@@ -33,7 +33,7 @@ const maoFormatted = computed(() => toUSD(mao.value));
 </script>
 
 <template>
-  <v-card class="pa-4">
+  <v-card class="pa-4 mobile-card">
     <v-row>
       <v-col cols="12" sm="6">
         <v-alert type="info" variant="tonal">

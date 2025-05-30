@@ -72,7 +72,7 @@ const amortizationTable = computed(() => {
 </script>
 
 <template>
-  <v-card class="pa-4 max-w-md mx-auto">
+  <v-card class="pa-4 max-w-md mx-auto mobile-card">
     <v-alert type="info" variant="tonal" class="mb-2">
       <strong>Monthly Principal & Interest:</strong>
       {{ toUSD(monthlyPrincipalAndInterest) }}
@@ -117,17 +117,18 @@ const amortizationTable = computed(() => {
       <v-col cols="12" sm="6">
         <v-text-field v-model.number="hoa" label="Monthly HOA (optional)" prefix="$" />
       </v-col>
+      <v-col cols="12" sm="6">
+        <v-btn
+          color="primary"
+          class="py-6 mt-1"
+          block
+          :disabled="!homePrice || !interestRate || !loanAmount"
+          @click="showAmortization = true"
+        >
+          Show Amortization Table
+        </v-btn>
+      </v-col>
     </v-row>
-
-    <v-btn
-      color="primary"
-      class="mt-4"
-      block
-      :disabled="!homePrice || !interestRate || !loanAmount"
-      @click="showAmortization = true"
-    >
-      Show Amortization Table
-    </v-btn>
 
     <v-dialog v-model="showAmortization" max-width="900">
       <v-card>
@@ -138,7 +139,7 @@ const amortizationTable = computed(() => {
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
-        <v-card-text style="max-height: 60vh; overflow-y: auto;">
+        <v-card-text style="max-height: 60vh; overflow-y: auto">
           <v-table density="compact">
             <thead>
               <tr>

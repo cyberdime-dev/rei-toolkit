@@ -35,7 +35,7 @@ const toUSD = (val) =>
 </script>
 
 <template>
-  <v-card class="pa-4">
+  <v-card class="pa-4 mobile-card">
     <v-row dense>
       <!-- Outputs -->
       <v-row>

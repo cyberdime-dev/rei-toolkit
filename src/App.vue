@@ -34,7 +34,7 @@ onUnmounted(() => {
 const route = useRoute();
 const routeTitles = {
   "/calculator/standard": "Calculator",
-    "/calculator/mortgage": "Mortgage",
+  "/calculator/mortgage": "Mortgage",
   "/calculator/fix-flip": "Fix & Flip",
   "/calculator/buy-hold": "Buy & Hold",
   "/calculator/brrr": "BRRR",
@@ -46,6 +46,27 @@ const routeTitles = {
 const isCalculatorRoute = computed(() => route.path.startsWith("/calculator")); // Check if current route for icon
 const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page title based on current route
 </script>
+
+<style scoped>
+@media (max-width: 600px) {
+  .mobile-card {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    z-index: 10;
+    margin: 0 !important;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding-top: 80px !important; /* Adjust for app bar height */
+  }
+}
+</style>
 
 <template>
   <v-app>

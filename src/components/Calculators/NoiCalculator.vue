@@ -29,7 +29,7 @@ const toUSD = (val) => `$${val.toLocaleString(undefined, { maximumFractionDigits
 </script>
 
 <template>
-  <v-card class="pa-4">
+  <v-card class="pa-4 mobile-card">
     <!-- Output -->
     <v-alert type="success" variant="tonal">
       <strong>Net Operating Income (NOI):</strong> {{ toUSD(noi) }}
