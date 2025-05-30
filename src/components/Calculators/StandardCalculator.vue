@@ -55,10 +55,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-card class="pa-4 max-w-md mx-auto mt-6">
-    <v-card-title>Calculator</v-card-title>
+  <v-card class="pa-4 max-w-md mx-auto">
     <v-text-field v-model="display" readonly hide-details class="mb-4" />
-
     <v-row dense>
       <v-col v-for="button in buttons" :key="button.label" cols="3">
         <v-btn

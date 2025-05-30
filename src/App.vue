@@ -34,6 +34,7 @@ onUnmounted(() => {
 const route = useRoute();
 const routeTitles = {
   "/calculator/standard": "Calculator",
+    "/calculator/mortgage": "Mortgage",
   "/calculator/fix-flip": "Fix & Flip",
   "/calculator/buy-hold": "Buy & Hold",
   "/calculator/brrr": "BRRR",
@@ -53,7 +54,7 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
       <!-- Desktop View -->
       <template v-if="isDesktop">
         <v-btn icon @click="toggleDrawer" class="me-2">
-          <v-icon color="white">mdi-menu</v-icon>
+          <v-icon color="white">mdi-toolbox</v-icon>
         </v-btn>
         <v-app-bar-title>
           REI Tools
@@ -74,7 +75,7 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
         </v-app-bar-title>
         <v-spacer />
         <v-btn icon @click="toggleDrawer">
-          <v-icon color="white">mdi-menu</v-icon>
+          <v-icon color="white">mdi-toolbox</v-icon>
         </v-btn>
       </template>
     </v-app-bar>
@@ -85,6 +86,7 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
       :permanent="isDesktop"
       :temporary="!isDesktop"
       app
+      :right="!isDesktop"
     >
       <v-list dense nav v-model="expandedGroups">
         <!-- Calculator Group -->
@@ -97,6 +99,9 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           </template>
           <v-list-item to="/calculator/standard" link @click="closeDrawer">
             <v-list-item-title>Calculator</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/calculator/mortgage" link @click="closeDrawer">
+            <v-list-item-title>Mortgage</v-list-item-title>
           </v-list-item>
           <v-list-item to="/calculator/fix-flip" link @click="closeDrawer">
             <v-list-item-title>Fix & Flip</v-list-item-title>
