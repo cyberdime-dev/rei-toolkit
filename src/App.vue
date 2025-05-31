@@ -2,6 +2,16 @@
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+const isDarkTheme = ref(theme.global.name.value === 'dark')
+
+const toggleTheme = () => {
+  theme.global.name.value = isDarkTheme.value ? 'dark' : 'light'
+  localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light')
+}
 
 const drawer = ref(false);
 const isDesktop = ref(window.innerWidth >= 960);
@@ -144,6 +154,19 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           </v-list-item>
         </v-list-group>
       </v-list>
+
+          <v-list class="mt-auto">
+      <v-list-item>
+        <v-list-item-title>Dark Mode</v-list-item-title>
+        <template #append>
+          <v-switch
+            v-model="isDarkTheme"
+            inset
+            @change="toggleTheme"
+          ></v-switch>
+        </template>
+      </v-list-item>
+    </v-list>
     </v-navigation-drawer>
 
     <!-- Main Content Area -->
