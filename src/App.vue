@@ -57,6 +57,7 @@ const routeTitles = {
   "/calculator/wholesale": "Wholesale",
   "/calculator/noi": "Net Operating Income",
   "/calculator/cash-on-cash": "Cash-on-Cash",
+  "/calculator/cashflow": "Cashflow",
 };
 
 const isCalculatorRoute = computed(() => route.path.startsWith("/calculator")); // Check if current route for icon
@@ -157,6 +158,9 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           </v-list-item>
           <v-list-item to="/calculator/cash-on-cash" link @click="closeDrawer">
             <v-list-item-title>Cash-on-Cash</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/calculator/cashflow" link @click="closeDrawer">
+            <v-list-item-title>Cashflow</v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>

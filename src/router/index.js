@@ -7,6 +7,7 @@ import Brrr from '@/components/Calculators/BrrrCalculator.vue'
 import Wholesale from '@/components/Calculators/WholesaleCalculator.vue'
 import NOI from '@/components/Calculators/NoiCalculator.vue'
 import CashOnCash from '@/components/Calculators/CashOnCashCalculator.vue'
+import Cashflow from '@/components/Calculators/CashflowCalculator.vue'
 
 const routes = [
   { path: '/', redirect: '/calculator/standard' },
@@ -21,6 +22,7 @@ const routes = [
   { path: '/calculator/wholesale', component: Wholesale },
   { path: '/calculator/noi', component: NOI },
   { path: '/calculator/cash-on-cash', component: CashOnCash },
+  { path: '/calculator/cashflow', component: Cashflow },
 ]
 
 const router = createRouter({
