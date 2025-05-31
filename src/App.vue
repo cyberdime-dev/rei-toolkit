@@ -2,16 +2,22 @@
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
-import { useTheme } from 'vuetify'
+import { useTheme } from "vuetify";
 
-const theme = useTheme()
+// Sets system's dark mode preference and saves it to localStorage
+// const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+// const savedTheme = localStorage.getItem("theme");
+// const selectedTheme = savedTheme || (prefersDark ? "dark" : "light");
+// vuetify.framework.theme.global.name.value = selectedTheme;
 
-const isDarkTheme = ref(theme.global.name.value === 'dark')
+const theme = useTheme();
+
+const isDarkTheme = ref(theme.global.name.value === "dark");
 
 const toggleTheme = () => {
-  theme.global.name.value = isDarkTheme.value ? 'dark' : 'light'
-  localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light')
-}
+  theme.global.name.value = isDarkTheme.value ? "dark" : "light";
+  localStorage.setItem("theme", isDarkTheme.value ? "dark" : "light");
+};
 
 const drawer = ref(false);
 const isDesktop = ref(window.innerWidth >= 960);
@@ -155,18 +161,14 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
         </v-list-group>
       </v-list>
 
-          <v-list class="mt-auto">
-      <v-list-item>
-        <v-list-item-title>Dark Mode</v-list-item-title>
-        <template #append>
-          <v-switch
-            v-model="isDarkTheme"
-            inset
-            @change="toggleTheme"
-          ></v-switch>
-        </template>
-      </v-list-item>
-    </v-list>
+      <v-list class="mt-auto">
+        <v-list-item>
+          <v-list-item-title>Dark Mode</v-list-item-title>
+          <template #append>
+            <v-switch v-model="isDarkTheme" inset @change="toggleTheme"></v-switch>
+          </template>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <!-- Main Content Area -->
