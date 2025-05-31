@@ -8,6 +8,7 @@ const interestRate = ref(0);
 const loanTerm = ref(30);
 const propertyTax = ref(0);
 const insurance = ref(0);
+// Rename hoa to "otherCosts" in code for clarity, but keep ref as hoa for minimal change
 const hoa = ref(0);
 
 const showAmortization = ref(false);
@@ -30,15 +31,20 @@ const monthlyPrincipalAndInterest = computed(() => {
 
 const monthlyTax = computed(() => propertyTax.value / 12);
 const monthlyInsurance = computed(() => insurance.value / 12);
-const monthlyHOA = computed(() => hoa.value);
+const monthlyOtherCosts = computed(() => hoa.value);
 
 const totalMonthlyPayment = computed(
   () =>
     monthlyPrincipalAndInterest.value +
     monthlyTax.value +
     monthlyInsurance.value +
-    monthlyHOA.value
+    monthlyOtherCosts.value
 );
+
+const totalInterest = computed(() => {
+  // Only principal & interest
+  return monthlyPrincipalAndInterest.value * numberOfPayments.value - loanAmount.value;
+});
 
 const toUSD = (val) =>
   `$${val.toLocaleString(undefined, {
@@ -73,17 +79,31 @@ const amortizationTable = computed(() => {
 
 <template>
   <v-card class="pa-4 max-w-md mx-auto mobile-card">
-    <v-alert type="info" variant="tonal" class="mb-2">
-      <strong>Monthly Principal & Interest:</strong>
-      {{ toUSD(monthlyPrincipalAndInterest) }}
-    </v-alert>
-    <v-alert type="success" variant="tonal">
-      <strong>Total Monthly Payment:</strong> {{ toUSD(totalMonthlyPayment) }}
-    </v-alert>
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Monthly Principal & Interest:</strong><br />
+          {{ toUSD(monthlyPrincipalAndInterest) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4" sm="6">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Monthly PITI + Other Costs:</strong><br />
+          {{ toUSD(totalMonthlyPayment) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4" sm="6">
+        <v-sheet color="success" class="pa-3" rounded>
+          <strong>Total Interest Paid:</strong><br />
+          {{ toUSD(totalInterest) }}
+        </v-sheet>
+      </v-col>
+    </v-row>
 
     <v-divider class="my-4" />
 
     <v-row dense>
+      <!-- Inputs -->
       <v-col cols="12" sm="6">
         <v-text-field v-model.number="homePrice" label="Home Price" prefix="$" />
       </v-col>
@@ -115,7 +135,11 @@ const amortizationTable = computed(() => {
         />
       </v-col>
       <v-col cols="12" sm="6">
-        <v-text-field v-model.number="hoa" label="Monthly HOA (optional)" prefix="$" />
+        <v-text-field
+          v-model.number="hoa"
+          label="Monthly Other Costs (optional)"
+          prefix="$"
+        />
       </v-col>
       <v-col cols="12" sm="6">
         <v-btn
