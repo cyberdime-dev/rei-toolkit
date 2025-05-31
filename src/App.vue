@@ -127,12 +127,12 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
       :right="!isDesktop"
     >
       <v-list dense nav v-model="expandedGroups">
-        <!-- Calculator Group -->
+        <!-- Tools Group -->
         <v-list-group value="calculator" prepend-icon="mdi-calculator">
           <template #activator>
             <v-list-item-title
-              ><v-icon class="mx-1" size="20">mdi-calculator</v-icon
-              >Calculators</v-list-item-title
+              ><v-icon class="mx-1" size="20">mdi-hammer-wrench</v-icon
+              >Tools</v-list-item-title
             >
           </template>
           <v-list-item to="/calculator/standard" link @click="closeDrawer">
@@ -162,6 +162,27 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           <v-list-item to="/calculator/cashflow" link @click="closeDrawer">
             <v-list-item-title>Cashflow</v-list-item-title>
           </v-list-item>
+        </v-list-group>
+        <!-- News Group -->
+        <v-list-group>
+          <template #activator>
+            <v-list-item-title
+              ><v-icon class="mx-1" size="20">mdi-newspaper</v-icon
+              >News</v-list-item-title
+            >
+          </template>
+          <!-- RE Market News -->
+        </v-list-group>
+        <!-- Configuration Group -->
+        <v-list-group>
+          <template #activator>
+            <v-list-item-title
+              ><v-icon class="mx-1" size="20">mdi-cog-box</v-icon
+              >Settings</v-list-item-title
+            >
+          </template>
+          <!-- Preferences: Select Default Starting Screen. -->
+          <!-- Login / Log Out -->
         </v-list-group>
       </v-list>
 
