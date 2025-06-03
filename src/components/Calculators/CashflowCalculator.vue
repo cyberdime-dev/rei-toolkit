@@ -52,23 +52,28 @@ function removeExpense(idx) {
   if (expenseItems.value.length > 1) expenseItems.value.splice(idx, 1);
 }
 
-// Pie chart data (Income & Expenses only)
+// Pie chart data (Income, Expenses, Cashflow)
 const pieData = computed(() => {
   const income = totalIncome.value;
   const expenses = totalExpenses.value;
+  const cashflow = netProfit.value;
 
   return {
-    labels: ["Income", "Expenses"],
+    labels: ["Income", "Expenses", "Cashflow"],
     datasets: [
       {
-        backgroundColor: ["#1976D2", "#E53935"],
-        data: [income, expenses],
+        backgroundColor: [
+          "#1976D2",           // Income: success blue (Vuetify primary blue)
+          "#FF5722",           // Expenses: deep-orange-lighten-1
+          "#43A047",           // Cashflow: success green
+        ],
+        data: [income, expenses, cashflow],
       },
     ],
   };
 });
 
-// Bar chart data (Income & Expenses only)
+// Bar chart data (Income & Expenses only, no Cashflow)
 const barData = computed(() => {
   const income = totalIncome.value;
   const expenses = totalExpenses.value;
@@ -78,7 +83,10 @@ const barData = computed(() => {
     datasets: [
       {
         label: "Amount",
-        backgroundColor: ["#1976D2", "#E53935"],
+        backgroundColor: [
+          "#1976D2",   // Income: success blue
+          "#FF5722",   // Expenses: deep-orange-lighten-1
+        ],
         data: [income, expenses],
       },
     ],
@@ -100,7 +108,7 @@ const showBarModal = ref(false);
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
-        <v-sheet color="deep-orange" class="pa-3" rounded>
+        <v-sheet color="deep-orange-lighten-1" class="pa-3" rounded>
           <strong>Total Expenses:</strong><br />
           {{ toUSD(totalExpenses) }}
         </v-sheet>
