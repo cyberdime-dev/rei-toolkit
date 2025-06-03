@@ -141,20 +141,51 @@ const lineChartData = computed(() => {
     <v-row dense class="mb-2">
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Principal & Interest:</strong><br />
+          <strong>Monthly Payment | PI</strong><br />
           {{ toUSD(monthlyPrincipalAndInterest) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="4" sm="6">
+      <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly PITI + Other Costs:</strong><br />
+          <strong>Monthly Payment | PITI</strong><br />
           {{ toUSD(totalMonthlyPayment) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="4" sm="6">
+      <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Total Interest Paid:</strong><br />
+          <strong>Monthly Payment | PITI + Other Costs</strong><br />
+          {{ toUSD(amortizationTable.length ? amortizationTable[0].total : 0) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Monthly Principal Payment</strong><br />
+          {{ toUSD(amortizationTable.length ? amortizationTable[0].principal : 0) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Monthly Interest Payment</strong><br />
+          {{ toUSD(amortizationTable.length ? amortizationTable[0].interest : 0) }}
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Total Principal Paid</strong><br />
+          {{ toUSD(loanAmount) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Total Interest Paid</strong><br />
           {{ toUSD(totalInterest) }}
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Total Principal &amp; Interest Paid</strong><br />
+          {{ toUSD(monthlyPrincipalAndInterest * numberOfPayments) }}
         </v-sheet>
       </v-col>
     </v-row>
@@ -201,9 +232,13 @@ const lineChartData = computed(() => {
         />
       </v-col>
     </v-row>
-
     <v-row class="my-4" v-if="loanAmount > 0 && interestRate > 0 && loanTerm > 0">
-     <!-- Amortization Chart -->
+      <v-row>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-icon size="36">mdi-chevron-double-down</v-icon>
+        </v-col>
+      </v-row>
+      <!-- Amortization Chart -->
       <v-col cols="12" md="5">
         <v-sheet class="pa-3" rounded>
           <h3 class="text-h6 mb-2">Amortization Chart</h3>
@@ -212,13 +247,13 @@ const lineChartData = computed(() => {
             :options="{
               responsive: true,
               plugins: { legend: { position: 'bottom' } },
-              scales: { y: { beginAtZero: true } }
+              scales: { y: { beginAtZero: true } },
             }"
-            style="max-height:350px;"
+            style="max-height: 350px"
           />
         </v-sheet>
       </v-col>
-    <!-- Amortization Table and Chart -->   
+      <!-- Amortization Table -->
       <v-col cols="12" md="7">
         <v-sheet class="pa-3" rounded>
           <h3 class="text-h6 mb-2">Amortization Table</h3>
