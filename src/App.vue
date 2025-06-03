@@ -150,6 +150,7 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           <v-list-item to="/calculator/wholesale" link @click="closeDrawer">
             <v-list-item-title>Wholesale</v-list-item-title>
           </v-list-item>
+          <v-divider class="my-1" />
           <v-list-item to="/calculator/buy-hold" link @click="closeDrawer">
             <v-list-item-title>Buy &amp; Hold</v-list-item-title>
           </v-list-item>
@@ -171,6 +172,16 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           </v-list-item>
         </v-list-group>
         <v-divider class="my-4" />
+        <!-- Deal Management Group -->
+        <v-list-group>
+          <template #activator>
+            <v-list-item-title
+              ><v-icon class="mx-1" size="20">mdi-handshake-outline</v-icon
+              >Deal Management</v-list-item-title
+            >
+          </template>
+        </v-list-group>
+         <v-divider class="my-4" />
         <!-- News Group -->
         <v-list-group>
           <template #activator>
@@ -211,3 +222,90 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
     </v-main>
   </v-app>
 </template>
+
+
+<!-- 🧰 Core Features (Must-Have)
+🔢 1. Deal Calculators
+Buy & Hold
+
+Fix & Flip
+
+BRRR
+
+Wholesale Assignment Fee
+
+Commercial: NOI, Cap Rate, Cash-on-Cash Return
+
+Standard Calculator
+
+📁 2. Deal Management
+Save deals
+
+Tag with statuses (e.g., analyzing, offer sent, under contract, closed)
+
+Export as PDF or CSV
+
+📄 3. Deal Reports
+Printable and shareable reports (for partners, lenders, buyers)
+
+Include deal summary, ROI projections, comps, repair costs
+
+🚀 Value-Add Features (Premium Tiers)
+📊 4. Comps + ARV Estimator
+Estimate After Repair Value using public or partner data
+
+Pull local comps (from Zillow, Redfin, or MLS API if integrated)
+
+🛠️ 5. Repair Cost Estimator
+Category-based (roof, kitchen, HVAC, paint, etc.)
+
+Prebuilt templates for different rehab levels (light, medium, full)
+
+🧮 6. Offer Calculator
+Use MAO (Max Allowable Offer) formulas
+
+Customize formulas based on strategy
+
+🧭 7. Strategy Suggestions
+Based on deal numbers, suggest best-fit strategy (flip vs. rental)
+
+“What-if” scenarios
+
+👥 CRM + Lead Tools (Upsell Opportunities)
+📞 8. Basic CRM
+Track seller leads
+
+Notes, statuses, follow-up reminders
+
+🔍 9. Skip Tracing + Lead Lists (Affiliate/Partner APIs)
+Allow importing lists and appending owner contact info
+
+Filter by equity, absentee, foreclosure, etc.
+
+💰 Monetization Features
+📦 10. Templates & Docs (One-time purchases or upsell)
+Assignment contracts
+
+LOIs
+
+Seller scripts
+
+Repair estimate spreadsheets
+
+🔌 11. Integrations
+Zapier
+
+REsimpli, Podio, or other investor CRMs
+
+Mailchimp (for marketing leads)
+
+💼 Admin & SaaS Features
+💳 12. Pricing Tiers
+Free: 1 deal/month
+
+Pro: Unlimited deals + reports
+
+Premium: CRM + integrations
+
+📈 13. Analytics Dashboard (optional)
+Track KPIs like ROI by zip code, best-performing strategies, etc. -->
