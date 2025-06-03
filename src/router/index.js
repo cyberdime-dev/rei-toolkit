@@ -9,6 +9,7 @@ import NOI from '@/components/Calculators/NoiCalculator.vue'
 import CashOnCash from '@/components/Calculators/CashOnCashCalculator.vue'
 import Cashflow from '@/components/Calculators/CashflowCalculator.vue'
 import CapRate from '@/components/Calculators/CapRateCalculator.vue'
+import NotFound from '@/components/NotFound.vue'
 
 const routes = [
   { path: '/', redirect: '/calculator/standard' },
@@ -16,7 +17,7 @@ const routes = [
 
   // Calculators
   { path: '/calculator/standard', component: StandardCalculator },
-    { path: '/calculator/mortgage', component: Mortgage },
+  { path: '/calculator/mortgage', component: Mortgage },
   { path: '/calculator/fix-flip', component: FixAndFlip },
   { path: '/calculator/buy-hold', component: BuyAndHold },
   { path: '/calculator/brrr', component: Brrr },
@@ -25,6 +26,7 @@ const routes = [
   { path: '/calculator/cash-on-cash', component: CashOnCash },
   { path: '/calculator/cashflow', component: Cashflow },
   { path: '/calculator/cap-rate', component: CapRate },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
 const router = createRouter({
