@@ -8,6 +8,7 @@ import Wholesale from '@/components/Calculators/WholesaleCalculator.vue'
 import NOI from '@/components/Calculators/NoiCalculator.vue'
 import CashOnCash from '@/components/Calculators/CashOnCashCalculator.vue'
 import Cashflow from '@/components/Calculators/CashflowCalculator.vue'
+import CapRate from '@/components/Calculators/CapRateCalculator.vue'
 
 const routes = [
   { path: '/', redirect: '/calculator/standard' },
@@ -23,6 +24,7 @@ const routes = [
   { path: '/calculator/noi', component: NOI },
   { path: '/calculator/cash-on-cash', component: CashOnCash },
   { path: '/calculator/cashflow', component: Cashflow },
+  { path: '/calculator/cap-rate', component: CapRate },
 ]
 
 const router = createRouter({

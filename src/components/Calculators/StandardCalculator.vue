@@ -64,19 +64,24 @@ onUnmounted(() => {
         <v-list-item
           v-for="(item, idx) in history.slice(0, 5)"
           :key="idx"
-          class="py-1"
         >
           <v-list-item-title class="text-caption">{{ item }}</v-list-item-title>
         </v-list-item>
       </v-list>
       <v-divider class="mb-2" />
     </div>
-    <v-text-field v-model="display" readonly hide-details class="mb-4" />
+    <v-text-field
+      v-model="display"
+      readonly
+      hide-details
+      class="mb-4"
+      bg-color="light-blue-lighten-4"
+    />
     <v-row dense>
       <v-col v-for="button in buttons" :key="button.label" cols="3">
         <v-btn
           block
-          :color="isOperator(button.label) ? 'deep-purple' : 'grey lighten-2'"
+          :color="isOperator(button.label) ? 'blue-grey-darken-1'  : 'blue-grey-lighten-3'"
           @click="handleClick(button.label)"
         >
           {{ button.label }}
@@ -84,7 +89,7 @@ onUnmounted(() => {
       </v-col>
     </v-row>
 
-    <v-btn block color="red lighten-1" class="mt-2" @click="clear">Clear</v-btn>
+    <v-btn block color="deep-orange lighten-1" class="mt-2" @click="clear">Clear</v-btn>
   </v-card>
 </template>
 

@@ -90,29 +90,121 @@ const showBarModal = ref(false);
 </script>
 
 <template>
-  <v-card class="pa-4 max-w-md mx-auto mobile-card">
+  <v-card class="pa-4 mobile-card">
     <!-- Cashflow Results -->
-    <v-row>
-      <v-col cols="12" sm="6">
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
           <strong>Total Income:</strong><br />
           {{ toUSD(totalIncome) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-sheet color="error" class="pa-3" rounded>
+      <v-col cols="12" md="4">
+        <v-sheet color="deep-orange" class="pa-3" rounded>
           <strong>Total Expenses:</strong><br />
           {{ toUSD(totalExpenses) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12">
-        <v-sheet :color="netProfit >= 0 ? 'success' : 'error'" class="pa-3 mt-2" rounded>
+      <v-col cols="12" md="4">
+        <v-sheet :color="netProfit >= 0 ? 'success' : 'error'" class="pa-3" rounded>
           <strong>Cashflow | Net Profit &amp; Loss:</strong><br />
           {{ toUSD(netProfit) }}
         </v-sheet>
       </v-col>
     </v-row>
+
+    <!-- Charts: Dashboard on desktop, modal on mobile -->
+    <v-row class="mb-4" v-if="$vuetify.display.mdAndUp">
+      <v-col cols="12" md="6">
+        <v-sheet class="pa-3" rounded>
+          <Pie
+            :data="pieData"
+            :options="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"
+            style="max-height:300px;"
+          />
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-sheet class="pa-3" rounded>
+          <Bar
+            :data="barData"
+            :options="{
+              responsive: true,
+              plugins: { legend: { display: false } },
+              scales: { y: { beginAtZero: true } },
+            }"
+            style="max-height:300px;"
+          />
+        </v-sheet>
+      </v-col>
+    </v-row>
+
+    <!-- Chart Buttons (mobile only) -->
+    <v-row v-else>
+      <v-col cols="12" class="d-flex justify-end gap-2">
+        <v-btn
+          color="primary"
+          @click="showPieModal = true"
+          :disabled="totalIncome === 0 && totalExpenses === 0"
+        >
+          <v-icon start>mdi-chart-pie</v-icon>
+          Pie Chart
+        </v-btn>
+        <v-btn
+          color="primary"
+          @click="showBarModal = true"
+          :disabled="totalIncome === 0 && totalExpenses === 0"
+        >
+          <v-icon start>mdi-chart-bar</v-icon>
+          Bar Chart
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <!-- Pie Chart Modal (mobile only) -->
+    <v-dialog v-model="showPieModal" max-width="400">
+      <v-card>
+        <v-card-title>
+          Income vs Expenses (Pie)
+          <v-spacer />
+          <v-btn icon @click="showPieModal = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <Pie
+            :data="pieData"
+            :options="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"
+          />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <!-- Bar Chart Modal (mobile only) -->
+    <v-dialog v-model="showBarModal" max-width="400">
+      <v-card>
+        <v-card-title>
+          Income vs Expenses (Bar)
+          <v-spacer />
+          <v-btn icon @click="showBarModal = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <Bar
+            :data="barData"
+            :options="{
+              responsive: true,
+              plugins: { legend: { display: false } },
+              scales: { y: { beginAtZero: true } },
+            }"
+          />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
     <v-divider class="my-4" />
+
     <!-- Income & Expense Inputs -->
     <v-row>
       <v-col cols="12">
@@ -188,66 +280,5 @@ const showBarModal = ref(false);
         </v-btn>
       </v-col>
     </v-row>
-
-    <!-- Chart Buttons at the bottom -->
-    <v-divider class="my-4" />
-    <v-row>
-      <v-col cols="12" class="d-flex justify-end gap-2">
-        <v-btn
-          color="primary"
-          @click="showPieModal = true"
-          :disabled="totalIncome === 0 && totalExpenses === 0"
-        >
-          <v-icon start>mdi-chart-pie</v-icon>
-          Pie Chart
-        </v-btn>
-        <v-btn
-          color="primary"
-          @click="showBarModal = true"
-          :disabled="totalIncome === 0 && totalExpenses === 0"
-        >
-          <v-icon start>mdi-chart-bar</v-icon>
-          Bar Chart
-        </v-btn>
-      </v-col>
-    </v-row>
-
-    <!-- Pie Chart Modal -->
-    <v-dialog v-model="showPieModal" max-width="400">
-      <v-card>
-        <v-card-title>
-          Income vs Expenses (Pie)
-          <v-spacer />
-          <v-btn icon @click="showPieModal = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <Pie
-            :data="pieData"
-            :options="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"
-          />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-
-    <!-- Bar Chart Modal -->
-    <v-dialog v-model="showBarModal" max-width="400">
-      <v-card>
-        <v-card-title>
-          Income vs Expenses (Bar)
-          <v-spacer />
-          <v-btn icon @click="showBarModal = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <Bar
-            :data="barData"
-            :options="{ responsive: true, plugins: { legend: { display: false }, }, scales: { y: { beginAtZero: true } } }"
-          />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>

@@ -23,16 +23,16 @@ const toUSD = (val) => `$${val.toLocaleString(undefined, { maximumFractionDigits
 
 <template>
   <v-card class="pa-4 mobile-card">
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Annual Cash Flow:</strong> {{ toUSD(annualCashFlow) }}
-        </v-alert>
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="success" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Cash-on-Cash Return:</strong> {{ cashOnCashReturn.toFixed(2) }}%
-        </v-alert>
+        </v-sheet>
       </v-col>
     </v-row>
 

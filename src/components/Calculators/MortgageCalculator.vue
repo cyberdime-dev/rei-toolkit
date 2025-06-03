@@ -1,5 +1,26 @@
 <script setup>
 import { ref, computed } from "vue";
+import { Line } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+);
 
 // Inputs
 const homePrice = ref(0);
@@ -8,10 +29,10 @@ const interestRate = ref(0);
 const loanTerm = ref(30);
 const propertyTax = ref(0);
 const insurance = ref(0);
-// Rename hoa to "otherCosts" in code for clarity, but keep ref as hoa for minimal change
 const hoa = ref(0);
 
 const showAmortization = ref(false);
+const showLineChart = ref(false);
 
 // Calculations
 const loanAmount = computed(() => homePrice.value - downPayment.value);
@@ -75,6 +96,44 @@ const amortizationTable = computed(() => {
   }
   return table;
 });
+
+// Line Chart Data for Amortization
+const lineChartData = computed(() => {
+  const labels = amortizationTable.value.map((row) => row.payment);
+  const balances = amortizationTable.value.map((row) => row.balance);
+  const principals = amortizationTable.value.map((row) => row.principal);
+  const interests = amortizationTable.value.map((row) => row.interest);
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: "Balance",
+        data: balances,
+        borderColor: "#1976D2",
+        backgroundColor: "#1976D2",
+        fill: false,
+        tension: 0.2,
+      },
+      {
+        label: "Principal Paid",
+        data: principals,
+        borderColor: "#43A047",
+        backgroundColor: "#43A047",
+        fill: false,
+        tension: 0.2,
+      },
+      {
+        label: "Interest Paid",
+        data: interests,
+        borderColor: "#E53935",
+        backgroundColor: "#E53935",
+        fill: false,
+        tension: 0.2,
+      },
+    ],
+  };
+});
 </script>
 
 <template>
@@ -93,7 +152,7 @@ const amortizationTable = computed(() => {
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4" sm="6">
-        <v-sheet color="success" class="pa-3" rounded>
+        <v-sheet color="info" class="pa-3" rounded>
           <strong>Total Interest Paid:</strong><br />
           {{ toUSD(totalInterest) }}
         </v-sheet>
@@ -141,29 +200,28 @@ const amortizationTable = computed(() => {
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-btn
-          color="primary"
-          class="py-6 mt-1"
-          block
-          :disabled="!homePrice || !interestRate || !loanAmount"
-          @click="showAmortization = true"
-        >
-          Show Amortization Table
-        </v-btn>
-      </v-col>
     </v-row>
 
-    <v-dialog v-model="showAmortization" max-width="900">
-      <v-card>
-        <v-card-title>
-          Amortization Table
-          <v-spacer />
-          <v-btn icon @click="showAmortization = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text style="max-height: 60vh; overflow-y: auto">
+    <v-row class="my-4" v-if="loanAmount > 0 && interestRate > 0 && loanTerm > 0">
+     <!-- Amortization Chart -->
+      <v-col cols="12" md="5">
+        <v-sheet class="pa-3" rounded>
+          <h3 class="text-h6 mb-2">Amortization Chart</h3>
+          <Line
+            :data="lineChartData"
+            :options="{
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } },
+              scales: { y: { beginAtZero: true } }
+            }"
+            style="max-height:350px;"
+          />
+        </v-sheet>
+      </v-col>
+    <!-- Amortization Table and Chart -->   
+      <v-col cols="12" md="7">
+        <v-sheet class="pa-3" rounded>
+          <h3 class="text-h6 mb-2">Amortization Table</h3>
           <v-table density="compact">
             <thead>
               <tr>
@@ -184,8 +242,8 @@ const amortizationTable = computed(() => {
               </tr>
             </tbody>
           </v-table>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-card>
 </template>

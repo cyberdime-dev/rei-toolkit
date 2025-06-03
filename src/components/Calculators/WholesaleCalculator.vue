@@ -38,20 +38,19 @@ const toUSD = (val) =>
   <v-card class="pa-4 mobile-card">
     <v-row dense>
       <!-- Outputs -->
-      <v-row>
-        <v-col cols="12" sm="6">
-          <v-alert type="info" variant="tonal">
+      <v-row dense class="mb-2">
+        <v-col cols="12" md="6">
+          <v-sheet color="info" class="pa-3" rounded>
             <strong>End Buyer Offer Price:</strong> {{ toUSD(buyerOfferPrice) }}<br />
             <strong>Max Allowable Offer (MAO):</strong> {{ toUSD(maxAllowableOffer) }}
-          </v-alert>
+          </v-sheet>
         </v-col>
-
-        <v-col cols="12" sm="6">
-          <v-alert :type="isAssignable ? 'success' : 'error'" variant="tonal">
+        <v-col cols="12" md="6">
+          <v-sheet :color="isAssignable ? 'success' : 'error'" class="pa-3" rounded>
             <strong>Spread:</strong> {{ toUSD(spread) }}<br />
             <strong>Deal is Assignable:</strong>
             <span class="font-weight-bold">{{ isAssignable ? "✅ YES" : "❌ NO" }}</span>
-          </v-alert>
+          </v-sheet>
         </v-col>
       </v-row>
 

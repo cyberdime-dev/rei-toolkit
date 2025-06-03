@@ -58,6 +58,7 @@ const routeTitles = {
   "/calculator/noi": "Net Operating Income",
   "/calculator/cash-on-cash": "Cash-on-Cash",
   "/calculator/cashflow": "Cashflow",
+  "/calculator/cap-rate": "Cap Rate",
 };
 
 const isCalculatorRoute = computed(() => route.path.startsWith("/calculator")); // Check if current route for icon
@@ -138,31 +139,38 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           <v-list-item to="/calculator/standard" link @click="closeDrawer">
             <v-list-item-title>Calculator</v-list-item-title>
           </v-list-item>
+          <v-divider class="my-1" />
           <v-list-item to="/calculator/mortgage" link @click="closeDrawer">
             <v-list-item-title>Mortgage</v-list-item-title>
           </v-list-item>
+          <v-divider class="my-1" />
           <v-list-item to="/calculator/fix-flip" link @click="closeDrawer">
-            <v-list-item-title>Fix & Flip</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/calculator/buy-hold" link @click="closeDrawer">
-            <v-list-item-title>Buy & Hold</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/calculator/brrr" link @click="closeDrawer">
-            <v-list-item-title>BRRR</v-list-item-title>
+            <v-list-item-title>Fix &amp; Flip</v-list-item-title>
           </v-list-item>
           <v-list-item to="/calculator/wholesale" link @click="closeDrawer">
             <v-list-item-title>Wholesale</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/calculator/buy-hold" link @click="closeDrawer">
+            <v-list-item-title>Buy &amp; Hold</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/calculator/brrr" link @click="closeDrawer">
+            <v-list-item-title>BRRR</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/calculator/cashflow" link @click="closeDrawer">
+            <v-list-item-title>Cashflow</v-list-item-title>
+          </v-list-item>
+          <v-divider class="my-1" />
           <v-list-item to="/calculator/noi" link @click="closeDrawer">
             <v-list-item-title>Net Operating Income</v-list-item-title>
           </v-list-item>
           <v-list-item to="/calculator/cash-on-cash" link @click="closeDrawer">
             <v-list-item-title>Cash-on-Cash</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/cashflow" link @click="closeDrawer">
-            <v-list-item-title>Cashflow</v-list-item-title>
+          <v-list-item to="/calculator/cap-rate" link @click="closeDrawer">
+            <v-list-item-title>Cap Rate</v-list-item-title>
           </v-list-item>
         </v-list-group>
+        <v-divider class="my-4" />
         <!-- News Group -->
         <v-list-group>
           <template #activator>
@@ -173,7 +181,8 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
           </template>
           <!-- RE Market News -->
         </v-list-group>
-        <!-- Configuration Group -->
+        <v-divider class="my-4" />
+        <!-- User Group -->
         <v-list-group>
           <template #activator>
             <v-list-item-title

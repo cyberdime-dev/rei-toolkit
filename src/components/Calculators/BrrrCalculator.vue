@@ -54,25 +54,24 @@ const toUSD = (val) =>
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Results -->
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
-          <strong>Total Initial Investment:</strong> {{ toUSD(totalInitialInvestment)
-          }}<br />
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="6">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Total Initial Investment:</strong> {{ toUSD(totalInitialInvestment) }}<br />
           <strong>New Loan Amount:</strong> {{ toUSD(newLoanAmount) }}
-        </v-alert>
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="success" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Equity Captured:</strong> {{ toUSD(equityCaptured) }}<br />
           <strong>Cash-Out Amount:</strong> {{ toUSD(cashOutAmount) }}
-        </v-alert>
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="warning" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Monthly Cash Flow:</strong> {{ toUSD(monthlyCashFlow) }}<br />
           <strong>Cash-on-Cash Return:</strong> {{ cocReturn.toFixed(1) }}%
-        </v-alert>
+        </v-sheet>
       </v-col>
     </v-row>
 

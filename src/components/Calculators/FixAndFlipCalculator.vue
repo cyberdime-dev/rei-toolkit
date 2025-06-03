@@ -34,26 +34,30 @@ const maoFormatted = computed(() => toUSD(mao.value));
 
 <template>
   <v-card class="pa-4 mobile-card">
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
-          <strong>Total Investment:</strong> {{ totalInvestmentFormatted }}
-        </v-alert>
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="6">
+        <v-sheet color="info" class="pa-3" rounded>
+          <strong>Total Investment:</strong><br />
+          {{ totalInvestmentFormatted }}
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="success" variant="tonal">
-          <strong>Net Profit:</strong> {{ netProfitFormatted }}
-        </v-alert>
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
+          <strong>Net Profit:</strong><br />
+          {{ netProfitFormatted }}
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="warning" variant="tonal">
-          <strong>ROI:</strong> {{ roi.toFixed(1) }}%
-        </v-alert>
+      <v-col cols="12" md="6">
+        <v-sheet color="light-green-darken-4" class="pa-3" rounded>
+          <strong>ROI:</strong><br />
+          {{ roi.toFixed(1) }}%
+        </v-sheet>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
-          <strong>Max Allowable Offer (MAO):</strong> {{ maoFormatted }}
-        </v-alert>
+      <v-col cols="12" md="6">
+        <v-sheet color="deep-orange" class="pa-3" rounded>
+          <strong>Max Allowable Offer (MAO):</strong><br />
+          {{ maoFormatted }}
+        </v-sheet>
       </v-col>
     </v-row>
 

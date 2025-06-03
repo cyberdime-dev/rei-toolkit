@@ -87,31 +87,28 @@ const toUSD = (val) =>
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Outputs -->
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
+    <v-row dense class="mb-2">
+      <v-col cols="12" md="6">
+        <v-sheet color="info" class="pa-3" rounded>
           <strong>Loan Amount:</strong> {{ toUSD(loanAmount) }} <br />
           <strong>Monthly Mortgage:</strong> {{ toUSD(monthlyMortgage) }}
-        </v-alert>
+        </v-sheet>
       </v-col>
-
-      <v-col cols="12" sm="6">
-        <v-alert type="success" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Monthly Cash Flow:</strong> {{ toUSD(monthlyCashFlow) }} <br />
           <strong>Annual Cash Flow:</strong> {{ toUSD(annualCashFlow) }}
-        </v-alert>
+        </v-sheet>
       </v-col>
-
-      <v-col cols="12" sm="6">
-        <v-alert type="warning" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Cap Rate:</strong> {{ capRate.toFixed(1) }}%
-        </v-alert>
+        </v-sheet>
       </v-col>
-
-      <v-col cols="12" sm="6">
-        <v-alert type="info" variant="tonal">
+      <v-col cols="12" md="6">
+        <v-sheet color="success" class="pa-3" rounded>
           <strong>Cash-on-Cash Return:</strong> {{ cashOnCashReturn.toFixed(1) }}%
-        </v-alert>
+        </v-sheet>
       </v-col>
     </v-row>
 
