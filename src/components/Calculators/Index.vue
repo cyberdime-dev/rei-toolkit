@@ -1,9 +1,7 @@
 <script setup>
-import { ref } from "vue";
-import "@mdi/font/css/materialdesignicons.css";
-
+import '@mdi/font/css/materialdesignicons.css'
 </script>
 
 <template>
-
+  <div>Calculator Index Component</div>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
-import { Pie, Bar } from "vue-chartjs";
+import { ref, computed } from 'vue'
+import { Pie, Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   Title,
@@ -10,7 +10,7 @@ import {
   BarElement,
   CategoryScale,
   LinearScale,
-} from "chart.js";
+} from 'chart.js'
 
 ChartJS.register(
   Title,
@@ -20,81 +20,81 @@ ChartJS.register(
   BarElement,
   CategoryScale,
   LinearScale
-);
+)
 
-const incomeItems = ref([{ label: "", amount: 0 }]);
-const expenseItems = ref([{ label: "", amount: 0 }]);
+const incomeItems = ref([{ label: '', amount: 0 }])
+const expenseItems = ref([{ label: '', amount: 0 }])
 
 const totalIncome = computed(() =>
   incomeItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0)
-);
+)
 const totalExpenses = computed(() =>
   expenseItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0)
-);
-const netProfit = computed(() => totalIncome.value - totalExpenses.value);
+)
+const netProfit = computed(() => totalIncome.value - totalExpenses.value)
 
-const toUSD = (val) =>
+const toUSD = val =>
   `$${Number(val).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })}`;
+  })}`
 
 function addIncome() {
-  incomeItems.value.push({ label: "", amount: 0 });
+  incomeItems.value.push({ label: '', amount: 0 })
 }
 function addExpense() {
-  expenseItems.value.push({ label: "", amount: 0 });
+  expenseItems.value.push({ label: '', amount: 0 })
 }
 function removeIncome(idx) {
-  if (incomeItems.value.length > 1) incomeItems.value.splice(idx, 1);
+  if (incomeItems.value.length > 1) incomeItems.value.splice(idx, 1)
 }
 function removeExpense(idx) {
-  if (expenseItems.value.length > 1) expenseItems.value.splice(idx, 1);
+  if (expenseItems.value.length > 1) expenseItems.value.splice(idx, 1)
 }
 
 // Pie chart data (Income, Expenses, Cashflow)
 const pieData = computed(() => {
-  const income = totalIncome.value;
-  const expenses = totalExpenses.value;
-  const cashflow = netProfit.value;
+  const income = totalIncome.value
+  const expenses = totalExpenses.value
+  const cashflow = netProfit.value
 
   return {
-    labels: ["Income", "Expenses", "Cashflow"],
+    labels: ['Income', 'Expenses', 'Cashflow'],
     datasets: [
       {
         backgroundColor: [
-          "#1976D2",           // Income: success blue (Vuetify primary blue)
-          "#FF5722",           // Expenses: deep-orange-lighten-1
-          "#43A047",           // Cashflow: success green
+          '#1976D2', // Income: success blue (Vuetify primary blue)
+          '#FF5722', // Expenses: deep-orange-lighten-1
+          '#43A047', // Cashflow: success green
         ],
         data: [income, expenses, cashflow],
       },
     ],
-  };
-});
+  }
+})
 
 // Bar chart data (Income & Expenses only, no Cashflow)
 const barData = computed(() => {
-  const income = totalIncome.value;
-  const expenses = totalExpenses.value;
+  const income = totalIncome.value
+  const expenses = totalExpenses.value
 
   return {
-    labels: ["Income", "Expenses"],
+    labels: ['Income', 'Expenses'],
     datasets: [
       {
-        label: "Amount",
+        label: 'Amount',
         backgroundColor: [
-          "#1976D2",   // Income: success blue
-          "#FF5722",   // Expenses: deep-orange-lighten-1
+          '#1976D2', // Income: success blue
+          '#FF5722', // Expenses: deep-orange-lighten-1
         ],
         data: [income, expenses],
       },
     ],
-  };
-});
+  }
+})
 
-const showPieModal = ref(false);
-const showBarModal = ref(false);
+const showPieModal = ref(false)
+const showBarModal = ref(false)
 </script>
 
 <template>
@@ -103,32 +103,42 @@ const showBarModal = ref(false);
     <v-row dense class="mb-2">
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Total Income:</strong><br />
+          <strong>Total Income:</strong>
+          <br />
           {{ toUSD(totalIncome) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="deep-orange-lighten-1" class="pa-3" rounded>
-          <strong>Total Expenses:</strong><br />
+          <strong>Total Expenses:</strong>
+          <br />
           {{ toUSD(totalExpenses) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
-        <v-sheet :color="netProfit >= 0 ? 'success' : 'error'" class="pa-3" rounded>
-          <strong>Cashflow | Net Profit &amp; Loss:</strong><br />
+        <v-sheet
+          :color="netProfit >= 0 ? 'success' : 'error'"
+          class="pa-3"
+          rounded
+        >
+          <strong>Cashflow | Net Profit &amp; Loss:</strong>
+          <br />
           {{ toUSD(netProfit) }}
         </v-sheet>
       </v-col>
     </v-row>
 
     <!-- Charts: Dashboard on desktop, modal on mobile -->
-    <v-row class="mb-4" v-if="$vuetify.display.mdAndUp">
+    <v-row v-if="$vuetify.display.mdAndUp" class="mb-4">
       <v-col cols="12" md="6">
         <v-sheet class="pa-3" rounded>
           <Pie
             :data="pieData"
-            :options="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"
-            style="max-height:300px;"
+            :options="{
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } },
+            }"
+            style="max-height: 300px"
           />
         </v-sheet>
       </v-col>
@@ -141,7 +151,7 @@ const showBarModal = ref(false);
               plugins: { legend: { display: false } },
               scales: { y: { beginAtZero: true } },
             }"
-            style="max-height:300px;"
+            style="max-height: 300px"
           />
         </v-sheet>
       </v-col>
@@ -152,16 +162,16 @@ const showBarModal = ref(false);
       <v-col cols="12" class="d-flex justify-end gap-2">
         <v-btn
           color="primary"
-          @click="showPieModal = true"
           :disabled="totalIncome === 0 && totalExpenses === 0"
+          @click="showPieModal = true"
         >
           <v-icon start>mdi-chart-pie</v-icon>
           Pie Chart
         </v-btn>
         <v-btn
           color="primary"
-          @click="showBarModal = true"
           :disabled="totalIncome === 0 && totalExpenses === 0"
+          @click="showBarModal = true"
         >
           <v-icon start>mdi-chart-bar</v-icon>
           Bar Chart
@@ -182,7 +192,10 @@ const showBarModal = ref(false);
         <v-card-text>
           <Pie
             :data="pieData"
-            :options="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"
+            :options="{
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } },
+            }"
           />
         </v-card-text>
       </v-card>
@@ -224,7 +237,12 @@ const showBarModal = ref(false);
           align="center"
         >
           <v-col cols="7">
-            <v-text-field v-model="item.label" label="Label" dense hide-details />
+            <v-text-field
+              v-model="item.label"
+              label="Label"
+              dense
+              hide-details
+            />
           </v-col>
           <v-col cols="4">
             <v-text-field
@@ -240,15 +258,16 @@ const showBarModal = ref(false);
             <v-btn
               icon
               size="small"
-              @click="removeIncome(idx)"
               :disabled="incomeItems.length === 1"
+              @click="removeIncome(idx)"
             >
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-col>
         </v-row>
         <v-btn color="primary" variant="tonal" size="small" @click="addIncome">
-          <v-icon start>mdi-plus</v-icon>Add Income
+          <v-icon start>mdi-plus</v-icon>
+          Add Income
         </v-btn>
       </v-col>
       <v-col cols="12" class="mt-4">
@@ -260,7 +279,12 @@ const showBarModal = ref(false);
           align="center"
         >
           <v-col cols="7">
-            <v-text-field v-model="item.label" label="Label" dense hide-details />
+            <v-text-field
+              v-model="item.label"
+              label="Label"
+              dense
+              hide-details
+            />
           </v-col>
           <v-col cols="4">
             <v-text-field
@@ -276,15 +300,16 @@ const showBarModal = ref(false);
             <v-btn
               icon
               size="small"
-              @click="removeExpense(idx)"
               :disabled="expenseItems.length === 1"
+              @click="removeExpense(idx)"
             >
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-col>
         </v-row>
         <v-btn color="primary" variant="tonal" size="small" @click="addExpense">
-          <v-icon start>mdi-plus</v-icon>Add Expense
+          <v-icon start>mdi-plus</v-icon>
+          Add Expense
         </v-btn>
       </v-col>
     </v-row>

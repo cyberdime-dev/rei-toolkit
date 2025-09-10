@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
-import { useRoute } from "vue-router";
-import "@mdi/font/css/materialdesignicons.css";
-import { useTheme } from "vuetify";
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import '@mdi/font/css/materialdesignicons.css'
+import { useTheme } from 'vuetify'
 
 // Sets system's dark mode preference and saves it to localStorage
 // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -10,81 +10,60 @@ import { useTheme } from "vuetify";
 // const selectedTheme = savedTheme || (prefersDark ? "dark" : "light");
 // vuetify.framework.theme.global.name.value = selectedTheme;
 
-const theme = useTheme();
+const theme = useTheme()
 
-const isDarkTheme = ref(theme.global.name.value === "dark");
+const isDarkTheme = ref(theme.global.name.value === 'dark')
 
 const toggleTheme = () => {
-  theme.global.name.value = isDarkTheme.value ? "dark" : "light";
-  localStorage.setItem("theme", isDarkTheme.value ? "dark" : "light");
-};
+  theme.global.name.value = isDarkTheme.value ? 'dark' : 'light'
+  localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light')
+}
 
-const drawer = ref(false);
-const isDesktop = ref(window.innerWidth >= 960);
+const drawer = ref(false)
+const isDesktop = ref(window.innerWidth >= 960)
 
 // Control expanded groups
-const expandedGroups = ref(["residential", "commercial"]);
+const expandedGroups = ref(['residential', 'commercial'])
 
 function handleResize() {
-  isDesktop.value = window.innerWidth >= 960;
-  if (isDesktop.value) drawer.value = true;
+  isDesktop.value = window.innerWidth >= 960
+  if (isDesktop.value) drawer.value = true
 }
 
 function closeDrawer() {
-  if (!isDesktop.value) drawer.value = false;
+  if (!isDesktop.value) drawer.value = false
 }
 
 function toggleDrawer() {
-  drawer.value = !drawer.value;
+  drawer.value = !drawer.value
 }
 
 onMounted(() => {
-  window.addEventListener("resize", handleResize);
-});
+  window.addEventListener('resize', handleResize)
+})
 
 onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
+  window.removeEventListener('resize', handleResize)
+})
 
 // Dynamic page title based on route
-const route = useRoute();
+const route = useRoute()
 const routeTitles = {
-  "/calculator/standard": "Calculator",
-  "/calculator/mortgage": "Mortgage",
-  "/calculator/fix-flip": "Fix & Flip",
-  "/calculator/buy-hold": "Buy & Hold",
-  "/calculator/brrr": "BRRR",
-  "/calculator/wholesale": "Wholesale",
-  "/calculator/noi": "Net Operating Income",
-  "/calculator/cash-on-cash": "Cash-on-Cash",
-  "/calculator/cashflow": "Cashflow",
-  "/calculator/cap-rate": "Cap Rate",
-};
-
-const isCalculatorRoute = computed(() => route.path.startsWith("/calculator")); // Check if current route for icon
-const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page title based on current route
-</script>
-
-<style scoped>
-@media (max-width: 600px) {
-  .mobile-card {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    max-width: 100vw !important;
-    max-height: 100vh !important;
-    height: 100vh !important;
-    border-radius: 0 !important;
-    z-index: 10;
-    margin: 0 !important;
-    box-sizing: border-box;
-    overflow-y: auto;
-    padding-top: 80px !important; /* Adjust for app bar height */
-  }
+  '/calculator/standard': 'Calculator',
+  '/calculator/mortgage': 'Mortgage',
+  '/calculator/fix-flip': 'Fix & Flip',
+  '/calculator/buy-hold': 'Buy & Hold',
+  '/calculator/brrr': 'BRRR',
+  '/calculator/wholesale': 'Wholesale',
+  '/calculator/noi': 'Net Operating Income',
+  '/calculator/cash-on-cash': 'Cash-on-Cash',
+  '/calculator/cashflow': 'Cashflow',
+  '/calculator/cap-rate': 'Cap Rate',
 }
-</style>
+
+const isCalculatorRoute = computed(() => route.path.startsWith('/calculator')) // Check if current route for icon
+const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page title based on current route
+</script>
 
 <template>
   <v-app>
@@ -92,7 +71,7 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
     <v-app-bar app color="primary" style="position: relative" dark>
       <!-- Desktop View -->
       <template v-if="isDesktop">
-        <v-btn icon @click="toggleDrawer" class="me-2">
+        <v-btn icon class="me-2" @click="toggleDrawer">
           <v-icon color="white">mdi-toolbox</v-icon>
         </v-btn>
         <v-app-bar-title>
@@ -127,14 +106,14 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
       app
       :right="!isDesktop"
     >
-      <v-list dense nav v-model="expandedGroups">
+      <v-list v-model="expandedGroups" dense nav>
         <!-- Tools Group -->
         <v-list-group value="calculator" prepend-icon="mdi-calculator">
           <template #activator>
-            <v-list-item-title
-              ><v-icon class="mx-1" size="20">mdi-hammer-wrench</v-icon
-              >Tools</v-list-item-title
-            >
+            <v-list-item-title>
+              <v-icon class="mx-1" size="20">mdi-hammer-wrench</v-icon>
+              Tools
+            </v-list-item-title>
           </template>
           <v-list-item to="/calculator/standard" link @click="closeDrawer">
             <v-list-item-title>Calculator</v-list-item-title>
@@ -175,20 +154,20 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
         <!-- Deal Management Group -->
         <v-list-group>
           <template #activator>
-            <v-list-item-title
-              ><v-icon class="mx-1" size="20">mdi-handshake-outline</v-icon
-              >Deal Management</v-list-item-title
-            >
+            <v-list-item-title>
+              <v-icon class="mx-1" size="20">mdi-handshake-outline</v-icon>
+              Deal Management
+            </v-list-item-title>
           </template>
         </v-list-group>
-         <v-divider class="my-4" />
+        <v-divider class="my-4" />
         <!-- News Group -->
         <v-list-group>
           <template #activator>
-            <v-list-item-title
-              ><v-icon class="mx-1" size="20">mdi-newspaper</v-icon
-              >News</v-list-item-title
-            >
+            <v-list-item-title>
+              <v-icon class="mx-1" size="20">mdi-newspaper</v-icon>
+              News
+            </v-list-item-title>
           </template>
           <!-- RE Market News -->
         </v-list-group>
@@ -196,10 +175,10 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
         <!-- User Group -->
         <v-list-group>
           <template #activator>
-            <v-list-item-title
-              ><v-icon class="mx-1" size="20">mdi-cog-box</v-icon
-              >Settings</v-list-item-title
-            >
+            <v-list-item-title>
+              <v-icon class="mx-1" size="20">mdi-cog-box</v-icon>
+              Settings
+            </v-list-item-title>
           </template>
           <!-- Preferences: Select Default Starting Screen. -->
           <!-- Login / Log Out -->
@@ -210,7 +189,11 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
         <v-list-item>
           <v-list-item-title>Dark Mode</v-list-item-title>
           <template #append>
-            <v-switch v-model="isDarkTheme" inset @change="toggleTheme"></v-switch>
+            <v-switch
+              v-model="isDarkTheme"
+              inset
+              @change="toggleTheme"
+            ></v-switch>
           </template>
         </v-list-item>
       </v-list>
@@ -223,6 +206,26 @@ const pageTitle = computed(() => routeTitles[route.path] || ""); // Compute page
   </v-app>
 </template>
 
+<style scoped>
+@media (max-width: 600px) {
+  .mobile-card {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    z-index: 10;
+    margin: 0 !important;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding-top: 80px !important; /* Adjust for app bar height */
+  }
+}
+</style>
 
 <!-- 🧰 Core Features (Must-Have)
 🔢 1. Deal Calculators

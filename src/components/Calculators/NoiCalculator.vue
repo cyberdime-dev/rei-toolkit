@@ -1,17 +1,17 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue'
 
-const grossIncome = ref(0);
-const otherIncome = ref(0);
+const grossIncome = ref(0)
+const otherIncome = ref(0)
 
-const taxes = ref(0);
-const insurance = ref(0);
-const maintenance = ref(0);
-const management = ref(0);
-const utilities = ref(0);
-const otherExpenses = ref(0);
+const taxes = ref(0)
+const insurance = ref(0)
+const maintenance = ref(0)
+const management = ref(0)
+const utilities = ref(0)
+const otherExpenses = ref(0)
 
-const totalIncome = computed(() => grossIncome.value + otherIncome.value);
+const totalIncome = computed(() => grossIncome.value + otherIncome.value)
 
 const totalExpenses = computed(
   () =>
@@ -21,11 +21,12 @@ const totalExpenses = computed(
     management.value +
     utilities.value +
     otherExpenses.value
-);
+)
 
-const noi = computed(() => totalIncome.value - totalExpenses.value);
+const noi = computed(() => totalIncome.value - totalExpenses.value)
 
-const toUSD = (val) => `$${val.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+const toUSD = val =>
+  `$${val.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
 </script>
 
 <template>
@@ -34,7 +35,8 @@ const toUSD = (val) => `$${val.toLocaleString(undefined, { maximumFractionDigits
     <v-row dense class="mb-2">
       <v-col cols="12" md="6">
         <v-sheet color="success" class="pa-3" rounded>
-          <strong>Net Operating Income (NOI):</strong> {{ toUSD(noi) }}
+          <strong>Net Operating Income (NOI):</strong>
+          {{ toUSD(noi) }}
         </v-sheet>
       </v-col>
     </v-row>
@@ -61,30 +63,40 @@ const toUSD = (val) => `$${val.toLocaleString(undefined, { maximumFractionDigits
         <h3 class="text-h6 mb-2">Operating Expenses</h3>
       </v-col>
 
-      <v-col cols="12" sm="6"
-        ><v-text-field v-model.number="taxes" label="Property Taxes" prefix="$"
-      /></v-col>
-      <v-col cols="12" sm="6"
-        ><v-text-field v-model.number="insurance" label="Insurance" prefix="$"
-      /></v-col>
-      <v-col cols="12" sm="6"
-        ><v-text-field
+      <v-col cols="12" sm="6">
+        <v-text-field
+          v-model.number="taxes"
+          label="Property Taxes"
+          prefix="$"
+        />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field v-model.number="insurance" label="Insurance" prefix="$" />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field
           v-model.number="maintenance"
           label="Maintenance/Repairs"
           prefix="$"
-      /></v-col>
-      <v-col cols="12" sm="6"
-        ><v-text-field v-model.number="management" label="Property Management" prefix="$"
-      /></v-col>
-      <v-col cols="12" sm="6"
-        ><v-text-field v-model.number="utilities" label="Utilities" prefix="$"
-      /></v-col>
-      <v-col cols="12" sm="6"
-        ><v-text-field
+        />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field
+          v-model.number="management"
+          label="Property Management"
+          prefix="$"
+        />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field v-model.number="utilities" label="Utilities" prefix="$" />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field
           v-model.number="otherExpenses"
           label="Other Operating Expenses"
           prefix="$"
-      /></v-col>
+        />
+      </v-col>
     </v-row>
   </v-card>
 </template>

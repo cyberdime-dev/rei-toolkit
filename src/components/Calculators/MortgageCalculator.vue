@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
-import { Line } from "vue-chartjs";
+import { ref, computed } from 'vue'
+import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   Title,
@@ -10,7 +10,7 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
-} from "chart.js";
+} from 'chart.js'
 
 ChartJS.register(
   Title,
@@ -20,39 +20,39 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement
-);
+)
 
 // Inputs
-const homePrice = ref(0);
-const downPayment = ref(0);
-const interestRate = ref(0);
-const loanTerm = ref(30);
-const propertyTax = ref(0);
-const insurance = ref(0);
-const hoa = ref(0);
+const homePrice = ref(0)
+const downPayment = ref(0)
+const interestRate = ref(0)
+const loanTerm = ref(30)
+const propertyTax = ref(0)
+const insurance = ref(0)
+const hoa = ref(0)
 
-const showAmortization = ref(false);
-const showLineChart = ref(false);
+// const showAmortization = ref(false)
+// const showLineChart = ref(false)
 
 // Calculations
-const loanAmount = computed(() => homePrice.value - downPayment.value);
+const loanAmount = computed(() => homePrice.value - downPayment.value)
 
-const monthlyInterest = computed(() => interestRate.value / 100 / 12);
-const numberOfPayments = computed(() => loanTerm.value * 12);
+const monthlyInterest = computed(() => interestRate.value / 100 / 12)
+const numberOfPayments = computed(() => loanTerm.value * 12)
 
 const monthlyPrincipalAndInterest = computed(() => {
-  const P = loanAmount.value;
-  const r = monthlyInterest.value;
-  const n = numberOfPayments.value;
-  if (!P || !r || !n) return 0;
-  const denominator = 1 - Math.pow(1 + r, -n);
-  if (denominator === 0) return 0;
-  return (P * r) / denominator;
-});
+  const P = loanAmount.value
+  const r = monthlyInterest.value
+  const n = numberOfPayments.value
+  if (!P || !r || !n) return 0
+  const denominator = 1 - Math.pow(1 + r, -n)
+  if (denominator === 0) return 0
+  return (P * r) / denominator
+})
 
-const monthlyTax = computed(() => propertyTax.value / 12);
-const monthlyInsurance = computed(() => insurance.value / 12);
-const monthlyOtherCosts = computed(() => hoa.value);
+const monthlyTax = computed(() => propertyTax.value / 12)
+const monthlyInsurance = computed(() => insurance.value / 12)
+const monthlyOtherCosts = computed(() => hoa.value)
 
 const totalMonthlyPayment = computed(
   () =>
@@ -60,80 +60,83 @@ const totalMonthlyPayment = computed(
     monthlyTax.value +
     monthlyInsurance.value +
     monthlyOtherCosts.value
-);
+)
 
 const totalInterest = computed(() => {
   // Only principal & interest
-  return monthlyPrincipalAndInterest.value * numberOfPayments.value - loanAmount.value;
-});
+  return (
+    monthlyPrincipalAndInterest.value * numberOfPayments.value -
+    loanAmount.value
+  )
+})
 
-const toUSD = (val) =>
+const toUSD = val =>
   `$${val.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })}`;
+  })}`
 
 // Amortization Table Calculation
 const amortizationTable = computed(() => {
-  const table = [];
-  let balance = loanAmount.value;
-  const r = monthlyInterest.value;
-  const n = numberOfPayments.value;
-  const monthlyPI = monthlyPrincipalAndInterest.value;
+  const table = []
+  let balance = loanAmount.value
+  const r = monthlyInterest.value
+  const n = numberOfPayments.value
+  const monthlyPI = monthlyPrincipalAndInterest.value
 
   for (let i = 1; i <= n; i++) {
-    const interest = balance * r;
-    const principal = monthlyPI - interest;
+    const interest = balance * r
+    const principal = monthlyPI - interest
     table.push({
       payment: i,
       principal: principal > balance ? balance : principal,
       interest: interest > balance ? balance : interest,
       total: principal + interest,
       balance: balance - principal > 0 ? balance - principal : 0,
-    });
-    balance -= principal;
-    if (balance < 0.01) break;
+    })
+    balance -= principal
+    if (balance < 0.01) break
   }
-  return table;
-});
+  return table
+})
 
 // Line Chart Data for Amortization
 const lineChartData = computed(() => {
-  const labels = amortizationTable.value.map((row) => row.payment);
-  const balances = amortizationTable.value.map((row) => row.balance);
-  const principals = amortizationTable.value.map((row) => row.principal);
-  const interests = amortizationTable.value.map((row) => row.interest);
+  const labels = amortizationTable.value.map(row => row.payment)
+  const balances = amortizationTable.value.map(row => row.balance)
+  const principals = amortizationTable.value.map(row => row.principal)
+  const interests = amortizationTable.value.map(row => row.interest)
 
   return {
     labels,
     datasets: [
       {
-        label: "Balance",
+        label: 'Balance',
         data: balances,
-        borderColor: "#1976D2",
-        backgroundColor: "#1976D2",
+        borderColor: '#1976D2',
+        backgroundColor: '#1976D2',
         fill: false,
         tension: 0.2,
       },
       {
-        label: "Principal Paid",
+        label: 'Principal Paid',
         data: principals,
-        borderColor: "#43A047",
-        backgroundColor: "#43A047",
+        borderColor: '#43A047',
+        backgroundColor: '#43A047',
         fill: false,
         tension: 0.2,
       },
       {
-        label: "Interest Paid",
+        label: 'Interest Paid',
         data: interests,
-        borderColor: "#E53935",
-        backgroundColor: "#E53935",
+        borderColor: '#E53935',
+        backgroundColor: '#E53935',
         fill: false,
         tension: 0.2,
       },
     ],
-  };
-});
+  }
+})
 </script>
 
 <template>
@@ -141,50 +144,62 @@ const lineChartData = computed(() => {
     <v-row dense class="mb-2">
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Payment | PI</strong><br />
+          <strong>Monthly Payment | PI</strong>
+          <br />
           {{ toUSD(monthlyPrincipalAndInterest) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Payment | PITI</strong><br />
+          <strong>Monthly Payment | PITI</strong>
+          <br />
           {{ toUSD(totalMonthlyPayment) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Payment | PITI + Other Costs</strong><br />
+          <strong>Monthly Payment | PITI + Other Costs</strong>
+          <br />
           {{ toUSD(amortizationTable.length ? amortizationTable[0].total : 0) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Principal Payment</strong><br />
-          {{ toUSD(amortizationTable.length ? amortizationTable[0].principal : 0) }}
+          <strong>Monthly Principal Payment</strong>
+          <br />
+          {{
+            toUSD(amortizationTable.length ? amortizationTable[0].principal : 0)
+          }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Monthly Interest Payment</strong><br />
-          {{ toUSD(amortizationTable.length ? amortizationTable[0].interest : 0) }}
+          <strong>Monthly Interest Payment</strong>
+          <br />
+          {{
+            toUSD(amortizationTable.length ? amortizationTable[0].interest : 0)
+          }}
         </v-sheet>
       </v-col>
 
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Total Principal Paid</strong><br />
+          <strong>Total Principal Paid</strong>
+          <br />
           {{ toUSD(loanAmount) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Total Interest Paid</strong><br />
+          <strong>Total Interest Paid</strong>
+          <br />
           {{ toUSD(totalInterest) }}
         </v-sheet>
       </v-col>
       <v-col cols="12" md="4">
         <v-sheet color="info" class="pa-3" rounded>
-          <strong>Total Principal &amp; Interest Paid</strong><br />
+          <strong>Total Principal &amp; Interest Paid</strong>
+          <br />
           {{ toUSD(monthlyPrincipalAndInterest * numberOfPayments) }}
         </v-sheet>
       </v-col>
@@ -195,10 +210,18 @@ const lineChartData = computed(() => {
     <v-row dense>
       <!-- Inputs -->
       <v-col cols="12" sm="6">
-        <v-text-field v-model.number="homePrice" label="Home Price" prefix="$" />
+        <v-text-field
+          v-model.number="homePrice"
+          label="Home Price"
+          prefix="$"
+        />
       </v-col>
       <v-col cols="12" sm="6">
-        <v-text-field v-model.number="downPayment" label="Down Payment" prefix="$" />
+        <v-text-field
+          v-model.number="downPayment"
+          label="Down Payment"
+          prefix="$"
+        />
       </v-col>
       <v-col cols="12" sm="6">
         <v-text-field
@@ -232,7 +255,10 @@ const lineChartData = computed(() => {
         />
       </v-col>
     </v-row>
-    <v-row class="my-4" v-if="loanAmount > 0 && interestRate > 0 && loanTerm > 0">
+    <v-row
+      v-if="loanAmount > 0 && interestRate > 0 && loanTerm > 0"
+      class="my-4"
+    >
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <v-icon size="36">mdi-chevron-double-down</v-icon>
