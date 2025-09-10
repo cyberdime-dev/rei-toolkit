@@ -90,20 +90,21 @@ onUnmounted(() => {
 }
 
 .content-shell {
-  max-width: 980px;
-  margin: 24px auto;
+  /* full-width content shell that aligns with the container padding */
+  width: 100%;
+  margin: 0;
   /* Make shell transparent so inner cards render directly on the app surface */
   background: transparent;
   border-radius: 0;
   box-shadow: none;
-  padding: 12px;
+  padding: 18px 24px;
 }
 
 @media (max-width: 768px) {
   .content-shell {
-    margin: 12px;
-    border-radius: 12px;
-    padding: 14px;
+    margin: 8px;
+    border-radius: 0;
+    padding: 12px;
   }
 }
 </style>
