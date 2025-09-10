@@ -4,7 +4,8 @@ import AppHeader from './components/Layout/AppHeader.vue'
 import AppNavigation from './components/Layout/AppNavigation.vue'
 import '@mdi/font/css/materialdesignicons.css'
 
-const drawer = ref(false)
+// Start drawer open when the app loads on desktop-sized screens
+const drawer = ref(window.innerWidth >= 960)
 const isDesktop = ref(window.innerWidth >= 960)
 
 function handleResize() {
