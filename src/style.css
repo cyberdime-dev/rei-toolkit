@@ -58,6 +58,13 @@ button:focus-visible {
   padding: 2em;
 }
 
+/* Make Vuetify v-cards flat to match app surface */
+.v-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--v-theme-surface, transparent) !important;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

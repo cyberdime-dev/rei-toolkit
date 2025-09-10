@@ -123,10 +123,23 @@ todo.md
 *.tmp
 
 # Package manager lock files (uncomment if you want to ignore them)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS specific
+# Windows hibernation file
+hiberfil.sys
+# Linux swap file
+swapfile
 
 # Local development
 .local/
 local/
+
+# Vite / build cache
+.vite/
+.cache/vite/
+
+# System temp
+/tmp/
