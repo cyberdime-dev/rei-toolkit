@@ -92,12 +92,11 @@ onUnmounted(() => {
 .content-shell {
   max-width: 980px;
   margin: 24px auto;
-  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.98));
+  /* Make shell transparent so inner cards render directly on the app surface */
+  background: transparent;
   border-radius: 0;
   box-shadow: none;
-  padding: 20px;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  padding: 12px;
 }
 
 @media (max-width: 768px) {
