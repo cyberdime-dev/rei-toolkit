@@ -1,10 +1,6 @@
 # Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+jspm_packages/
 
 # Build outputs
 dist/
@@ -36,14 +32,8 @@ coverage/
 # nyc test coverage
 .nyc_output/
 
-# Dependency directories
-jspm_packages/
-
 # Optional npm cache directory
 .npm
-
-# Optional eslint cache
-.eslintcache
 
 # Optional REPL history
 .node_repl_history
@@ -77,15 +67,7 @@ tmp/
 temp/
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-.idea/
-*.swp
-*.swo
-*~
+# (Moved to IDE section above)
 
 # OS generated files
 .DS_Store
@@ -102,12 +84,25 @@ Thumbs.db
 firebase-debug.log
 firebase-debug.*.log
 
-# Testing
+# Testing and coverage
 coverage/
 .nyc_output/
 test-results/
 playwright-report/
 test-results.xml
+junit.xml
+.coverage
+htmlcov/
+.pytest_cache/
+.vitest/
+
+# Performance and profiling
+.clinic/
+isolate-*.log
+v8.log
+*.heapprofile
+*.heapsnapshot
+*.cpuprofile
 
 # Misc
 *.suo
@@ -122,16 +117,32 @@ todo.md
 *.bak
 *.tmp
 
-# Package manager lock files (uncomment if you want to ignore them)
+# Package manager lock files
 package-lock.json
-yarn.lock
+yarn.lock  
 pnpm-lock.yaml
 
 # OS specific
-# Windows hibernation file
+# Windows
+*.lnk
+Desktop.ini
+ehthumbs_vista.db
 hiberfil.sys
-# Linux swap file
+pagefile.sys
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
 swapfile
+# macOS
+.AppleDouble
+.LSOverride
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
 # Local development
 .local/
@@ -140,6 +151,53 @@ local/
 # Vite / build cache
 .vite/
 .cache/vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Modern bundler caches
+.turbo/
+.vercel/
+.netlify/
+
+# IDE and editor files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Security and environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.pem
+*.key
+secrets.json
 
 # System temp
 /tmp/
+
+# Development and debugging
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.wireit/
+.history/
+
+# AI and ML cache
+.huggingface/
+.transformers_cache/
+
+# Deployment artifacts
+deploy.log
+deployment-config.local.json
