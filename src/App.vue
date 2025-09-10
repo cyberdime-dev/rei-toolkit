@@ -4,13 +4,27 @@ import AppHeader from './components/Layout/AppHeader.vue'
 import AppNavigation from './components/Layout/AppNavigation.vue'
 import '@mdi/font/css/materialdesignicons.css'
 
-// Start drawer open when the app loads on desktop-sized screens
-const drawer = ref(window.innerWidth >= 960)
+// Persist drawer open/closed preference in localStorage.
+const stored = localStorage.getItem('drawer')
+const drawer = ref(stored !== null ? stored === 'true' : window.innerWidth >= 960)
 const isDesktop = ref(window.innerWidth >= 960)
+
+// Save changes to localStorage
+import { watch } from 'vue'
+watch(drawer, (val) => {
+  try {
+    localStorage.setItem('drawer', val ? 'true' : 'false')
+  } catch {
+    // ignore storage errors (private mode, quotas)
+  }
+})
 
 function handleResize() {
   isDesktop.value = window.innerWidth >= 960
-  if (isDesktop.value) drawer.value = true
+  // If user has not persisted a preference, default to open on desktop and closed on mobile
+  if (localStorage.getItem('drawer') === null) {
+    drawer.value = isDesktop.value
+  }
 }
 
 function closeDrawer() {
