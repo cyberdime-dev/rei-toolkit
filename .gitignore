@@ -112,7 +112,6 @@ v8.log
 *.sw?
 
 # Project specific
-todo.md
 *.backup
 *.bak
 *.tmp
