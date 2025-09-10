@@ -3,10 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc && vite build",
     "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
     "format": "prettier --write src/",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs",
@@ -18,7 +28,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -30,19 +41,25 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.1",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vitest/ui": "^3.2.4",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.8.1",
     "deepmerge": "^4.3.1",
     "eslint": "^9.35.0",
     "eslint-plugin-vue": "^10.4.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.0",
     "sass-loader": "^16.0.5",
+    "typescript": "^5.9.2",
     "vite": "^6.3.5",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.0.6"
   }
 }
