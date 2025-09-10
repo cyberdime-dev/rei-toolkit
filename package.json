@@ -11,7 +11,14 @@
     "format": "prettier --write src/",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs",
     "format:check": "prettier --check src/",
-    "analyze": "npm run build && echo 'Bundle analysis available at dist/stats.html'"
+    "analyze": "npm run build && echo 'Bundle analysis available at dist/stats.html'",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -22,15 +29,20 @@
     "vuetify": "^3.8.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
     "@vitejs/plugin-vue": "^5.2.3",
+    "@vitest/ui": "^3.2.4",
     "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/test-utils": "^2.4.6",
     "deepmerge": "^4.3.1",
     "eslint": "^9.35.0",
     "eslint-plugin-vue": "^10.4.0",
+    "jsdom": "^26.1.0",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.0",
     "sass-loader": "^16.0.5",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
   }
 }
