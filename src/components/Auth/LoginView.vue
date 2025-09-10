@@ -188,9 +188,9 @@
                     start
                     size="small"
                   >
-                    mdi-timer-sand
+                    mdi-rocket-launch
                   </v-icon>
-                  Try for free (30 days)
+                  Skip to Free Version
                 </v-btn>
               </div>
             </div>

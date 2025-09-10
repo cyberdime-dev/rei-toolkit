@@ -29,7 +29,6 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   EmailAuthProvider,
-  connectAuthEmulator,
 } from 'firebase/auth'
 import { doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { firebaseApp, firestore } from './firebase.js'
@@ -86,18 +85,7 @@ export class FirebaseAuthService {
     this.userProfile = null
     this.authStateListeners = []
     
-    // Setup emulator if in development
-    if (import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true' && import.meta.env.DEV) {
-      const emulatorHost = import.meta.env.VITE_FIREBASE_EMULATOR_HOST || 'localhost'
-      const emulatorPort = import.meta.env.VITE_AUTH_EMULATOR_PORT || 9099
-      
-      try {
-        connectAuthEmulator(this.auth, `http://${emulatorHost}:${emulatorPort}`)
-        console.log('🔥 Connected to Firebase Auth emulator')
-      } catch (error) {
-        console.warn('Failed to connect to Auth emulator:', error)
-      }
-    }
+    // Emulator connection is handled in firebase.js
     
     // Setup auth state listener
     this.setupAuthStateListener()

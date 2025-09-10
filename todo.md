@@ -2,16 +2,18 @@
 
 ## 🔒 Security & Dependencies
 
-### C### 💾 LocalStorage Optimization & Migration
+### Critical Security Issues
+- [x] **Fix Vite security vulnerability** - Update Vite from 6.3.5 to 6.3.6+ to address middleware file serving vulnerability (GHSA-g4jq-h2w9-997c)
+- [x] **Fix Vite HTML file serving vulnerability** - Address server.fs settings not applied to HTML files (GHSA-jqfw-vq24-v9c3)
+
+### 💾 LocalStorage Optimization & Migration
 - [x] **Audit current localStorage usage** - Review all components using localStorage for data persistence
 - [x] **Create unified storage service** - Abstract localStorage with error handling, validation, and fallbacks
 - [x] **Add storage quota monitoring** - Implement storage space checks and cleanup routines
 - [x] **Create data migration utilities** - Build tools to migrate localStorage data to Firebase when users sign up
 - [x] **Add data validation layer** - Ensure data integrity with schema validation before storage
 - [x] **Implement storage compression** - Optimize storage space usage for large datasets
-- [x] **Add storage error recovery** - Handle localStorage failures gracefully with user feedbackIssues
-- [x] **Fix Vite security vulnerability** - Update Vite from 6.3.5 to 6.3.6+ to address middleware file serving vulnerability (GHSA-g4jq-h2w9-997c)
-- [x] **Fix Vite HTML file serving vulnerability** - Address server.fs settings not applied to HTML files (GHSA-jqfw-vq24-v9c3)
+- [x] **Add storage error recovery** - Handle localStorage failures gracefully with user feedback
 
 ### Dependency Updates
 - [x] **Update @vitejs/plugin-vue** from 5.2.4 to 6.0.1 (major version update)
@@ -33,6 +35,23 @@
 - [x] **Implement dynamic imports** - Use import() for route-based code splitting
 - [ ] **Optimize Material Design Icons** - Consider using tree-shaking for icons (currently 2.6MB+ of icon fonts) - *Reverted due to compatibility issues*
 - [x] **Add bundle analyzer** - Implement webpack-bundle-analyzer or similar to identify optimization opportunities
+
+## 💰 Freemium Business Model Implementation
+
+### Free/Local Mode Enhancements
+- [x] **Update Login page "Try for free" button to "Skip to Free Version" button** - Make the free tier more prominent and appealing
+- [ ] **Add "local mode" branding** - Clear indication of current mode
+- [ ] **Enhance export capabilities** - Professional PDF reports for free users
+- [ ] **Add upgrade prompts** - Strategic CTAs for premium features
+- [ ] **Improve offline experience** - Better offline indicators and capabilities
+
+### Premium Mode Development  
+- [ ] **Integrate payment system** - Stripe/Paddle for subscriptions
+- [ ] **Add subscription management** - User dashboard for billing
+- [ ] **Implement feature gating** - Clean premium feature restrictions
+- [ ] **Add collaboration features** - Deal sharing and team workspaces
+- [ ] **Build portfolio analytics** - Advanced reporting and insights
+- [ ] **Add market data integration** - Real estate market data APIs
 
 ## 🧪 Testing & Quality
 
@@ -58,10 +77,6 @@
 - [x] **Fix authentication method compatibility** - Resolved TypeError issues with auth service methods
 - [x] **Add trial mode support** - Anonymous authentication with limited functionality
 - [x] **Add OAuth provider UI** - Google and GitHub sign-in buttons
-- [x] **Add component testing** - Test calculator components for accuracy
-- [x] **Add integration testing** - Test routing and navigation
-- [x] **Add E2E testing** - Consider Cypress or Playwright for full user flows
-- [ ] **Remove debug logging from MortgageCalculator.vue** - Clean up console.log statements added for troubleshooting form data binding and calculation issues
 
 ### Code Quality
 - [x] **Add ESLint configuration** - Comprehensive ESLint setup with Vue 3 and security rules
@@ -303,20 +318,5 @@
 ---
 
 *Last updated: September 10, 2025*
-*Total items: 105 (45 completed, 60 remaining)*
+*Total items: 117 (45 completed, 72 remaining)*
 
-## 💰 Freemium Business Model Implementation
-
-### Free/Local Mode Enhancements
-- [ ] **Add "local mode" branding** - Clear indication of current mode
-- [ ] **Enhance export capabilities** - Professional PDF reports for free users
-- [ ] **Add upgrade prompts** - Strategic CTAs for premium features
-- [ ] **Improve offline experience** - Better offline indicators and capabilities
-
-### Premium Mode Development  
-- [ ] **Integrate payment system** - Stripe/Paddle for subscriptions
-- [ ] **Add subscription management** - User dashboard for billing
-- [ ] **Implement feature gating** - Clean premium feature restrictions
-- [ ] **Add collaboration features** - Deal sharing and team workspaces
-- [ ] **Build portfolio analytics** - Advanced reporting and insights
-- [ ] **Add market data integration** - Real estate market data APIs

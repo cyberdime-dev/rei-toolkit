@@ -167,7 +167,7 @@
                   class="text-primary text-decoration-none"
                   @click.prevent="startTrial"
                 >
-                  Start free trial
+                  Skip to free version
                 </a>
               </div>
             </div>

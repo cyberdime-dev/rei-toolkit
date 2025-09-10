@@ -65,19 +65,29 @@ if (!isDevelopment && typeof window !== 'undefined') {
 /**
  * Connect to Firebase Emulators in development
  */
-if (isDevelopment && useEmulators) {
-  try {
-    // Connect to Firestore emulator (port 8180 from firebase.json)
-    connectFirestoreEmulator(db, 'localhost', 8180)
-    console.log('🔥 Connected to Firestore emulator on port 8180')
+function connectToEmulators() {
+  if (isDevelopment && useEmulators) {
+    try {
+      console.log('🔥 Connecting to Firebase emulators...')
+      
+      // Connect to Firestore emulator (port 8180 from firebase.json)
+      connectFirestoreEmulator(db, 'localhost', 8180)
+      console.log('✅ Connected to Firestore emulator on port 8180')
 
-    // Connect to Auth emulator (port 9199 from firebase.json)
-    connectAuthEmulator(auth, 'http://localhost:9199', { disableWarnings: true })
-    console.log('🔥 Connected to Auth emulator on port 9199')
-  } catch (error) {
-    console.warn('Failed to connect to Firebase emulators:', error)
+      // Connect to Auth emulator (port 9199 from firebase.json)  
+      connectAuthEmulator(auth, 'http://localhost:9199', { disableWarnings: true })
+      console.log('✅ Connected to Auth emulator on port 9199')
+      
+    } catch (error) {
+      console.error('❌ Failed to connect to Firebase emulators:', error.message)
+      // Continue execution even if emulator connection fails
+      console.warn('⚠️ Continuing with production Firebase configuration')
+    }
   }
 }
+
+// Connect to emulators immediately
+connectToEmulators()
 
 /**
  * Firebase services configuration
