@@ -49,19 +49,19 @@ onUnmounted(() => {
 // Dynamic page title based on route
 const route = useRoute()
 const routeTitles = {
-  '/calculator/standard': 'Calculator',
-  '/calculator/mortgage': 'Mortgage',
-  '/calculator/fix-flip': 'Fix & Flip',
-  '/calculator/buy-hold': 'Buy & Hold',
-  '/calculator/brrr': 'BRRR',
-  '/calculator/wholesale': 'Wholesale',
-  '/calculator/noi': 'Net Operating Income',
-  '/calculator/cash-on-cash': 'Cash-on-Cash',
-  '/calculator/cashflow': 'Cashflow',
-  '/calculator/cap-rate': 'Cap Rate',
+  '/mdi-calculator/standard': 'Calculator',
+  '/mdi-calculator/mortgage': 'Mortgage',
+  '/mdi-calculator/fix-flip': 'Fix & Flip',
+  '/mdi-calculator/buy-hold': 'Buy & Hold',
+  '/mdi-calculator/brrr': 'BRRR',
+  '/mdi-calculator/wholesale': 'Wholesale',
+  '/mdi-calculator/noi': 'Net Operating Income',
+  '/mdi-calculator/cash-on-cash': 'Cash-on-Cash',
+  '/mdi-calculator/cashflow': 'Cashflow',
+  '/mdi-calculator/cap-rate': 'Cap Rate',
 }
 
-const isCalculatorRoute = computed(() => route.path.startsWith('/calculator')) // Check if current route for icon
+const isCalculatorRoute = computed(() => route.path.startsWith('/mdi-calculator')) // Check if current route for icon
 const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page title based on current route
 </script>
 
@@ -108,7 +108,7 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
     >
       <v-list v-model="expandedGroups" dense nav>
         <!-- Tools Group -->
-        <v-list-group value="calculator" prepend-icon="mdi-calculator">
+        <v-list-group value="mdi-calculator" prepend-icon="mdi-mdi-calculator">
           <template #activator>
             <v-list-item-title>
               <v-icon class="mx-1" size="20">mdi-hammer-wrench</v-icon>

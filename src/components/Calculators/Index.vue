@@ -1,5 +1,5 @@
 <script setup>
-import '@mdi/font/css/materialdesignicons.css'
+// Icons are now tree-shaken and imported via Vuetify configuration
 </script>
 
 <template>

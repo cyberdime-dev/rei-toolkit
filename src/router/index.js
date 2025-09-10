@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import StandardCalculator from '@/components/Calculators/StandardCalculator.vue'
-import Mortgage from '@/components/Calculators/MortgageCalculator.vue'
-import FixAndFlip from '@/components/Calculators/FixAndFlipCalculator.vue'
-import BuyAndHold from '@/components/Calculators/BuyAndHoldCalculator.vue'
-import Brrr from '@/components/Calculators/BrrrCalculator.vue'
-import Wholesale from '@/components/Calculators/WholesaleCalculator.vue'
-import NOI from '@/components/Calculators/NoiCalculator.vue'
-import CashOnCash from '@/components/Calculators/CashOnCashCalculator.vue'
-import Cashflow from '@/components/Calculators/CashflowCalculator.vue'
-import CapRate from '@/components/Calculators/CapRateCalculator.vue'
-import NotFound from '@/components/NotFound.vue'
+
+// Dynamic imports for code splitting
+const StandardCalculator = () => import('@/components/Calculators/StandardCalculator.vue')
+const Mortgage = () => import('@/components/Calculators/MortgageCalculator.vue')
+const FixAndFlip = () => import('@/components/Calculators/FixAndFlipCalculator.vue')
+const BuyAndHold = () => import('@/components/Calculators/BuyAndHoldCalculator.vue')
+const Brrr = () => import('@/components/Calculators/BrrrCalculator.vue')
+const Wholesale = () => import('@/components/Calculators/WholesaleCalculator.vue')
+const NOI = () => import('@/components/Calculators/NoiCalculator.vue')
+const CashOnCash = () => import('@/components/Calculators/CashOnCashCalculator.vue')
+const Cashflow = () => import('@/components/Calculators/CashflowCalculator.vue')
+const CapRate = () => import('@/components/Calculators/CapRateCalculator.vue')
+const NotFound = () => import('@/components/NotFound.vue')
 
 const routes = [
   { path: '/', redirect: '/calculator/standard' },

@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
     "format": "prettier --write src/",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs",
-    "format:check": "prettier --check src/"
+    "format:check": "prettier --check src/",
+    "analyze": "npm run build && echo 'Bundle analysis available at dist/stats.html'"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -27,6 +28,7 @@
     "eslint": "^9.35.0",
     "eslint-plugin-vue": "^10.4.0",
     "prettier": "^3.6.2",
+    "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.0",
     "sass-loader": "^16.0.5",
     "vite": "^6.3.5"
