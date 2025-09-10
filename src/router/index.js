@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authGuard } from '@/services/authGuard.js'
 
 // Dynamic imports for code splitting
+const Home = () => import('@/views/Home.vue')
+const LoginView = () => import('@/components/Auth/LoginView.vue')
+const RegisterView = () => import('@/components/Auth/RegisterView.vue')
 const DealList = () => import('@/components/DealManagement/DealList.vue')
 const NewsList = () => import('@/components/News/NewsList.vue')
 const Settings = () => import('@/components/Settings/Settings.vue')
@@ -22,32 +26,141 @@ const CapRate = () => import('@/components/Calculators/CapRateCalculator.vue')
 const NotFound = () => import('@/components/NotFound.vue')
 
 const routes = [
-  { path: '/', redirect: '/calculator/standard' },
-  { path: '/calculator', redirect: '/calculator/standard' },
+  // Public Routes
+  { 
+    path: '/', 
+    name: 'Home',
+    component: Home,
+    meta: { requiresAuth: false },
+  },
+  { 
+    path: '/login', 
+    name: 'Login',
+    component: LoginView,
+    meta: { requiresAuth: false, redirectIfAuth: true },
+  },
+  { 
+    path: '/register', 
+    name: 'Register',
+    component: RegisterView,
+    meta: { requiresAuth: false, redirectIfAuth: true },
+  },
 
-  // Core Features
-  { path: '/deals', component: DealList },
-  { path: '/deals/new', component: DealList }, // Uses same component, form opens automatically
-  { path: '/news', component: NewsList },
-  { path: '/settings', component: Settings },
+  // Protected Routes - Default Dashboard
+  { 
+    path: '/dashboard', 
+    redirect: '/calculator/standard',
+    meta: { requiresAuth: true },
+  },
+  { 
+    path: '/calculator', 
+    redirect: '/calculator/standard',
+    meta: { requiresAuth: true },
+  },
 
-  // Calculators
-  { path: '/calculator/standard', component: StandardCalculator },
-  { path: '/calculator/mortgage', component: Mortgage },
-  { path: '/calculator/fix-flip', component: FixAndFlip },
-  { path: '/calculator/buy-hold', component: BuyAndHold },
-  { path: '/calculator/brrr', component: Brrr },
-  { path: '/calculator/wholesale', component: Wholesale },
-  { path: '/calculator/noi', component: NOI },
-  { path: '/calculator/cash-on-cash', component: CashOnCash },
-  { path: '/calculator/cashflow', component: Cashflow },
-  { path: '/calculator/cap-rate', component: CapRate },
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+  // Core Features - Protected
+  { 
+    path: '/deals', 
+    name: 'Deals',
+    component: DealList,
+    meta: { requiresAuth: true, requiredPermissions: ['deals:read'] },
+  },
+  { 
+    path: '/deals/new', 
+    name: 'NewDeal',
+    component: DealList,
+    meta: { requiresAuth: true, requiredPermissions: ['deals:create'] },
+  },
+  { 
+    path: '/news', 
+    name: 'News',
+    component: NewsList,
+    meta: { requiresAuth: true, requiredPermissions: ['news:read'] },
+  },
+  { 
+    path: '/settings', 
+    name: 'Settings',
+    component: Settings,
+    meta: { requiresAuth: true },
+  },
+
+  // Calculators - Some have trial access
+  { 
+    path: '/calculator/standard', 
+    name: 'StandardCalculator',
+    component: StandardCalculator,
+    meta: { requiresAuth: true, allowTrial: true },
+  },
+  { 
+    path: '/calculator/mortgage', 
+    name: 'MortgageCalculator',
+    component: Mortgage,
+    meta: { requiresAuth: true, allowTrial: true },
+  },
+  { 
+    path: '/calculator/fix-flip', 
+    name: 'FixAndFlipCalculator',
+    component: FixAndFlip,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/buy-hold', 
+    name: 'BuyAndHoldCalculator',
+    component: BuyAndHold,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/brrr', 
+    name: 'BrrrCalculator',
+    component: Brrr,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/wholesale', 
+    name: 'WholesaleCalculator',
+    component: Wholesale,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/noi', 
+    name: 'NOICalculator',
+    component: NOI,
+    meta: { requiresAuth: true, allowTrial: true },
+  },
+  { 
+    path: '/calculator/cash-on-cash', 
+    name: 'CashOnCashCalculator',
+    component: CashOnCash,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/cashflow', 
+    name: 'CashflowCalculator',
+    component: Cashflow,
+    meta: { requiresAuth: true, requiredPermissions: ['calculator:advanced'] },
+  },
+  { 
+    path: '/calculator/cap-rate', 
+    name: 'CapRateCalculator',
+    component: CapRate,
+    meta: { requiresAuth: true, allowTrial: true },
+  },
+
+  // 404 Catch All
+  { 
+    path: '/:pathMatch(.*)*', 
+    name: 'NotFound', 
+    component: NotFound,
+    meta: { requiresAuth: false },
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+// Apply authentication guards
+router.beforeEach(authGuard.beforeEach)
 
 export default router

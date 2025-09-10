@@ -34,11 +34,13 @@ const useEmulators = import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true'
  * Initialize Firebase App
  */
 export const app = initializeApp(firebaseConfig)
+export const firebaseApp = app // Alias for compatibility
 
 /**
  * Initialize Firestore
  */
 export const db = getFirestore(app)
+export const firestore = db // Alias for compatibility
 
 /**
  * Initialize Firebase Auth

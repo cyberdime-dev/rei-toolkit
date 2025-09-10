@@ -1,3 +1,19 @@
+# ============================================================================
+# REI Toolkit - Production Ready .gitignore
+# ============================================================================
+# This file excludes sensitive data and private configurations from git
+# 
+# Security Coverage:
+# ✅ Environment variables (.env, .env.local, etc.)
+# ✅ Firebase credentials and service accounts  
+# ✅ API keys and authentication tokens
+# ✅ SSL certificates and private keys
+# ✅ OAuth configuration files
+# ✅ User data exports and backups
+# ✅ Development artifacts and caches
+# ✅ OS-specific files and IDE configurations
+# ============================================================================
+
 # Dependencies
 node_modules/
 jspm_packages/
@@ -83,6 +99,35 @@ Thumbs.db
 .firebaserc
 firebase-debug.log
 firebase-debug.*.log
+firebase-export-*.json
+firebase-export-*
+firebase-emulator-data/
+emulator-data/
+firebase-adminsdk-*.json
+service-account-*.json
+serviceAccountKey.json
+google-services.json
+GoogleService-Info.plist
+
+# Firebase functions (if added later)
+functions/node_modules/
+functions/lib/
+functions/.env
+functions/.env.local
+
+# API Keys and Service Accounts
+**/api-keys.json
+**/service-account*.json
+**/google-cloud-key*.json
+**/firebase-adminsdk*.json
+**/gcp-credentials*.json
+**/*-private-key.json
+**/*-service-account.json
+**/credentials.json
+**/.credentials/
+**/keys/
+api-config.local.js
+webhook-secrets.json
 
 # Testing and coverage
 coverage/
@@ -115,6 +160,15 @@ v8.log
 *.backup
 *.bak
 *.tmp
+*.old
+*.orig
+*.rej
+package.json.backup
+package.json.bak
+eslint.config.js.bak
+vite.config.js.bak
+*-backup.*
+*-old.*
 
 # Package manager lock files
 package-lock.json
@@ -179,9 +233,34 @@ vite.config.ts.timestamp-*
 .env.test.local
 .env.production.local
 .env.*.local
+.env.production
+.env.staging
 *.pem
 *.key
+*.cert
+*.crt
+*.p12
+*.pfx
 secrets.json
+auth-config.json
+oauth-credentials.json
+jwt-secret.txt
+private-key.json
+api-keys.json
+config/secrets.js
+config/production.json
+config/staging.json
+
+# Authentication & OAuth
+oauth-callback.html
+.oauth/
+.auth/
+auth-tokens.json
+refresh-tokens.json
+session-keys.json
+users.json
+user-export.json
+firebase-users-export.json
 
 # System temp
 /tmp/
@@ -200,3 +279,22 @@ secrets.json
 # Deployment artifacts
 deploy.log
 deployment-config.local.json
+deploy-config.local.js
+.vercel
+.netlify
+.serverless/
+.terraform/
+terraform.tfstate*
+terraform.tfvars
+ansible-vault-pass.txt
+kubernetes-secrets.yml
+docker-compose.override.yml
+Dockerfile.local
+
+# Production builds and assets
+*.sourcemap
+source-maps/
+.build-cache/
+build-stats.json
+bundle-analyzer-report.html
+lighthouse-report.html
