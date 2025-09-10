@@ -161,6 +161,6 @@ const router = createRouter({
 })
 
 // Apply authentication guards
-router.beforeEach(authGuard.beforeEach)
+router.beforeEach(authGuard.createRouterGuard())
 
 export default router

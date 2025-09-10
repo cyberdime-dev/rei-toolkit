@@ -17,9 +17,9 @@ import { authService } from './authService.js'
  */
 const GUARD_CONFIG = {
   // Redirect routes
-  LOGIN_ROUTE: '/auth/login',
-  TRIAL_ROUTE: '/auth/trial',
-  UPGRADE_ROUTE: '/auth/upgrade',
+  LOGIN_ROUTE: '/login',
+  TRIAL_ROUTE: '/login',
+  UPGRADE_ROUTE: '/login',
   HOME_ROUTE: '/',
   
   // Protected routes that require authentication
@@ -28,6 +28,8 @@ const GUARD_CONFIG = {
     '/settings',
     '/profile',
     '/export',
+    '/calculator',
+    '/dashboard',
   ],
   
   // Routes that require full account (not trial)
@@ -39,9 +41,9 @@ const GUARD_CONFIG = {
   
   // Routes only for unauthenticated users
   AUTH_ONLY_ROUTES: [
-    '/auth/login',
-    '/auth/register',
-    '/auth/forgot-password',
+    '/login',
+    '/register',
+    '/forgot-password',
   ],
   
   // Public routes accessible to everyone
@@ -65,7 +67,7 @@ export class AuthGuardService {
   /**
    * Check if user can access a route
    */
-  canAccess(to) {
+  canAccess(to, from = null) {
     const user = this.authService.getCurrentUser()
     const userProfile = this.authService.getUserProfile()
     const isAuthenticated = this.authService.isAuthenticated()

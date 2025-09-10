@@ -67,17 +67,13 @@ if (!isDevelopment && typeof window !== 'undefined') {
  */
 if (isDevelopment && useEmulators) {
   try {
-    // Connect to Firestore emulator
-    if (!db._delegate._databaseId.database.includes('localhost')) {
-      connectFirestoreEmulator(db, 'localhost', 8080)
-      console.log('Connected to Firestore emulator')
-    }
+    // Connect to Firestore emulator (port 8180 from firebase.json)
+    connectFirestoreEmulator(db, 'localhost', 8180)
+    console.log('🔥 Connected to Firestore emulator on port 8180')
 
-    // Connect to Auth emulator
-    if (!auth.config.emulator) {
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
-      console.log('Connected to Auth emulator')
-    }
+    // Connect to Auth emulator (port 9199 from firebase.json)
+    connectAuthEmulator(auth, 'http://localhost:9199', { disableWarnings: true })
+    console.log('🔥 Connected to Auth emulator on port 9199')
   } catch (error) {
     console.warn('Failed to connect to Firebase emulators:', error)
   }
