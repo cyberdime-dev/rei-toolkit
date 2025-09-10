@@ -1,0 +1,99 @@
+// Firestore Security Rules for REI Toolkit
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users can only access their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // User's deals subcollection
+      match /deals/{dealId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // User's calculations subcollection
+      match /calculations/{calculationId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // User's preferences subcollection
+      match /preferences/{preferenceId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Shared/public data (if any in the future)
+    match /public/{document=**} {
+      allow read: if true;
+      allow write: if false; // Only allow writes through admin/cloud functions
+    }
+    
+    // Validation functions
+    function isValidDeal(deal) {
+      return deal.keys().hasAll(['title', 'propertyType', 'createdAt', 'updatedAt']) &&
+             deal.title is string &&
+             deal.title.size() > 0 &&
+             deal.propertyType is string &&
+             deal.createdAt is timestamp &&
+             deal.updatedAt is timestamp;
+    }
+    
+    function isValidCalculation(calculation) {
+      return calculation.keys().hasAll(['type', 'inputs', 'results', 'timestamp']) &&
+             calculation.type is string &&
+             calculation.inputs is map &&
+             calculation.results is map &&
+             calculation.timestamp is timestamp;
+    }
+    
+    function isValidUser(user) {
+      return user.keys().hasAll(['email', 'createdAt', 'lastLoginAt']) &&
+             user.email is string &&
+             user.email.matches('.*@.*') &&
+             user.createdAt is timestamp &&
+             user.lastLoginAt is timestamp;
+    }
+    
+    // Additional validation for specific operations
+    match /users/{userId}/deals/{dealId} {
+      allow create: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       isValidDeal(request.resource.data) &&
+                       request.resource.data.userId == userId;
+      
+      allow update: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       isValidDeal(request.resource.data) &&
+                       request.resource.data.userId == userId &&
+                       resource.data.userId == userId;
+      
+      allow delete: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       resource.data.userId == userId;
+    }
+    
+    match /users/{userId}/calculations/{calculationId} {
+      allow create: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       isValidCalculation(request.resource.data) &&
+                       request.resource.data.userId == userId;
+      
+      allow update: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       isValidCalculation(request.resource.data) &&
+                       request.resource.data.userId == userId &&
+                       resource.data.userId == userId;
+      
+      allow delete: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       resource.data.userId == userId;
+    }
+    
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

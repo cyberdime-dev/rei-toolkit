@@ -200,3 +200,6 @@ secrets.json
 # Deployment artifacts
 deploy.log
 deployment-config.local.json
+
+# Implementation documentation
+docs/firebase-implementation-summary.md
