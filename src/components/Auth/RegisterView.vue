@@ -403,7 +403,7 @@ export default {
         const result = await authService.startTrialMode()
         
         if (result.success) {
-          showSnackbar('Trial mode started! Explore the app with limited features.')
+          showSnackbar('Free mode started! Enjoy unlimited local features.')
           router.push('/dashboard')
         } else {
           showSnackbar(result.error, 'error')

@@ -84,18 +84,18 @@ const routes = [
     meta: { requiresAuth: true },
   },
 
-  // Calculators - Some have trial access
+  // Calculators - Some have free access
   { 
     path: '/calculator/standard', 
     name: 'StandardCalculator',
     component: StandardCalculator,
-    meta: { requiresAuth: true, allowTrial: true },
+    meta: { requiresAuth: true, allowFree: true },
   },
   { 
     path: '/calculator/mortgage', 
     name: 'MortgageCalculator',
     component: Mortgage,
-    meta: { requiresAuth: true, allowTrial: true },
+    meta: { requiresAuth: true, allowFree: true },
   },
   { 
     path: '/calculator/fix-flip', 
@@ -125,7 +125,7 @@ const routes = [
     path: '/calculator/noi', 
     name: 'NOICalculator',
     component: NOI,
-    meta: { requiresAuth: true, allowTrial: true },
+    meta: { requiresAuth: true, allowFree: true },
   },
   { 
     path: '/calculator/cash-on-cash', 
@@ -143,7 +143,7 @@ const routes = [
     path: '/calculator/cap-rate', 
     name: 'CapRateCalculator',
     component: CapRate,
-    meta: { requiresAuth: true, allowTrial: true },
+    meta: { requiresAuth: true, allowFree: true },
   },
 
   // 404 Catch All

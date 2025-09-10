@@ -4,7 +4,7 @@
  * Provides route protection and role-based access control:
  * - Route guards for authenticated/unauthenticated access
  * - Role-based permission checks
- * - Trial user limitations
+ * - Free user limitations
  * - Redirect logic for authentication flows
  */
 
@@ -18,7 +18,7 @@ import { authService } from './authService.js'
 const GUARD_CONFIG = {
   // Redirect routes
   LOGIN_ROUTE: '/login',
-  TRIAL_ROUTE: '/login',
+  FREE_ROUTE: '/login',
   UPGRADE_ROUTE: '/login',
   HOME_ROUTE: '/',
   
@@ -32,8 +32,8 @@ const GUARD_CONFIG = {
     '/dashboard',
   ],
   
-  // Routes that require full account (not trial)
-  PREMIUM_ROUTES: [
+  // Routes that require full account (not free/anonymous)
+  PREMIUM_ONLY_ROUTES: [
     '/export',
     '/advanced',
     '/integrations',
@@ -67,18 +67,20 @@ export class AuthGuardService {
   /**
    * Check if user can access a route
    */
-  canAccess(to, from = null) {
+  canAccess(to) {
     const user = this.authService.getCurrentUser()
     const userProfile = this.authService.getUserProfile()
     const isAuthenticated = this.authService.isAuthenticated()
-    const isTrialUser = this.authService.isTrialUser()
+    const isFreeUser = this.authService.isFreeUser()
+    const isPremiumUser = this.authService.isPremiumUser()
     const isAnonymous = this.authService.isAnonymousUser()
     
     console.log('Route guard check:', {
       to: to.path,
       user: user?.email || 'anonymous',
       isAuthenticated,
-      isTrialUser,
+      isFreeUser,
+      isPremiumUser,
       isAnonymous,
     })
 
@@ -92,8 +94,8 @@ export class AuthGuardService {
         }
       }
 
-      // Check if trial user accessing premium features
-      if (isTrialUser && this.requiresPremium(to.path)) {
+      // Check if free user accessing premium features
+      if (isFreeUser && this.requiresPremium(to.path)) {
         return {
           allowed: false,
           redirect: GUARD_CONFIG.UPGRADE_ROUTE,
@@ -101,13 +103,9 @@ export class AuthGuardService {
         }
       }
 
-      // Check trial expiration
-      if (isTrialUser && this.authService.isTrialExpired()) {
-        return {
-          allowed: false,
-          redirect: GUARD_CONFIG.UPGRADE_ROUTE,
-          reason: 'trial_expired',
-        }
+      // Check if route allows free users
+      if (to.meta?.allowFree && isFreeUser) {
+        return { allowed: true }
       }
     }
 
@@ -173,7 +171,7 @@ export class AuthGuardService {
     
     // Define route permissions
     const routePermissions = {
-      '/deals': ['trial', 'free', 'premium', 'admin'],
+      '/deals': ['free', 'premium', 'admin'],
       '/export': ['free', 'premium', 'admin'],
       '/advanced': ['premium', 'admin'],
       '/admin': ['admin'],
@@ -186,7 +184,7 @@ export class AuthGuardService {
         if (!allowedRoles.includes(userRole)) {
           return {
             allowed: false,
-            redirect: userRole === 'trial' ? GUARD_CONFIG.UPGRADE_ROUTE : GUARD_CONFIG.LOGIN_ROUTE,
+            redirect: userRole === 'free' ? GUARD_CONFIG.UPGRADE_ROUTE : GUARD_CONFIG.LOGIN_ROUTE,
             reason: 'insufficient_permissions',
           }
         }
@@ -197,58 +195,69 @@ export class AuthGuardService {
   }
 
   /**
-   * Check trial limitations for specific features
+   * Check free user limitations for specific features
    */
-  checkTrialLimitations(feature) {
-    if (!this.authService.isTrialUser()) {
+  checkFreeLimitations(feature) {
+    if (!this.authService.isFreeUser()) {
       return { allowed: true }
     }
 
-    const limitations = this.authService.getTrialLimitations()
+    const limitations = this.authService.getFreeLimitations()
     
-    if (limitations.expired) {
-      return {
-        allowed: false,
-        reason: 'trial_expired',
-        message: 'Your trial has expired. Please upgrade to continue.',
-      }
-    }
-
     // Check specific feature limitations
     switch (feature) {
       case 'export':
         return {
           allowed: limitations.EXPORT_ENABLED,
-          reason: 'trial_limitation',
-          message: 'Export feature is not available in trial mode.',
+          reason: 'free_limitation',
+          message: 'PDF export is available for free users.',
         }
 
       case 'real_time_sync':
         return {
           allowed: limitations.REAL_TIME_SYNC,
-          reason: 'trial_limitation',
-          message: 'Real-time sync is not available in trial mode.',
+          reason: 'free_limitation',
+          message: 'Real-time sync requires Premium upgrade.',
+        }
+
+      case 'cloud_backup':
+        return {
+          allowed: limitations.CLOUD_BACKUP,
+          reason: 'free_limitation',
+          message: 'Cloud backup requires Premium upgrade.',
+        }
+
+      case 'collaboration':
+        return {
+          allowed: limitations.COLLABORATION,
+          reason: 'free_limitation',
+          message: 'Deal sharing requires Premium upgrade.',
         }
 
       case 'create_deal':
         // This would be checked against current deal count
         return {
           allowed: true, // Would check against actual count
-          reason: 'trial_limitation',
-          message: `Trial users can create up to ${limitations.MAX_DEALS} deals.`,
+          reason: 'free_limitation',
+          message: `Free users can create up to ${limitations.MAX_DEALS} deals.`,
         }
 
       case 'save_calculation':
         // This would be checked against current calculation count
         return {
           allowed: true, // Would check against actual count
-          reason: 'trial_limitation',
-          message: `Trial users can save up to ${limitations.MAX_CALCULATIONS} calculations.`,
+          reason: 'free_limitation',
+          message: `Free users can save up to ${limitations.MAX_CALCULATIONS} calculations.`,
         }
 
       default:
         return { allowed: true }
     }
+  }
+
+  // Backward compatibility
+  checkTrialLimitations(feature) {
+    return this.checkFreeLimitations(feature)
   }
 
   /**
@@ -380,10 +389,13 @@ export class AuthGuardService {
       canAccess: (route) => this.canAccess(route),
       requiresAuth: (path) => this.requiresAuth(path),
       requiresPremium: (path) => this.requiresPremium(path),
-      checkTrialLimitations: (feature) => this.checkTrialLimitations(feature),
+      checkFreeLimitations: (feature) => this.checkFreeLimitations(feature),
+      checkTrialLimitations: (feature) => this.checkTrialLimitations(feature), // backward compatibility
       getOnboardingStep: () => this.getOnboardingStep(),
       isAuthenticated: () => this.authService.isAuthenticated(),
-      isTrialUser: () => this.authService.isTrialUser(),
+      isFreeUser: () => this.authService.isFreeUser(),
+      isPremiumUser: () => this.authService.isPremiumUser(),
+      isTrialUser: () => this.authService.isFreeUser(), // backward compatibility
       getUserRole: () => this.authService.getUserRole(),
     }
   }

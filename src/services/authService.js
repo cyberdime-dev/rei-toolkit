@@ -41,19 +41,19 @@ const AUTH_CONFIG = {
   GOOGLE_SCOPES: ['profile', 'email'],
   GITHUB_SCOPES: ['user:email'],
   
-  // Trial mode settings
-  TRIAL_DURATION_DAYS: 30,
-  TRIAL_FEATURES: {
-    MAX_DEALS: 5,
-    MAX_CALCULATIONS: 50,
-    EXPORT_ENABLED: false,
+  // Free mode settings (freemium model)
+  FREE_FEATURES: {
+    MAX_DEALS: 10,
+    MAX_CALCULATIONS: 100,
+    EXPORT_ENABLED: true,
     REAL_TIME_SYNC: false,
+    CLOUD_BACKUP: false,
+    COLLABORATION: false,
   },
   
   // User roles
   USER_ROLES: {
     ANONYMOUS: 'anonymous',
-    TRIAL: 'trial', 
     FREE: 'free',
     PREMIUM: 'premium',
     ADMIN: 'admin',
@@ -106,11 +106,6 @@ export class FirebaseAuthService {
         
         // Update last login time
         await this.updateLastLogin(user.uid)
-        
-        // Check if trial user needs upgrade prompt
-        if (this.isTrialUser() && this.isTrialExpired()) {
-          this.notifyTrialExpired()
-        }
       } else {
         this.userProfile = null
       }
@@ -271,30 +266,30 @@ export class FirebaseAuthService {
   }
 
   /**
-   * Anonymous Authentication (Trial Mode)
+   * Anonymous Authentication (Free Mode)
    */
   async signInAnonymously() {
     try {
-      console.log('Starting anonymous trial...')
+      console.log('Starting free mode...')
       
       const result = await signInAnonymously(this.auth)
       const user = result.user
       
-      // Create trial user profile
+      // Create free user profile
       await this.createUserProfile(user, {
         authProvider: 'anonymous',
-        role: AUTH_CONFIG.USER_ROLES.TRIAL,
-        trialStartDate: new Date().toISOString(),
-        trialEndDate: new Date(Date.now() + AUTH_CONFIG.TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000).toISOString(),
+        role: AUTH_CONFIG.USER_ROLES.FREE,
+        createdAt: new Date().toISOString(),
+        mode: 'local', // Local/offline mode
       })
       
       return {
         success: true,
         user,
-        message: `Welcome to your ${AUTH_CONFIG.TRIAL_DURATION_DAYS}-day trial!`,
-        trialInfo: {
-          daysRemaining: AUTH_CONFIG.TRIAL_DURATION_DAYS,
-          features: AUTH_CONFIG.TRIAL_FEATURES,
+        message: 'Welcome to REI Toolkit Free Version!',
+        freeInfo: {
+          features: AUTH_CONFIG.FREE_FEATURES,
+          mode: 'local',
         },
       }
       
@@ -657,56 +652,38 @@ export class FirebaseAuthService {
   }
 
   /**
-   * Trial Mode Management
+   * Free Mode Management
    */
-  isTrialUser() {
-    return this.userProfile?.role === AUTH_CONFIG.USER_ROLES.TRIAL
+  isFreeUser() {
+    return this.userProfile?.role === AUTH_CONFIG.USER_ROLES.FREE
   }
 
   isAnonymousUser() {
     return this.currentUser?.isAnonymous || false
   }
 
-  isTrialExpired() {
-    if (!this.isTrialUser() || !this.userProfile?.trialEndDate) {
-      return false
-    }
-    
-    return new Date() > new Date(this.userProfile.trialEndDate)
+  isPremiumUser() {
+    return this.userProfile?.role === AUTH_CONFIG.USER_ROLES.PREMIUM
   }
 
-  getTrialDaysRemaining() {
-    if (!this.isTrialUser() || !this.userProfile?.trialEndDate) {
-      return 0
-    }
-    
-    const endDate = new Date(this.userProfile.trialEndDate)
-    const now = new Date()
-    const diffTime = endDate - now
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    
-    return Math.max(0, diffDays)
-  }
-
-  getTrialLimitations() {
-    if (!this.isTrialUser()) {
+  getFreeLimitations() {
+    if (!this.isFreeUser()) {
       return null
     }
     
     return {
-      ...AUTH_CONFIG.TRIAL_FEATURES,
-      daysRemaining: this.getTrialDaysRemaining(),
-      expired: this.isTrialExpired(),
+      ...AUTH_CONFIG.FREE_FEATURES,
+      mode: this.userProfile?.mode || 'local',
     }
   }
 
-  notifyTrialExpired() {
+  notifyUpgradePrompt() {
     // This would integrate with your notification system
-    console.log('Trial expired - prompting user to upgrade')
+    console.log('Prompting user to upgrade to premium')
     
-    const event = new CustomEvent('trialExpired', {
+    const event = new CustomEvent('upgradePrompt', {
       detail: {
-        message: 'Your trial has expired. Please create an account to continue using all features.',
+        message: 'Upgrade to Premium for unlimited features and cloud sync!',
         userProfile: this.userProfile,
       },
     })
@@ -788,8 +765,13 @@ export { AUTH_CONFIG }
 export const getCurrentUser = () => authService.getCurrentUser()
 export const getUserProfile = () => authService.getUserProfile()
 export const isAuthenticated = () => authService.isAuthenticated()
-export const isTrialUser = () => authService.isTrialUser()
-export const getTrialLimitations = () => authService.getTrialLimitations()
+export const isFreeUser = () => authService.isFreeUser()
+export const isPremiumUser = () => authService.isPremiumUser()
+export const getFreeLimitations = () => authService.getFreeLimitations()
+
+// Backward compatibility exports
+export const isTrialUser = () => authService.isFreeUser()
+export const getTrialLimitations = () => authService.getFreeLimitations()
 
 // Default export
 export default authService

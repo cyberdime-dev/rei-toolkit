@@ -413,8 +413,8 @@ export default {
           showError(result.error)
         }
       } catch (error) {
-        showError('Failed to start trial. Please try again.')
-        console.error('Trial mode error:', error)
+        showError('Failed to start free mode. Please try again.')
+        console.error('Free mode error:', error)
       } finally {
         loading.value = false
       }
