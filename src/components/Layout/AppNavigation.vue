@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ThemeToggle from './ThemeToggle.vue'
 
-const props = defineProps({
+// Use a different name than `props` to avoid shadowing template activator props
+const p = defineProps({
   drawer: {
     type: Boolean,
     required: true,
@@ -19,19 +20,31 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  // Configurable drawer width (px)
+  drawerWidth: {
+    type: Number,
+    default: 300,
+  },
 })
 
 const expandedGroups = ref(['tools', 'residential', 'commercial']) // Keep groups expanded
+
+const computedWidth = computed(() => {
+  // On small screens, cap the width to keep the layout usable
+  if (!p.isDesktop) return Math.min(240, p.drawerWidth)
+  return p.drawerWidth
+})
 </script>
 
 <template>
   <v-navigation-drawer
     :model-value="drawer"
-    @update:model-value="onDrawerUpdate"
     :permanent="isDesktop"
     :temporary="!isDesktop"
     app
+    :width="computedWidth"
     :right="!isDesktop"
+    @update:model-value="onDrawerUpdate"
   >
     <v-list
       v-model:opened="expandedGroups"
@@ -202,3 +215,25 @@ const expandedGroups = ref(['tools', 'residential', 'commercial']) // Keep group
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<style scoped>
+/* Use responsive CSS variable for drawer width (fallback provided by prop)
+   and allow titles to wrap instead of truncating. */
+:deep(.v-navigation-drawer) {
+  --app-drawer-width: 300px;
+}
+
+:deep(.v-list-item__title) {
+  white-space: normal;
+}
+
+:deep(.v-list-item__content) {
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  :deep(.v-navigation-drawer) {
+    --app-drawer-width: 220px;
+  }
+}
+</style>
