@@ -44,8 +44,15 @@ onUnmounted(() => {
     />
 
     <!-- Main Content Area -->
-    <v-main class="pa-4">
-      <router-view />
+    <v-main class="app-main">
+      <v-container
+        fluid
+        class="main-viewport pa-0"
+      >
+        <div class="content-shell">
+          <router-view />
+        </div>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -67,6 +74,37 @@ onUnmounted(() => {
     box-sizing: border-box;
     overflow-y: auto;
     padding-top: 80px !important; /* Adjust for app bar height */
+  }
+}
+</style>
+
+<style scoped>
+/* iOS-style content shell for main area */
+.app-main {
+  background: var(--v-theme-surface, #f2f5f8);
+  min-height: calc(100vh - 64px); /* account for app bar */
+}
+
+.main-viewport {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.content-shell {
+  max-width: 980px;
+  margin: 24px auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.98));
+  border-radius: 0;
+  box-shadow: none;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+  .content-shell {
+    margin: 12px;
+    border-radius: 12px;
+    padding: 14px;
   }
 }
 </style>
