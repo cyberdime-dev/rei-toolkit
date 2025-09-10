@@ -27,6 +27,7 @@ const routes = [
 
   // Core Features
   { path: '/deals', component: DealList },
+  { path: '/deals/new', component: DealList }, // Uses same component, form opens automatically
   { path: '/news', component: NewsList },
   { path: '/settings', component: Settings },
 
