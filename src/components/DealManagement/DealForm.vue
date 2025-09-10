@@ -380,40 +380,40 @@ const showMetrics = computed(() => {
 })
 
 const calculatedMetrics = computed(() => {
-  const tempDeal = new Deal(formData.value)
-  return {
-    cashFlow: tempDeal.cashFlow,
-    cashOnCashReturn: tempDeal.cashOnCashReturn,
-    capRate: tempDeal.capRate,
-    monthlyPayment: tempDeal.calculateMonthlyPayment(),
-  }
-})
-
-// Watchers
-watch(() => props.deal, (newDeal) => {
-  if (newDeal) {
-    // Populate form with deal data
-    Object.keys(formData.value).forEach(key => {
-      if (newDeal[key] !== undefined) {
-        formData.value[key] = newDeal[key]
+  try {
+    // Ensure all numeric values are valid numbers, not NaN
+    const sanitizedData = { ...formData.value }
+    Object.keys(sanitizedData).forEach(key => {
+      const value = sanitizedData[key]
+      if (typeof value === 'number' && (isNaN(value) || !isFinite(value))) {
+        sanitizedData[key] = 0
       }
     })
-  } else {
-    // Reset form for new deal
-    resetForm()
-  }
-}, { immediate: true })
-
-watch(() => props.modelValue, (isOpen) => {
-  if (isOpen && !props.deal) {
-    resetForm()
+    
+    const tempDeal = new Deal(sanitizedData)
+    
+    // Safely calculate metrics with fallbacks
+    const cashFlow = isFinite(tempDeal.cashFlow) ? tempDeal.cashFlow : 0
+    const cashOnCashReturn = isFinite(tempDeal.cashOnCashReturn) ? tempDeal.cashOnCashReturn : 0
+    const capRate = isFinite(tempDeal.capRate) ? tempDeal.capRate : 0
+    const monthlyPayment = isFinite(tempDeal.calculateMonthlyPayment()) ? tempDeal.calculateMonthlyPayment() : 0
+    
+    return {
+      cashFlow,
+      cashOnCashReturn,
+      capRate,
+      monthlyPayment,
+    }
+  } catch (error) {
+    console.warn('Error calculating metrics:', error)
+    return {
+      cashFlow: 0,
+      cashOnCashReturn: 0,
+      capRate: 0,
+      monthlyPayment: 0,
+    }
   }
 })
-
-// Update loan amount when purchase price or down payment changes
-watch([() => formData.value.purchasePrice, () => formData.value.downPayment], () => {
-  formData.value.loanAmount = formData.value.purchasePrice - formData.value.downPayment
-}, { deep: true })
 
 // Methods
 const resetForm = () => {
@@ -441,6 +441,54 @@ const resetForm = () => {
   })
 }
 
+// Watchers
+watch(() => props.deal, (newDeal) => {
+  try {
+    if (newDeal) {
+      // Populate form with deal data
+      Object.keys(formData.value).forEach(key => {
+        if (newDeal[key] !== undefined) {
+          // Ensure numeric values are valid
+          let value = newDeal[key]
+          if (typeof value === 'number' && (isNaN(value) || !isFinite(value))) {
+            value = 0
+          }
+          formData.value[key] = value
+        }
+      })
+    } else {
+      // Reset form for new deal
+      resetForm()
+    }
+  } catch (error) {
+    console.warn('Error in deal watcher:', error)
+    resetForm()
+  }
+}, { immediate: true })
+
+watch(() => props.modelValue, (isOpen) => {
+  if (isOpen && !props.deal) {
+    resetForm()
+  }
+})
+
+// Update loan amount when purchase price or down payment changes
+watch([() => formData.value.purchasePrice, () => formData.value.downPayment], () => {
+  try {
+    const purchasePrice = formData.value.purchasePrice || 0
+    const downPayment = formData.value.downPayment || 0
+    
+    // Ensure values are valid numbers
+    if (isFinite(purchasePrice) && isFinite(downPayment)) {
+      const loanAmount = Math.max(0, purchasePrice - downPayment)
+      formData.value.loanAmount = isFinite(loanAmount) ? loanAmount : 0
+    }
+  } catch (error) {
+    console.warn('Error calculating loan amount:', error)
+  }
+}, { deep: true })
+
+// Methods (after watchers)
 const saveDeal = async () => {
   if (!form.value || !isFormValid.value) return
 
