@@ -304,3 +304,19 @@
 
 *Last updated: September 10, 2025*
 *Total items: 105 (45 completed, 60 remaining)*
+
+## 💰 Freemium Business Model Implementation
+
+### Free/Local Mode Enhancements
+- [ ] **Add "local mode" branding** - Clear indication of current mode
+- [ ] **Enhance export capabilities** - Professional PDF reports for free users
+- [ ] **Add upgrade prompts** - Strategic CTAs for premium features
+- [ ] **Improve offline experience** - Better offline indicators and capabilities
+
+### Premium Mode Development  
+- [ ] **Integrate payment system** - Stripe/Paddle for subscriptions
+- [ ] **Add subscription management** - User dashboard for billing
+- [ ] **Implement feature gating** - Clean premium feature restrictions
+- [ ] **Add collaboration features** - Deal sharing and team workspaces
+- [ ] **Build portfolio analytics** - Advanced reporting and insights
+- [ ] **Add market data integration** - Real estate market data APIs
