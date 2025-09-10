@@ -5,12 +5,12 @@ import { useRoute } from 'vue-router'
 const props = defineProps({
   isDesktop: {
     type: Boolean,
-    required: true
+    required: true,
   },
   onToggleDrawer: {
     type: Function,
-    required: true
-  }
+    required: true,
+  },
 })
 
 // Dynamic page title based on route

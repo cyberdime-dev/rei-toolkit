@@ -69,7 +69,9 @@ const computedWidth = computed(() => {
           @click="onCloseDrawer"
         >
           <template #prepend>
-            <v-icon size="small">mdi-calculator</v-icon>
+            <v-icon size="small">
+              mdi-calculator
+            </v-icon>
           </template>
           <v-list-item-title>Standard Calculator</v-list-item-title>
         </v-list-item>
@@ -79,7 +81,9 @@ const computedWidth = computed(() => {
           <template #activator="{ props }">
             <v-list-item v-bind="props">
               <template #prepend>
-                <v-icon size="small">mdi-home</v-icon>
+                <v-icon size="small">
+                  mdi-home
+                </v-icon>
               </template>
               <v-list-item-title>Residential</v-list-item-title>
             </v-list-item>
@@ -127,7 +131,9 @@ const computedWidth = computed(() => {
           <template #activator="{ props }">
             <v-list-item v-bind="props">
               <template #prepend>
-                <v-icon size="small">mdi-office-building</v-icon>
+                <v-icon size="small">
+                  mdi-office-building
+                </v-icon>
               </template>
               <v-list-item-title>Commercial</v-list-item-title>
             </v-list-item>

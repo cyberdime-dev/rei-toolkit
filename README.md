@@ -12,7 +12,22 @@ A collection of real estate investment calculators built with [Vue 3](https://vu
 - **NOI Calculator**: Compute Net Operating Income for rental properties.
 - **Cap Rate Calculator**: Calculate cap rate and property value based on NOI.
 - **Cash-on-Cash Calculator**: Determine cash-on-cash return for investments.
+- **Mortgage Calculator**: Calculate loan payments with taxes and insurance.
 - Responsive navigation drawer for quick access to all calculators.
+
+## 📊 Examples and Use Cases
+
+See [EXAMPLES.md](./EXAMPLES.md) for detailed real-world examples and scenarios for each calculator, including:
+
+- Fix & flip renovation project analysis
+- Buy & hold rental property evaluation
+- BRRR strategy implementation
+- Wholesale deal assessment
+- NOI and cap rate calculations
+- Cash-on-cash return analysis
+- Mortgage payment calculations
+
+Each example includes realistic input values, expected results, and investment analysis tips.
 
 ## Project Structure
 

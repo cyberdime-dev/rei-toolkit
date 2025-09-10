@@ -27,6 +27,17 @@ const spread = computed(() => maxAllowableOffer.value - contractPrice.value)
 
 const isAssignable = computed(() => spread.value >= 0)
 
+// Example data function
+const loadExample = () => {
+  contractPrice.value = 65000
+  repairEstimate.value = 30000
+  arv.value = 140000
+  buyerDiscount.value = 30
+  assignmentFee.value = 8000
+  closingCosts.value = 2500
+  buyerPaysClosing.value = 'Yes'
+}
+
 const toUSD = val =>
   `$${val.toLocaleString(undefined, {
     minimumFractionDigits: 0,
@@ -79,6 +90,31 @@ const toUSD = val =>
       </v-row>
 
       <v-divider class="my-4" />
+
+      <!-- Example Data Button -->
+      <v-col
+        cols="12"
+        class="pb-0"
+      >
+        <v-btn
+          color="primary"
+          variant="outlined"
+          prepend-icon="mdi-lightbulb-outline"
+          class="mb-2"
+          @click="loadExample"
+        >
+          Load Example: Contract Assignment Deal
+        </v-btn>
+        <v-alert
+          type="info"
+          variant="tonal"
+          density="compact"
+          class="text-caption mb-4"
+        >
+          Example: $65k contract, $30k repairs, $140k ARV - typical wholesale assignment
+        </v-alert>
+      </v-col>
+
       <!-- Inputs -->
       <v-col
         cols="12"

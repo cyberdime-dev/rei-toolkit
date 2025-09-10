@@ -35,6 +35,16 @@ const mao = computed(
   () => arv.value * 0.7 - repairCosts.value, // Simple 70% rule
 )
 
+// Example data function
+const loadExample = () => {
+  purchasePrice.value = 85000
+  repairCosts.value = 25000
+  arv.value = 150000
+  holdingCosts.value = 2500
+  closingCosts.value = 2000
+  sellingCostPercent.value = 8
+}
+
 // Formatters
 const toUSD = val => `$${val.toLocaleString()}`
 const totalInvestmentFormatted = computed(() => toUSD(totalInvestment.value))
@@ -107,6 +117,32 @@ const maoFormatted = computed(() => toUSD(mao.value))
     </v-row>
 
     <v-divider class="my-4" />
+
+    <!-- Example Data Button -->
+    <v-row
+      dense
+      class="mb-4"
+    >
+      <v-col cols="12">
+        <v-btn
+          color="primary"
+          variant="outlined"
+          prepend-icon="mdi-lightbulb-outline"
+          class="mb-2"
+          @click="loadExample"
+        >
+          Load Example: 3BR Ranch Renovation
+        </v-btn>
+        <v-alert
+          type="info"
+          variant="tonal"
+          density="compact"
+          class="text-caption"
+        >
+          Example: $85k purchase, $25k repairs, $150k ARV - typical suburban fix & flip
+        </v-alert>
+      </v-col>
+    </v-row>
 
     <v-row dense>
       <v-col

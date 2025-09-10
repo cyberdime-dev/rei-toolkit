@@ -78,6 +78,21 @@ const cashOnCashReturn = computed(() =>
     : (annualCashFlow.value / downPaymentAmount.value) * 100,
 )
 
+// Example data function
+const loadExample = () => {
+  purchasePrice.value = 180000
+  downPaymentPercent.value = 25
+  interestRate.value = 6.5
+  loanTerm.value = 30
+  monthlyRent.value = 2400
+  otherIncome.value = 100
+  taxes.value = 300
+  insurance.value = 150
+  repairs.value = 200
+  management.value = 240
+  vacancyPercent.value = 5
+}
+
 // Formatting
 const toUSD = val =>
   `$${val.toLocaleString(undefined, {
@@ -154,6 +169,33 @@ const toUSD = val =>
     </v-row>
 
     <v-divider class="my-4" />
+
+    <!-- Example Data Button -->
+    <v-row
+      dense
+      class="mb-4"
+    >
+      <v-col cols="12">
+        <v-btn
+          color="primary"
+          variant="outlined"
+          prepend-icon="mdi-lightbulb-outline"
+          class="mb-2"
+          @click="loadExample"
+        >
+          Load Example: Duplex Investment
+        </v-btn>
+        <v-alert
+          type="info"
+          variant="tonal"
+          density="compact"
+          class="text-caption"
+        >
+          Example: $180k duplex, 25% down, $2,400/mo rent - typical buy & hold property
+        </v-alert>
+      </v-col>
+    </v-row>
+
     <v-row dense>
       <!-- Inputs -->
       <v-col
