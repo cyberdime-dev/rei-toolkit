@@ -9,7 +9,10 @@
               <v-list-item>
                 <v-list-item-title>Theme</v-list-item-title>
                 <template #append>
-                  <v-switch v-model="darkMode" label="Dark Mode" />
+                  <v-switch
+                    v-model="darkMode"
+                    label="Dark Mode"
+                  />
                 </template>
               </v-list-item>
 

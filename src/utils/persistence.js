@@ -28,7 +28,7 @@ export const exportToCSV = (data, filename) => {
   const csvContent = [
     headers.join(','),
     ...data.map(row =>
-      headers.map(header => JSON.stringify(row[header])).join(',')
+      headers.map(header => JSON.stringify(row[header])).join(','),
     ),
   ].join('\n')
 

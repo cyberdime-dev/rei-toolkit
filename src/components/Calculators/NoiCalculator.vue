@@ -20,7 +20,7 @@ const totalExpenses = computed(
     maintenance.value +
     management.value +
     utilities.value +
-    otherExpenses.value
+    otherExpenses.value,
 )
 
 const noi = computed(() => totalIncome.value - totalExpenses.value)
@@ -32,9 +32,19 @@ const toUSD = val =>
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Output -->
-    <v-row dense class="mb-2">
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+    <v-row
+      dense
+      class="mb-2"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Net Operating Income (NOI):</strong>
           {{ toUSD(noi) }}
         </v-sheet>
@@ -45,7 +55,9 @@ const toUSD = val =>
     <v-row dense>
       <!-- Income -->
       <v-col cols="12">
-        <h3 class="text-h6 mb-2">Gross Income</h3>
+        <h3 class="text-h6 mb-2">
+          Gross Income
+        </h3>
         <v-text-field
           v-model.number="grossIncome"
           label="Gross Rental Income"
@@ -60,37 +72,65 @@ const toUSD = val =>
 
       <!-- Expenses -->
       <v-col cols="12">
-        <h3 class="text-h6 mb-2">Operating Expenses</h3>
+        <h3 class="text-h6 mb-2">
+          Operating Expenses
+        </h3>
       </v-col>
 
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="taxes"
           label="Property Taxes"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field v-model.number="insurance" label="Insurance" prefix="$" />
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-text-field
+          v-model.number="insurance"
+          label="Insurance"
+          prefix="$"
+        />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="maintenance"
           label="Maintenance/Repairs"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="management"
           label="Property Management"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field v-model.number="utilities" label="Utilities" prefix="$" />
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-text-field
+          v-model.number="utilities"
+          label="Utilities"
+          prefix="$"
+        />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="otherExpenses"
           label="Other Operating Expenses"

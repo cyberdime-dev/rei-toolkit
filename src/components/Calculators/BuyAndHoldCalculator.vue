@@ -17,7 +17,7 @@ const vacancyPercent = ref(0)
 
 // Loan Calculations
 const downPaymentAmount = computed(
-  () => (downPaymentPercent.value / 100) * purchasePrice.value
+  () => (downPaymentPercent.value / 100) * purchasePrice.value,
 )
 const loanAmount = computed(() => purchasePrice.value - downPaymentAmount.value)
 
@@ -33,10 +33,10 @@ const monthlyMortgage = computed(() => {
 
 // Operating Income and Expenses
 const vacancyLoss = computed(
-  () => (monthlyRent.value * vacancyPercent.value) / 100
+  () => (monthlyRent.value * vacancyPercent.value) / 100,
 )
 const effectiveGrossIncome = computed(
-  () => monthlyRent.value + otherIncome.value - vacancyLoss.value
+  () => monthlyRent.value + otherIncome.value - vacancyLoss.value,
 )
 
 const totalMonthlyExpenses = computed(
@@ -45,7 +45,7 @@ const totalMonthlyExpenses = computed(
     insurance.value +
     repairs.value +
     management.value +
-    monthlyMortgage.value
+    monthlyMortgage.value,
 )
 
 const monthlyCashFlow = computed(() => {
@@ -69,13 +69,13 @@ const capRate = computed(() =>
           management.value)) *
         12) /
         purchasePrice.value) *
-      100
+      100,
 )
 
 const cashOnCashReturn = computed(() =>
   downPaymentAmount.value === 0
     ? 0
-    : (annualCashFlow.value / downPaymentAmount.value) * 100
+    : (annualCashFlow.value / downPaymentAmount.value) * 100,
 )
 
 // Formatting
@@ -89,9 +89,19 @@ const toUSD = val =>
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Outputs -->
-    <v-row dense class="mb-2">
-      <v-col cols="12" md="6">
-        <v-sheet color="info" class="pa-3" rounded>
+    <v-row
+      dense
+      class="mb-2"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="info"
+          class="pa-3"
+          rounded
+        >
           <strong>Loan Amount:</strong>
           {{ toUSD(loanAmount) }}
           <br />
@@ -99,8 +109,15 @@ const toUSD = val =>
           {{ toUSD(monthlyMortgage) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Monthly Cash Flow:</strong>
           {{ toUSD(monthlyCashFlow) }}
           <br />
@@ -108,14 +125,28 @@ const toUSD = val =>
           {{ toUSD(annualCashFlow) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Cap Rate:</strong>
           {{ capRate.toFixed(1) }}%
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Cash-on-Cash Return:</strong>
           {{ cashOnCashReturn.toFixed(1) }}%
         </v-sheet>
@@ -125,38 +156,59 @@ const toUSD = val =>
     <v-divider class="my-4" />
     <v-row dense>
       <!-- Inputs -->
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="purchasePrice"
           label="Purchase Price"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="downPaymentPercent"
           label="Down Payment %"
           suffix="%"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="interestRate"
           label="Interest Rate (Annual)"
           suffix="%"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field v-model.number="loanTerm" label="Loan Term (Years)" />
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-text-field
+          v-model.number="loanTerm"
+          label="Loan Term (Years)"
+        />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="monthlyRent"
           label="Monthly Rent"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="otherIncome"
           label="Other Monthly Income"
@@ -165,33 +217,56 @@ const toUSD = val =>
       </v-col>
 
       <!-- Monthly Expenses -->
-      <v-col cols="12"><v-divider class="my-2" /></v-col>
-      <v-col cols="12"><h4>Monthly Expenses</h4></v-col>
-      <v-col cols="12" sm="6">
+      <v-col cols="12">
+        <v-divider class="my-2" />
+      </v-col>
+      <v-col cols="12">
+        <h4>Monthly Expenses</h4>
+      </v-col>
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="taxes"
           label="Property Taxes"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field v-model.number="insurance" label="Insurance" prefix="$" />
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-text-field
+          v-model.number="insurance"
+          label="Insurance"
+          prefix="$"
+        />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="repairs"
           label="Repairs & Maintenance"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="management"
           label="Property Management"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="vacancyPercent"
           label="Vacancy Allowance (%)"

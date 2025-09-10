@@ -110,7 +110,7 @@ describe('Navigation Integration Tests', () => {
         item.text().includes('Net Operating Income') ||
         item.text().includes('Cash-on-Cash') ||
         item.text().includes('Cashflow') ||
-        item.text().includes('Cap Rate')
+        item.text().includes('Cap Rate'),
     )
 
     expect(calculatorItems.length).toBeGreaterThan(8)

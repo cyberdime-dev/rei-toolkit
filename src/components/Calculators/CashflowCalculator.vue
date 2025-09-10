@@ -19,17 +19,17 @@ ChartJS.register(
   ArcElement,
   BarElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
 )
 
 const incomeItems = ref([{ label: '', amount: 0 }])
 const expenseItems = ref([{ label: '', amount: 0 }])
 
 const totalIncome = computed(() =>
-  incomeItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0)
+  incomeItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0),
 )
 const totalExpenses = computed(() =>
-  expenseItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0)
+  expenseItems.value.reduce((sum, item) => sum + Number(item.amount || 0), 0),
 )
 const netProfit = computed(() => totalIncome.value - totalExpenses.value)
 
@@ -100,22 +100,42 @@ const showBarModal = ref(false)
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Cashflow Results -->
-    <v-row dense class="mb-2">
-      <v-col cols="12" md="4">
-        <v-sheet color="info" class="pa-3" rounded>
+    <v-row
+      dense
+      class="mb-2"
+    >
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-sheet
+          color="info"
+          class="pa-3"
+          rounded
+        >
           <strong>Total Income:</strong>
           <br />
           {{ toUSD(totalIncome) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="4">
-        <v-sheet color="deep-orange-lighten-1" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-sheet
+          color="deep-orange-lighten-1"
+          class="pa-3"
+          rounded
+        >
           <strong>Total Expenses:</strong>
           <br />
           {{ toUSD(totalExpenses) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-sheet
           :color="netProfit >= 0 ? 'success' : 'error'"
           class="pa-3"
@@ -129,9 +149,18 @@ const showBarModal = ref(false)
     </v-row>
 
     <!-- Charts: Dashboard on desktop, modal on mobile -->
-    <v-row v-if="$vuetify.display.mdAndUp" class="mb-4">
-      <v-col cols="12" md="6">
-        <v-sheet class="pa-3" rounded>
+    <v-row
+      v-if="$vuetify.display.mdAndUp"
+      class="mb-4"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          class="pa-3"
+          rounded
+        >
           <Pie
             :data="pieData"
             :options="{
@@ -142,8 +171,14 @@ const showBarModal = ref(false)
           />
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          class="pa-3"
+          rounded
+        >
           <Bar
             :data="barData"
             :options="{
@@ -159,13 +194,18 @@ const showBarModal = ref(false)
 
     <!-- Chart Buttons (mobile only) -->
     <v-row v-else>
-      <v-col cols="12" class="d-flex justify-end gap-2">
+      <v-col
+        cols="12"
+        class="d-flex justify-end gap-2"
+      >
         <v-btn
           color="primary"
           :disabled="totalIncome === 0 && totalExpenses === 0"
           @click="showPieModal = true"
         >
-          <v-icon start>mdi-chart-pie</v-icon>
+          <v-icon start>
+            mdi-chart-pie
+          </v-icon>
           Pie Chart
         </v-btn>
         <v-btn
@@ -173,19 +213,27 @@ const showBarModal = ref(false)
           :disabled="totalIncome === 0 && totalExpenses === 0"
           @click="showBarModal = true"
         >
-          <v-icon start>mdi-chart-bar</v-icon>
+          <v-icon start>
+            mdi-chart-bar
+          </v-icon>
           Bar Chart
         </v-btn>
       </v-col>
     </v-row>
 
     <!-- Pie Chart Modal (mobile only) -->
-    <v-dialog v-model="showPieModal" max-width="400">
+    <v-dialog
+      v-model="showPieModal"
+      max-width="400"
+    >
       <v-card>
         <v-card-title>
           Income vs Expenses (Pie)
           <v-spacer />
-          <v-btn icon @click="showPieModal = false">
+          <v-btn
+            icon
+            @click="showPieModal = false"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -202,12 +250,18 @@ const showBarModal = ref(false)
     </v-dialog>
 
     <!-- Bar Chart Modal (mobile only) -->
-    <v-dialog v-model="showBarModal" max-width="400">
+    <v-dialog
+      v-model="showBarModal"
+      max-width="400"
+    >
       <v-card>
         <v-card-title>
           Income vs Expenses (Bar)
           <v-spacer />
-          <v-btn icon @click="showBarModal = false">
+          <v-btn
+            icon
+            @click="showBarModal = false"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -229,7 +283,9 @@ const showBarModal = ref(false)
     <!-- Income & Expense Inputs -->
     <v-row>
       <v-col cols="12">
-        <h3 class="text-h6 mb-2">Income</h3>
+        <h3 class="text-h6 mb-2">
+          Income
+        </h3>
         <v-row
           v-for="(item, idx) in incomeItems"
           :key="'inc' + idx"
@@ -265,13 +321,25 @@ const showBarModal = ref(false)
             </v-btn>
           </v-col>
         </v-row>
-        <v-btn color="primary" variant="tonal" size="small" @click="addIncome">
-          <v-icon start>mdi-plus</v-icon>
+        <v-btn
+          color="primary"
+          variant="tonal"
+          size="small"
+          @click="addIncome"
+        >
+          <v-icon start>
+            mdi-plus
+          </v-icon>
           Add Income
         </v-btn>
       </v-col>
-      <v-col cols="12" class="mt-4">
-        <h3 class="text-h6 mb-2">Expenses</h3>
+      <v-col
+        cols="12"
+        class="mt-4"
+      >
+        <h3 class="text-h6 mb-2">
+          Expenses
+        </h3>
         <v-row
           v-for="(item, idx) in expenseItems"
           :key="'exp' + idx"
@@ -307,8 +375,15 @@ const showBarModal = ref(false)
             </v-btn>
           </v-col>
         </v-row>
-        <v-btn color="primary" variant="tonal" size="small" @click="addExpense">
-          <v-icon start>mdi-plus</v-icon>
+        <v-btn
+          color="primary"
+          variant="tonal"
+          size="small"
+          @click="addExpense"
+        >
+          <v-icon start>
+            mdi-plus
+          </v-icon>
           Add Expense
         </v-btn>
       </v-col>

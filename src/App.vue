@@ -72,17 +72,31 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
 <template>
   <v-app>
     <!-- Top App Bar -->
-    <v-app-bar app color="primary" style="position: relative" dark>
+    <v-app-bar
+      app
+      color="primary"
+      style="position: relative"
+      dark
+    >
       <!-- Desktop View -->
       <template v-if="isDesktop">
-        <v-btn icon class="me-2" @click="toggleDrawer">
-          <v-icon color="white">mdi-toolbox</v-icon>
+        <v-btn
+          icon
+          class="me-2"
+          @click="toggleDrawer"
+        >
+          <v-icon color="white">
+            mdi-toolbox
+          </v-icon>
         </v-btn>
         <v-app-bar-title>
           REI Tools
           <span v-if="isCalculatorRoute">
             |
-            <v-icon class="mx-1" size="20">mdi-calculator</v-icon>
+            <v-icon
+              class="mx-1"
+              size="20"
+            >mdi-calculator</v-icon>
           </span>
           <span v-if="pageTitle">{{ pageTitle }}</span>
         </v-app-bar-title>
@@ -91,13 +105,21 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
       <template v-else>
         <v-app-bar-title>
           <span v-if="isCalculatorRoute">
-            <v-icon class="mx-1" size="20">mdi-calculator</v-icon>
+            <v-icon
+              class="mx-1"
+              size="20"
+            >mdi-calculator</v-icon>
           </span>
           <span v-if="pageTitle">{{ pageTitle }}</span>
         </v-app-bar-title>
         <v-spacer />
-        <v-btn icon @click="toggleDrawer">
-          <v-icon color="white">mdi-toolbox</v-icon>
+        <v-btn
+          icon
+          @click="toggleDrawer"
+        >
+          <v-icon color="white">
+            mdi-toolbox
+          </v-icon>
         </v-btn>
       </template>
     </v-app-bar>
@@ -110,71 +132,141 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
       app
       :right="!isDesktop"
     >
-      <v-list v-model="expandedGroups" dense nav>
+      <v-list
+        v-model="expandedGroups"
+        dense
+        nav
+      >
         <!-- Tools Group -->
-        <v-list-group value="mdi-calculator" prepend-icon="mdi-mdi-calculator">
+        <v-list-group
+          value="mdi-calculator"
+          prepend-icon="mdi-mdi-calculator"
+        >
           <template #activator>
             <v-list-item-title>
-              <v-icon class="mx-1" size="20">mdi-hammer-wrench</v-icon>
+              <v-icon
+                class="mx-1"
+                size="20"
+              >
+                mdi-hammer-wrench
+              </v-icon>
               Tools
             </v-list-item-title>
           </template>
-          <v-list-item to="/calculator/standard" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/standard"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Calculator</v-list-item-title>
           </v-list-item>
           <v-divider class="my-1" />
-          <v-list-item to="/calculator/mortgage" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/mortgage"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Mortgage</v-list-item-title>
           </v-list-item>
           <v-divider class="my-1" />
-          <v-list-item to="/calculator/fix-flip" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/fix-flip"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Fix &amp; Flip</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/wholesale" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/wholesale"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Wholesale</v-list-item-title>
           </v-list-item>
           <v-divider class="my-1" />
-          <v-list-item to="/calculator/buy-hold" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/buy-hold"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Buy &amp; Hold</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/brrr" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/brrr"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>BRRR</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/cashflow" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/cashflow"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Cashflow</v-list-item-title>
           </v-list-item>
           <v-divider class="my-1" />
-          <v-list-item to="/calculator/noi" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/noi"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Net Operating Income</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/cash-on-cash" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/cash-on-cash"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Cash-on-Cash</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/calculator/cap-rate" link @click="closeDrawer">
+          <v-list-item
+            to="/calculator/cap-rate"
+            link
+            @click="closeDrawer"
+          >
             <v-list-item-title>Cap Rate</v-list-item-title>
           </v-list-item>
         </v-list-group>
         <v-divider class="my-4" />
         <!-- Deal Management -->
-        <v-list-item to="/deals" link @click="closeDrawer">
+        <v-list-item
+          to="/deals"
+          link
+          @click="closeDrawer"
+        >
           <template #prepend>
-            <v-icon size="20">mdi-handshake-outline</v-icon>
+            <v-icon size="20">
+              mdi-handshake-outline
+            </v-icon>
           </template>
           <v-list-item-title>Deal Management</v-list-item-title>
         </v-list-item>
         <v-divider class="my-4" />
         <!-- News -->
-        <v-list-item to="/news" link @click="closeDrawer">
+        <v-list-item
+          to="/news"
+          link
+          @click="closeDrawer"
+        >
           <template #prepend>
-            <v-icon size="20">mdi-newspaper</v-icon>
+            <v-icon size="20">
+              mdi-newspaper
+            </v-icon>
           </template>
           <v-list-item-title>News</v-list-item-title>
         </v-list-item>
         <v-divider class="my-4" />
         <!-- Settings -->
-        <v-list-item to="/settings" link @click="closeDrawer">
+        <v-list-item
+          to="/settings"
+          link
+          @click="closeDrawer"
+        >
           <template #prepend>
-            <v-icon size="20">mdi-cog-box</v-icon>
+            <v-icon size="20">
+              mdi-cog-box
+            </v-icon>
           </template>
           <v-list-item-title>Settings</v-list-item-title>
         </v-list-item>
@@ -188,7 +280,7 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
               v-model="isDarkTheme"
               inset
               @change="toggleTheme"
-            ></v-switch>
+            />
           </template>
         </v-list-item>
       </v-list>

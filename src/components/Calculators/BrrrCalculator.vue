@@ -13,7 +13,7 @@ const interestRate = ref(0)
 const loanTerm = ref(0)
 
 const totalInitialInvestment = computed(
-  () => purchasePrice.value + rehabCosts.value
+  () => purchasePrice.value + rehabCosts.value,
 )
 
 const newLoanAmount = computed(() => (arv.value * refiLtv.value) / 100)
@@ -21,7 +21,7 @@ const newLoanAmount = computed(() => (arv.value * refiLtv.value) / 100)
 const equityCaptured = computed(() => arv.value - newLoanAmount.value)
 
 const cashOutAmount = computed(
-  () => newLoanAmount.value - totalInitialInvestment.value - refiCosts.value
+  () => newLoanAmount.value - totalInitialInvestment.value - refiCosts.value,
 )
 
 const monthlyMortgage = computed(() => {
@@ -58,9 +58,19 @@ const toUSD = val =>
 <template>
   <v-card class="pa-4 mobile-card">
     <!-- Results -->
-    <v-row dense class="mb-2">
-      <v-col cols="12" md="6">
-        <v-sheet color="info" class="pa-3" rounded>
+    <v-row
+      dense
+      class="mb-2"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="info"
+          class="pa-3"
+          rounded
+        >
           <strong>Total Initial Investment:</strong>
           {{ toUSD(totalInitialInvestment) }}
           <br />
@@ -68,8 +78,15 @@ const toUSD = val =>
           {{ toUSD(newLoanAmount) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Equity Captured:</strong>
           {{ toUSD(equityCaptured) }}
           <br />
@@ -77,8 +94,15 @@ const toUSD = val =>
           {{ toUSD(cashOutAmount) }}
         </v-sheet>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-sheet color="success" class="pa-3" rounded>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-sheet
+          color="success"
+          class="pa-3"
+          rounded
+        >
           <strong>Monthly Cash Flow:</strong>
           {{ toUSD(monthlyCashFlow) }}
           <br />
@@ -91,28 +115,40 @@ const toUSD = val =>
     <v-divider class="my-4" />
     <v-row dense>
       <!-- Deal Inputs -->
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="purchasePrice"
           label="Purchase Price"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="rehabCosts"
           label="Rehab Costs"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="arv"
           label="After Repair Value (ARV)"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="refiLtv"
           label="Refinance LTV (%)"
@@ -121,36 +157,54 @@ const toUSD = val =>
       </v-col>
 
       <!-- Rental and Refi -->
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="monthlyRent"
           label="Monthly Rent"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="monthlyExpenses"
           label="Monthly Expenses (taxes, insurance, etc.)"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="refiCosts"
           label="Refinance Closing Costs"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="interestRate"
           label="New Loan Interest Rate (%)"
           suffix="%"
         />
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field v-model.number="loanTerm" label="Loan Term (years)" />
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-text-field
+          v-model.number="loanTerm"
+          label="Loan Term (years)"
+        />
       </v-col>
     </v-row>
   </v-card>

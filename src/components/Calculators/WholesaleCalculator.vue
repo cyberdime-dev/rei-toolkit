@@ -11,7 +11,7 @@ const buyerPaysClosing = ref('Yes')
 
 // Buyer Offer Price (what they'd pay for this flip)
 const buyerOfferPrice = computed(
-  () => arv.value * ((100 - buyerDiscount.value) / 100) - repairEstimate.value
+  () => arv.value * ((100 - buyerDiscount.value) / 100) - repairEstimate.value,
 )
 
 // Max Allowable Offer (MAO) = Buyer offer - assignment fee - closing costs (if not paid by buyer)
@@ -19,7 +19,7 @@ const maxAllowableOffer = computed(
   () =>
     buyerOfferPrice.value -
     assignmentFee.value -
-    (buyerPaysClosing.value === 'Yes' ? 0 : closingCosts.value)
+    (buyerPaysClosing.value === 'Yes' ? 0 : closingCosts.value),
 )
 
 // Spread = MAO - what you're under contract for
@@ -38,9 +38,19 @@ const toUSD = val =>
   <v-card class="pa-4 mobile-card">
     <v-row dense>
       <!-- Outputs -->
-      <v-row dense class="mb-2">
-        <v-col cols="12" md="6">
-          <v-sheet color="info" class="pa-3" rounded>
+      <v-row
+        dense
+        class="mb-2"
+      >
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-sheet
+            color="info"
+            class="pa-3"
+            rounded
+          >
             <strong>End Buyer Offer Price:</strong>
             {{ toUSD(buyerOfferPrice) }}
             <br />
@@ -48,7 +58,10 @@ const toUSD = val =>
             {{ toUSD(maxAllowableOffer) }}
           </v-sheet>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col
+          cols="12"
+          md="6"
+        >
           <v-sheet
             :color="isAssignable ? 'success' : 'error'"
             class="pa-3"
@@ -67,49 +80,70 @@ const toUSD = val =>
 
       <v-divider class="my-4" />
       <!-- Inputs -->
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="contractPrice"
           label="Seller Contract Price"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="repairEstimate"
           label="Repair Estimate"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="arv"
           label="After Repair Value (ARV)"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="buyerDiscount"
           label="End Buyer Discount %"
           suffix="%"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="assignmentFee"
           label="Your Assignment Fee"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-text-field
           v-model.number="closingCosts"
           label="Closing Costs (optional)"
           prefix="$"
         />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col
+        cols="12"
+        sm="6"
+      >
         <v-select
           v-model="buyerPaysClosing"
           :items="['Yes', 'No']"

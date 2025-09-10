@@ -97,10 +97,18 @@ onUnmounted(() => {
 
 <template>
   <v-card class="pa-4 max-w-md mx-auto mobile-card">
-    <div v-if="history.length" class="mb-2">
+    <div
+      v-if="history.length"
+      class="mb-2"
+    >
       <v-list density="compact">
-        <v-list-item v-for="(item, idx) in history.slice(0, 5)" :key="idx">
-          <v-list-item-title class="text-caption">{{ item }}</v-list-item-title>
+        <v-list-item
+          v-for="(item, idx) in history.slice(0, 5)"
+          :key="idx"
+        >
+          <v-list-item-title class="text-caption">
+            {{ item }}
+          </v-list-item-title>
         </v-list-item>
       </v-list>
       <v-divider class="mb-2" />
@@ -113,7 +121,11 @@ onUnmounted(() => {
       bg-color="light-blue-lighten-4"
     />
     <v-row dense>
-      <v-col v-for="button in buttons" :key="button.label" cols="3">
+      <v-col
+        v-for="button in buttons"
+        :key="button.label"
+        cols="3"
+      >
         <v-btn
           block
           :color="
@@ -128,7 +140,12 @@ onUnmounted(() => {
       </v-col>
     </v-row>
 
-    <v-btn block color="deep-orange lighten-1" class="mt-2" @click="clear">
+    <v-btn
+      block
+      color="deep-orange lighten-1"
+      class="mt-2"
+      @click="clear"
+    >
       Clear
     </v-btn>
   </v-card>

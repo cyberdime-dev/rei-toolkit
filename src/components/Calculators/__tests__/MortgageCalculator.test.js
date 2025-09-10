@@ -88,11 +88,11 @@ describe('MortgageCalculator', () => {
     const propertyTaxField = textFields.find(
       field =>
         field.attributes('label')?.includes('Property Tax') ||
-        field.attributes('label')?.includes('Tax')
+        field.attributes('label')?.includes('Tax'),
     )
 
     const insuranceField = textFields.find(field =>
-      field.attributes('label')?.includes('Insurance')
+      field.attributes('label')?.includes('Insurance'),
     )
 
     if (propertyTaxField) {

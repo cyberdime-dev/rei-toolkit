@@ -5,7 +5,10 @@
         <h1>Deal Management</h1>
         <v-card>
           <v-list>
-            <v-list-item v-for="deal in deals" :key="deal.id">
+            <v-list-item
+              v-for="deal in deals"
+              :key="deal.id"
+            >
               <v-list-item-title>{{ deal.name }}</v-list-item-title>
               <v-list-item-subtitle>
                 Added: {{ new Date(deal.date).toLocaleDateString() }}
