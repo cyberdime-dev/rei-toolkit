@@ -18,19 +18,19 @@ describe('MortgageCalculator', () => {
     // Set home price
     const homePriceField = wrapper.findAll('v-text-field')[0]
     await homePriceField.setValue('300000')
-    
+
     // Set down payment
     const downPaymentField = wrapper.findAll('v-text-field')[1]
     await downPaymentField.setValue('60000')
-    
+
     // Set interest rate
     const interestRateField = wrapper.findAll('v-text-field')[2]
     await interestRateField.setValue('6.5')
-    
+
     // Set loan term
     const loanTermField = wrapper.findAll('v-text-field')[3]
     await loanTermField.setValue('30')
-    
+
     // Check if monthly payment is calculated
     // The exact calculation depends on the component implementation
     // This test verifies that the component responds to input changes
@@ -43,7 +43,7 @@ describe('MortgageCalculator', () => {
   it('handles decimal inputs correctly', async () => {
     const homePriceField = wrapper.findAll('v-text-field')[0]
     await homePriceField.setValue('250000.50')
-    
+
     expect(homePriceField.props('modelValue')).toBe('250000.50')
   })
 
@@ -51,7 +51,7 @@ describe('MortgageCalculator', () => {
     // Test with negative values
     const homePriceField = wrapper.findAll('v-text-field')[0]
     await homePriceField.setValue('-1000')
-    
+
     // Component should handle negative values appropriately
     // This depends on the component's validation logic
     expect(homePriceField.props('modelValue')).toBe('-1000')
@@ -60,15 +60,15 @@ describe('MortgageCalculator', () => {
   it('updates calculations when inputs change', async () => {
     const homePriceField = wrapper.findAll('v-text-field')[0]
     const downPaymentField = wrapper.findAll('v-text-field')[1]
-    
+
     // Initial values
     await homePriceField.setValue('200000')
     await downPaymentField.setValue('40000')
-    
+
     // Change values
     await homePriceField.setValue('250000')
     await downPaymentField.setValue('50000')
-    
+
     expect(homePriceField.props('modelValue')).toBe('250000')
     expect(downPaymentField.props('modelValue')).toBe('50000')
   })
@@ -83,22 +83,23 @@ describe('MortgageCalculator', () => {
 
   it('handles property tax and insurance inputs', async () => {
     const textFields = wrapper.findAll('v-text-field')
-    
+
     // Find property tax and insurance fields (assuming they exist)
-    const propertyTaxField = textFields.find(field => 
-      field.attributes('label')?.includes('Property Tax') || 
-      field.attributes('label')?.includes('Tax')
+    const propertyTaxField = textFields.find(
+      field =>
+        field.attributes('label')?.includes('Property Tax') ||
+        field.attributes('label')?.includes('Tax')
     )
-    
-    const insuranceField = textFields.find(field => 
+
+    const insuranceField = textFields.find(field =>
       field.attributes('label')?.includes('Insurance')
     )
-    
+
     if (propertyTaxField) {
       await propertyTaxField.setValue('3000')
       expect(propertyTaxField.props('modelValue')).toBe('3000')
     }
-    
+
     if (insuranceField) {
       await insuranceField.setValue('1200')
       expect(insuranceField.props('modelValue')).toBe('1200')

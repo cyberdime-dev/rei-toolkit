@@ -1,11 +1,9 @@
 import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
-import prettier from '@vue/eslint-config-prettier'
 
 export default [
   js.configs.recommended,
   ...vue.configs['flat/recommended'],
-  prettier,
   {
     languageOptions: {
       ecmaVersion: 2022,
@@ -29,6 +27,20 @@ export default [
       },
     },
     rules: {
+      // Formatting rules
+      semi: ['error', 'never'],
+      'comma-dangle': ['error', 'always-multiline'],
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'always',
+            normal: 'always',
+            component: 'always',
+          },
+        },
+      ],
+
       // Vue specific rules
       'vue/multi-word-component-names': 'off',
       'vue/no-unused-vars': 'error',

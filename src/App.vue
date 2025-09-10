@@ -49,19 +49,23 @@ onUnmounted(() => {
 // Dynamic page title based on route
 const route = useRoute()
 const routeTitles = {
-  '/mdi-calculator/standard': 'Calculator',
-  '/mdi-calculator/mortgage': 'Mortgage',
-  '/mdi-calculator/fix-flip': 'Fix & Flip',
-  '/mdi-calculator/buy-hold': 'Buy & Hold',
-  '/mdi-calculator/brrr': 'BRRR',
-  '/mdi-calculator/wholesale': 'Wholesale',
-  '/mdi-calculator/noi': 'Net Operating Income',
-  '/mdi-calculator/cash-on-cash': 'Cash-on-Cash',
-  '/mdi-calculator/cashflow': 'Cashflow',
-  '/mdi-calculator/cap-rate': 'Cap Rate',
+  '/calculator/standard': 'Calculator',
+  '/calculator/mortgage': 'Mortgage',
+  '/calculator/fix-flip': 'Fix & Flip',
+  '/calculator/buy-hold': 'Buy & Hold',
+  '/calculator/brrr': 'BRRR',
+  '/calculator/wholesale': 'Wholesale',
+  '/calculator/noi': 'Net Operating Income',
+  '/calculator/cash-on-cash': 'Cash-on-Cash',
+  '/calculator/cashflow': 'Cashflow',
+  '/calculator/cap-rate': 'Cap Rate',
+  '/deals': 'My Deals',
+  '/deals/new': 'Add New Deal',
+  '/news': 'Market Updates',
+  '/settings': 'Preferences',
 }
 
-const isCalculatorRoute = computed(() => route.path.startsWith('/mdi-calculator')) // Check if current route for icon
+const isCalculatorRoute = computed(() => route.path.startsWith('/calculator')) // Check if current route for icon
 const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page title based on current route
 </script>
 
@@ -151,38 +155,29 @@ const pageTitle = computed(() => routeTitles[route.path] || '') // Compute page 
           </v-list-item>
         </v-list-group>
         <v-divider class="my-4" />
-        <!-- Deal Management Group -->
-        <v-list-group>
-          <template #activator>
-            <v-list-item-title>
-              <v-icon class="mx-1" size="20">mdi-handshake-outline</v-icon>
-              Deal Management
-            </v-list-item-title>
+        <!-- Deal Management -->
+        <v-list-item to="/deals" link @click="closeDrawer">
+          <template #prepend>
+            <v-icon size="20">mdi-handshake-outline</v-icon>
           </template>
-        </v-list-group>
+          <v-list-item-title>Deal Management</v-list-item-title>
+        </v-list-item>
         <v-divider class="my-4" />
-        <!-- News Group -->
-        <v-list-group>
-          <template #activator>
-            <v-list-item-title>
-              <v-icon class="mx-1" size="20">mdi-newspaper</v-icon>
-              News
-            </v-list-item-title>
+        <!-- News -->
+        <v-list-item to="/news" link @click="closeDrawer">
+          <template #prepend>
+            <v-icon size="20">mdi-newspaper</v-icon>
           </template>
-          <!-- RE Market News -->
-        </v-list-group>
+          <v-list-item-title>News</v-list-item-title>
+        </v-list-item>
         <v-divider class="my-4" />
-        <!-- User Group -->
-        <v-list-group>
-          <template #activator>
-            <v-list-item-title>
-              <v-icon class="mx-1" size="20">mdi-cog-box</v-icon>
-              Settings
-            </v-list-item-title>
+        <!-- Settings -->
+        <v-list-item to="/settings" link @click="closeDrawer">
+          <template #prepend>
+            <v-icon size="20">mdi-cog-box</v-icon>
           </template>
-          <!-- Preferences: Select Default Starting Screen. -->
-          <!-- Login / Log Out -->
-        </v-list-group>
+          <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item>
       </v-list>
 
       <v-list class="mt-auto">
