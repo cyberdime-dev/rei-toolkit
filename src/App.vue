@@ -74,9 +74,6 @@ async function initAuth() {
   try {
     isLoading.value = true
     
-    // Initialize Firebase Auth
-    await authService.initialize()
-    
     // Set up auth state listener
     authService.onAuthStateChanged((user) => {
       isAuthenticated.value = !!user

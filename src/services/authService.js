@@ -172,6 +172,11 @@ export class FirebaseAuthService {
     }
   }
 
+  // Alias for UI compatibility
+  async registerWithEmail(email, password, options = {}) {
+    return this.signUpWithEmail(email, password, options.displayName)
+  }
+
   async signInWithEmail(email, password) {
     try {
       console.log('Signing in with email:', email)
@@ -313,6 +318,11 @@ export class FirebaseAuthService {
         code: error.code,
       }
     }
+  }
+
+  // Alias for UI compatibility
+  async startTrialMode() {
+    return this.signInAnonymously()
   }
 
   /**
@@ -593,6 +603,11 @@ export class FirebaseAuthService {
         code: error.code,
       }
     }
+  }
+
+  // Alias for UI compatibility
+  async sendEmailVerification() {
+    return this.resendEmailVerification()
   }
 
   /**
