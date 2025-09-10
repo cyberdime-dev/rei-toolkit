@@ -2,7 +2,6 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import AppHeader from './components/Layout/AppHeader.vue'
 import AppNavigation from './components/Layout/AppNavigation.vue'
-import ThemeToggle from './components/Layout/ThemeToggle.vue'
 import '@mdi/font/css/materialdesignicons.css'
 
 const drawer = ref(false)
@@ -48,13 +47,6 @@ onUnmounted(() => {
     <v-main class="pa-4">
       <router-view />
     </v-main>
-
-    <!-- Theme Toggle in Footer -->
-    <v-footer app>
-      <v-row justify="center">
-        <ThemeToggle />
-      </v-row>
-    </v-footer>
   </v-app>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import ThemeToggle from './ThemeToggle.vue'
 
 const props = defineProps({
   drawer: {
@@ -184,6 +185,19 @@ const expandedGroups = ref(['tools', 'residential', 'commercial']) // Keep group
           <v-icon>mdi-cog</v-icon>
         </template>
         <v-list-item-title>Settings</v-list-item-title>
+      </v-list-item>
+
+      <v-divider class="my-2" />
+
+      <!-- Theme Toggle -->
+      <v-list-item>
+        <template #prepend>
+          <v-icon>mdi-theme-light-dark</v-icon>
+        </template>
+        <v-list-item-title>Theme</v-list-item-title>
+        <template #append>
+          <ThemeToggle />
+        </template>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
