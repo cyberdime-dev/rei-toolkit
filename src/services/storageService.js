@@ -5,7 +5,7 @@
  * - Error handling and graceful fallbacks
  * - Data validation and schema enforcement
  * - Storage quota monitoring and management
- * - Future Firebase migration preparation
+ * - Cloud sync integration for premium users
  * - Consistent API across the application
  */
 
@@ -90,12 +90,35 @@ const VALIDATION_SCHEMAS = {
  */
 class StorageService {
   constructor() {
-    this.isAvailable = this.checkStorageAvailability()
-    this.fallbackData = new Map() // In-memory fallback for when localStorage fails
-    this.storageEventListeners = new Set()
+    this.isAvailable = false
+    this.fallbackStorage = new Map()
+    this.eventListeners = []
+    this.cloudSyncService = null // Will be injected to avoid circular dependency
     
-    // Initialize storage monitoring
-    this.initializeStorageMonitoring()
+    this.init()
+  }
+  
+  /**
+   * Set cloud sync service reference (called after service initialization)
+   */
+  setCloudSyncService(cloudSyncService) {
+    this.cloudSyncService = cloudSyncService
+  }
+  
+  /**
+   * Check if cloud sync should be used for this data type
+   */
+  shouldUseCloudSync(key) {
+    if (!this.cloudSyncService) return false
+    
+    // Only sync specific data types for premium users
+    const cloudSyncKeys = [
+      STORAGE_KEYS.DEALS_DATA,
+      STORAGE_KEYS.USER_SETTINGS,
+      STORAGE_KEYS.CALCULATOR_HISTORY,
+    ]
+    
+    return cloudSyncKeys.includes(key) && this.cloudSyncService.isCloudSyncAvailable()
   }
 
   /**

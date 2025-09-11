@@ -68,6 +68,12 @@ export class AuthGuardService {
    * Check if user can access a route
    */
   canAccess(to) {
+    // Safety check for authService
+    if (!this.authService) {
+      console.warn('AuthService not initialized, allowing navigation')
+      return { allowed: true }
+    }
+
     const user = this.authService.getCurrentUser()
     const userProfile = this.authService.getUserProfile()
     const isAuthenticated = this.authService.isAuthenticated()
@@ -140,7 +146,7 @@ export class AuthGuardService {
    * Check if route requires premium account
    */
   requiresPremium(path) {
-    return GUARD_CONFIG.PREMIUM_ROUTES.some(route => 
+    return GUARD_CONFIG.PREMIUM_ONLY_ROUTES.some(route => 
       path.startsWith(route),
     )
   }
@@ -369,14 +375,20 @@ export class AuthGuardService {
    */
   createRouterGuard() {
     return (to, from, next) => {
-      const result = this.canAccess(to, from)
-      
-      if (result.allowed) {
+      try {
+        const result = this.canAccess(to)
+        
+        if (result.allowed) {
+          next()
+        } else {
+          const redirectRoute = this.getAuthRedirect(result.reason, to.fullPath)
+          console.log('Redirecting to:', redirectRoute, 'Reason:', result.reason)
+          next(redirectRoute)
+        }
+      } catch (error) {
+        console.error('Error in auth guard:', error)
+        // In case of error, allow navigation to prevent app break
         next()
-      } else {
-        const redirectRoute = this.getAuthRedirect(result.reason, to.fullPath)
-        console.log('Redirecting to:', redirectRoute, 'Reason:', result.reason)
-        next(redirectRoute)
       }
     }
   }

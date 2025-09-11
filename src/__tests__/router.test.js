@@ -40,7 +40,7 @@ const createTestRouter = () => {
 
 describe('Router Integration Tests', () => {
   let router
-  let wrapper
+  let wrapper // eslint-disable-line no-unused-vars
 
   beforeEach(async () => {
     router = createTestRouter()

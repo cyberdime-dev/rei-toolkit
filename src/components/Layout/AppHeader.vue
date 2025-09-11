@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import SyncStatusIndicator from './SyncStatusIndicator.vue'
 
 defineProps({
   isDesktop: {
@@ -66,6 +67,14 @@ const pageTitle = computed(() => routeTitles[route.path] || '')
         </span>
         <span v-if="pageTitle">{{ pageTitle }}</span>
       </v-app-bar-title>
+      
+      <v-spacer />
+      
+      <!-- Sync Status Indicator for Desktop -->
+      <SyncStatusIndicator
+        :show-text="true"
+        class="me-3"
+      />
     </template>
 
     <!-- Mobile View -->
@@ -79,7 +88,14 @@ const pageTitle = computed(() => routeTitles[route.path] || '')
         </span>
         <span v-if="pageTitle">{{ pageTitle }}</span>
       </v-app-bar-title>
-      <v-spacer />
+      
+      <!-- Sync Status Indicator for Mobile -->
+      <SyncStatusIndicator
+        :show-text="false"
+        :compact="true"
+        class="me-2"
+      />
+      
       <v-btn
         icon
         @click="onToggleDrawer"

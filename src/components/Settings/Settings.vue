@@ -279,6 +279,9 @@
               </v-card-text>
             </v-card>
 
+            <!-- Cloud Sync Settings -->
+            <SyncSettings class="mb-4" />
+
             <!-- Notifications -->
             <v-card class="mb-4">
               <v-card-title class="d-flex align-center">
@@ -480,6 +483,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { useTheme } from 'vuetify'
 import dealManager from '@/utils/dealManager.js'
 import newsManager from '@/utils/newsManager.js'
+import SyncSettings from './SyncSettings.vue'
 
 const theme = useTheme()
 

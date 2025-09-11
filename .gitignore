@@ -271,6 +271,7 @@ firebase-users-export.json
 *.tsbuildinfo
 .wireit/
 .history/
+/dev-docs/
 
 # AI and ML cache
 .huggingface/

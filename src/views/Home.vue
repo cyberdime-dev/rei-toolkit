@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -8,7 +8,7 @@ const router = useRouter()
 const welcomeData = ref({
   title: 'Welcome to REI Toolkit',
   subtitle: 'Your comprehensive real estate investment analysis platform',
-  description: 'Calculate returns, analyze deals, and make informed investment decisions with our suite of professional-grade calculators.'
+  description: 'Calculate returns, analyze deals, and make informed investment decisions with our suite of professional-grade calculators.',
 })
 
 // Calculator categories
@@ -18,24 +18,24 @@ const calculatorCategories = ref([
     icon: 'mdi-home',
     color: 'primary',
     calculators: [
-      { name: 'Mortgage Calculator', route: '/calculators/mortgage', icon: 'mdi-calculator', description: 'Calculate monthly payments and loan details' },
-      { name: 'Fix & Flip', route: '/calculators/fix-and-flip', icon: 'mdi-hammer-wrench', description: 'Analyze renovation project profitability' },
-      { name: 'Wholesale', route: '/calculators/wholesale', icon: 'mdi-handshake', description: 'Calculate wholesale deal margins' },
-      { name: 'Buy & Hold', route: '/calculators/buy-and-hold', icon: 'mdi-key', description: 'Long-term rental property analysis' },
-      { name: 'BRRR', route: '/calculators/brrr', icon: 'mdi-repeat', description: 'Buy, Rehab, Rent, Refinance strategy' }
-    ]
+      { name: 'Mortgage Calculator', route: '/calculator/mortgage', icon: 'mdi-calculator', description: 'Calculate monthly payments and loan details' },
+      { name: 'Fix & Flip', route: '/calculator/fix-and-flip', icon: 'mdi-hammer-wrench', description: 'Analyze renovation project profitability' },
+      { name: 'Wholesale', route: '/calculator/wholesale', icon: 'mdi-handshake', description: 'Calculate wholesale deal margins' },
+      { name: 'Buy & Hold', route: '/calculator/buy-and-hold', icon: 'mdi-key', description: 'Long-term rental property analysis' },
+      { name: 'BRRR', route: '/calculator/brrr', icon: 'mdi-repeat', description: 'Buy, Rehab, Rent, Refinance strategy' },
+    ],
   },
   {
     title: 'Commercial Calculators',
     icon: 'mdi-office-building',
     color: 'secondary',
     calculators: [
-      { name: 'NOI Calculator', route: '/calculators/noi', icon: 'mdi-chart-line', description: 'Net Operating Income analysis' },
-      { name: 'Cash-on-Cash', route: '/calculators/cash-on-cash', icon: 'mdi-cash', description: 'Return on cash invested' },
-      { name: 'Cashflow', route: '/calculators/cashflow', icon: 'mdi-trending-up', description: 'Property cashflow analysis' },
-      { name: 'Cap Rate', route: '/calculators/cap-rate', icon: 'mdi-percent', description: 'Capitalization rate calculator' }
-    ]
-  }
+      { name: 'NOI Calculator', route: '/calculator/noi', icon: 'mdi-chart-line', description: 'Net Operating Income analysis' },
+      { name: 'Cash-on-Cash', route: '/calculator/cash-on-cash', icon: 'mdi-cash', description: 'Return on cash invested' },
+      { name: 'Cashflow', route: '/calculator/cashflow', icon: 'mdi-trending-up', description: 'Property cashflow analysis' },
+      { name: 'Cap Rate', route: '/calculator/cap-rate', icon: 'mdi-percent', description: 'Capitalization rate calculator' },
+    ],
+  },
 ])
 
 // Quick stats
@@ -43,20 +43,32 @@ const quickStats = ref([
   { title: 'Calculators Available', value: '9+', icon: 'mdi-calculator', color: 'primary' },
   { title: 'Investment Strategies', value: '5', icon: 'mdi-strategy', color: 'secondary' },
   { title: 'Deal Analysis Tools', value: 'Pro', icon: 'mdi-chart-areaspline', color: 'success' },
-  { title: 'Property Types', value: 'All', icon: 'mdi-domain', color: 'info' }
+  { title: 'Property Types', value: 'All', icon: 'mdi-domain', color: 'info' },
 ])
 
 // Navigation functions
 function navigateToCalculator(route) {
-  router.push(route)
+  try {
+    router.push(route)
+  } catch (error) {
+    console.error('Navigation error:', error)
+  }
 }
 
 function navigateToDeals() {
-  router.push('/deals')
+  try {
+    router.push('/deals')
+  } catch (error) {
+    console.error('Navigation error:', error)
+  }
 }
 
 function navigateToNews() {
-  router.push('/news')
+  try {
+    router.push('/news')
+  } catch (error) {
+    console.error('Navigation error:', error)
+  }
 }
 </script>
 
@@ -72,7 +84,10 @@ function navigateToNews() {
           <h2 class="headline font-weight-regular mb-4 text-medium-emphasis">
             {{ welcomeData.subtitle }}
           </h2>
-          <p class="body-1 mb-6 mx-auto" style="max-width: 600px;">
+          <p
+            class="body-1 mb-6 mx-auto"
+            style="max-width: 600px;"
+          >
             {{ welcomeData.description }}
           </p>
           
@@ -81,9 +96,11 @@ function navigateToNews() {
               color="primary"
               size="large"
               class="mr-4 mb-2"
-              @click="navigateToCalculator('/calculators/standard')"
+              @click="navigateToCalculator('/calculator/standard')"
             >
-              <v-icon left>mdi-calculator</v-icon>
+              <v-icon left>
+                mdi-calculator
+              </v-icon>
               Start Calculating
             </v-btn>
             <v-btn
@@ -92,7 +109,9 @@ function navigateToNews() {
               class="mb-2"
               @click="navigateToDeals()"
             >
-              <v-icon left>mdi-briefcase</v-icon>
+              <v-icon left>
+                mdi-briefcase
+              </v-icon>
               Manage Deals
             </v-btn>
           </div>
@@ -109,7 +128,10 @@ function navigateToNews() {
         sm="6"
         md="3"
       >
-        <v-card class="stat-card h-100" elevation="2">
+        <v-card
+          class="stat-card h-100"
+          elevation="2"
+        >
           <v-card-text class="text-center">
             <v-icon
               :color="stat.color"
@@ -187,7 +209,12 @@ function navigateToNews() {
                     variant="text"
                     size="small"
                   >
-                    <v-icon left size="small">mdi-launch</v-icon>
+                    <v-icon
+                      left
+                      size="small"
+                    >
+                      mdi-launch
+                    </v-icon>
                     Open Calculator
                   </v-btn>
                 </v-card-actions>
@@ -202,12 +229,22 @@ function navigateToNews() {
     <v-row class="additional-tools">
       <v-col cols="12">
         <h3 class="text-h5 font-weight-bold mb-4">
-          <v-icon color="info" size="32" class="mr-3">mdi-tools</v-icon>
+          <v-icon
+            color="info"
+            size="32"
+            class="mr-3"
+          >
+            mdi-tools
+          </v-icon>
           Additional Tools
         </h3>
         
         <v-row>
-          <v-col cols="12" sm="6" md="4">
+          <v-col
+            cols="12"
+            sm="6"
+            md="4"
+          >
             <v-card
               class="tool-card h-100"
               elevation="2"
@@ -215,7 +252,11 @@ function navigateToNews() {
               @click="navigateToDeals()"
             >
               <v-card-text class="text-center">
-                <v-icon color="info" size="40" class="mb-3">
+                <v-icon
+                  color="info"
+                  size="40"
+                  class="mb-3"
+                >
                   mdi-briefcase
                 </v-icon>
                 <div class="text-h6 font-weight-bold mb-2">
@@ -228,7 +269,11 @@ function navigateToNews() {
             </v-card>
           </v-col>
           
-          <v-col cols="12" sm="6" md="4">
+          <v-col
+            cols="12"
+            sm="6"
+            md="4"
+          >
             <v-card
               class="tool-card h-100"
               elevation="2"
@@ -236,7 +281,11 @@ function navigateToNews() {
               @click="navigateToNews()"
             >
               <v-card-text class="text-center">
-                <v-icon color="warning" size="40" class="mb-3">
+                <v-icon
+                  color="warning"
+                  size="40"
+                  class="mb-3"
+                >
                   mdi-newspaper
                 </v-icon>
                 <div class="text-h6 font-weight-bold mb-2">
@@ -249,15 +298,23 @@ function navigateToNews() {
             </v-card>
           </v-col>
           
-          <v-col cols="12" sm="6" md="4">
+          <v-col
+            cols="12"
+            sm="6"
+            md="4"
+          >
             <v-card
               class="tool-card h-100"
               elevation="2"
               hover
-              @click="navigateToCalculator('/calculators/standard')"
+              @click="navigateToCalculator('/calculator/standard')"
             >
               <v-card-text class="text-center">
-                <v-icon color="success" size="40" class="mb-3">
+                <v-icon
+                  color="success"
+                  size="40"
+                  class="mb-3"
+                >
                   mdi-calculator-variant
                 </v-icon>
                 <div class="text-h6 font-weight-bold mb-2">
