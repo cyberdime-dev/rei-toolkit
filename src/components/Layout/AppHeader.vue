@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import SyncStatusIndicator from './SyncStatusIndicator.vue'
+import PlanBadge from './PlanBadge.vue'
+import LocalModeIndicator from './LocalModeIndicator.vue'
 
 defineProps({
   isDesktop: {
@@ -58,6 +60,7 @@ const pageTitle = computed(() => routeTitles[route.path] || '')
       </v-btn>
       <v-app-bar-title>
         REI Tools
+        <LocalModeIndicator class="ms-2" />
         <span v-if="isCalculatorRoute">
           |
           <v-icon
@@ -69,6 +72,12 @@ const pageTitle = computed(() => routeTitles[route.path] || '')
       </v-app-bar-title>
       
       <v-spacer />
+      
+      <!-- Plan Badge for Desktop -->
+      <PlanBadge
+        size="small"
+        class="me-3"
+      />
       
       <!-- Sync Status Indicator for Desktop -->
       <SyncStatusIndicator
@@ -88,6 +97,12 @@ const pageTitle = computed(() => routeTitles[route.path] || '')
         </span>
         <span v-if="pageTitle">{{ pageTitle }}</span>
       </v-app-bar-title>
+      
+      <!-- Plan Badge for Mobile -->
+      <PlanBadge
+        size="x-small"
+        class="me-2"
+      />
       
       <!-- Sync Status Indicator for Mobile -->
       <SyncStatusIndicator
