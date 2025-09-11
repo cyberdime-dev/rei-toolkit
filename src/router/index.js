@@ -23,6 +23,8 @@ const CashOnCash = () =>
   import('@/components/Calculators/CashOnCashCalculator.vue')
 const Cashflow = () => import('@/components/Calculators/CashflowCalculator.vue')
 const CapRate = () => import('@/components/Calculators/CapRateCalculator.vue')
+const PricingView = () => import('@/views/PricingView.vue')
+const CheckoutSuccess = () => import('@/views/CheckoutSuccess.vue')
 const NotFound = () => import('@/components/NotFound.vue')
 
 const routes = [
@@ -32,6 +34,18 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: { requiresAuth: false },
+  },
+  { 
+    path: '/pricing', 
+    name: 'Pricing',
+    component: PricingView,
+    meta: { requiresAuth: false },
+  },
+  { 
+    path: '/checkout/success', 
+    name: 'CheckoutSuccess',
+    component: CheckoutSuccess,
+    meta: { requiresAuth: true },
   },
   { 
     path: '/login', 

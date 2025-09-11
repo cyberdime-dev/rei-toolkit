@@ -22,6 +22,11 @@ export const UserSchema = {
   isAnonymous: 'boolean',
   linkedAt: 'timestamp|null',
   
+  // Authentication & Role
+  authProvider: 'string', // 'email', 'google', 'github', 'anonymous'
+  role: 'string', // 'free', 'premium', 'admin'
+  mode: 'string', // 'local', 'cloud'
+  
   // User preferences
   preferences: {
     theme: 'string', // 'light', 'dark', 'auto'
@@ -29,6 +34,27 @@ export const UserSchema = {
     autoSave: 'boolean',
     defaultCurrency: 'string', // 'USD', 'EUR', etc.
     calculatorDefaults: 'object',
+  },
+  
+  // Subscription information
+  subscription: {
+    status: 'string', // 'none', 'active', 'past_due', 'canceled', 'unpaid'
+    plan: 'string', // 'free', 'pro', 'team'
+    stripeCustomerId: 'string|null',
+    stripeSubscriptionId: 'string|null',
+    currentPeriodStart: 'timestamp|null',
+    currentPeriodEnd: 'timestamp|null',
+    cancelAtPeriodEnd: 'boolean',
+    createdAt: 'timestamp|null',
+    updatedAt: 'timestamp|null',
+  },
+  
+  // Usage tracking
+  usage: {
+    dealsCount: 'number',
+    calculationsCount: 'number',
+    lastCalculationAt: 'timestamp|null',
+    lastDealAt: 'timestamp|null',
   },
   
   // Metadata

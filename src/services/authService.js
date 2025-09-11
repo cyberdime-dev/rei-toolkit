@@ -410,10 +410,27 @@ export class FirebaseAuthService {
           },
         },
         
+        // Subscription information (default to free)
+        subscription: {
+          status: 'none',
+          plan: 'free',
+          stripeCustomerId: null,
+          stripeSubscriptionId: null,
+          currentPeriodStart: null,
+          currentPeriodEnd: null,
+          cancelAtPeriodEnd: false,
+          createdAt: null,
+          updatedAt: null,
+        },
+        
         // Usage statistics
         usage: {
-          totalCalculations: 0,
-          totalDeals: 0,
+          dealsCount: 0,
+          calculationsCount: 0,
+          lastCalculationAt: null,
+          lastDealAt: null,
+          totalCalculations: 0, // backward compatibility
+          totalDeals: 0, // backward compatibility
           lastActivity: new Date().toISOString(),
         },
       }
@@ -663,7 +680,8 @@ export class FirebaseAuthService {
   }
 
   isPremiumUser() {
-    return this.userProfile?.role === AUTH_CONFIG.USER_ROLES.PREMIUM
+    const subscription = this.userProfile?.subscription
+    return subscription?.status === 'active' && ['pro', 'team'].includes(subscription.plan)
   }
 
   getFreeLimitations() {
@@ -748,6 +766,63 @@ export class FirebaseAuthService {
   }
 
   /**
+   * Subscription Management
+   */
+  async updateSubscription(subscriptionData) {
+    try {
+      if (!this.currentUser) {
+        throw new Error('User not authenticated')
+      }
+
+      const userRef = doc(firestore, 'users', this.currentUser.uid)
+      const subscriptionUpdate = {
+        subscription: {
+          ...subscriptionData,
+          updatedAt: new Date().toISOString(),
+        },
+        updatedAt: new Date().toISOString(),
+      }
+
+      await updateDoc(userRef, subscriptionUpdate)
+      
+      // Update local profile
+      if (this.userProfile) {
+        this.userProfile.subscription = subscriptionUpdate.subscription
+        this.userProfile.updatedAt = subscriptionUpdate.updatedAt
+      }
+
+      console.log('Subscription updated successfully')
+      return { success: true }
+
+    } catch (error) {
+      console.error('Error updating subscription:', error)
+      return { success: false, error: error.message }
+    }
+  }
+
+  async getSubscription() {
+    return this.userProfile?.subscription || {
+      status: 'none',
+      plan: 'free',
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      currentPeriodStart: null,
+      currentPeriodEnd: null,
+      cancelAtPeriodEnd: false,
+      createdAt: null,
+      updatedAt: null,
+    }
+  }
+
+  getSubscriptionPlan() {
+    return this.userProfile?.subscription?.plan || 'free'
+  }
+
+  isSubscriptionActive() {
+    return this.userProfile?.subscription?.status === 'active'
+  }
+
+  /**
    * Cleanup
    */
   destroy() {
@@ -768,6 +843,12 @@ export const isAuthenticated = () => authService.isAuthenticated()
 export const isFreeUser = () => authService.isFreeUser()
 export const isPremiumUser = () => authService.isPremiumUser()
 export const getFreeLimitations = () => authService.getFreeLimitations()
+
+// Subscription management exports
+export const getSubscription = () => authService.getSubscription()
+export const getSubscriptionPlan = () => authService.getSubscriptionPlan()
+export const isSubscriptionActive = () => authService.isSubscriptionActive()
+export const updateSubscription = (data) => authService.updateSubscription(data)
 
 // Backward compatibility exports
 export const isTrialUser = () => authService.isFreeUser()

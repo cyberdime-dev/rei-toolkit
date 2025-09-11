@@ -51,6 +51,32 @@ const computedWidth = computed(() => {
       dense
       nav
     >
+      <!-- Home -->
+      <v-list-item
+        to="/"
+        link
+        @click="onCloseDrawer"
+      >
+        <template #prepend>
+          <v-icon>mdi-home</v-icon>
+        </template>
+        <v-list-item-title>Home</v-list-item-title>
+      </v-list-item>
+
+      <!-- Pricing -->
+      <v-list-item
+        to="/pricing"
+        link
+        @click="onCloseDrawer"
+      >
+        <template #prepend>
+          <v-icon>mdi-credit-card</v-icon>
+        </template>
+        <v-list-item-title>Pricing</v-list-item-title>
+      </v-list-item>
+
+      <v-divider class="my-2" />
+
       <!-- Tools Group -->
       <v-list-group
         value="tools"
@@ -69,7 +95,9 @@ const computedWidth = computed(() => {
           @click="onCloseDrawer"
         >
           <template #prepend>
-            <v-icon size="small">mdi-calculator</v-icon>
+            <v-icon size="small">
+              mdi-calculator
+            </v-icon>
           </template>
           <v-list-item-title>Standard Calculator</v-list-item-title>
         </v-list-item>
@@ -79,7 +107,9 @@ const computedWidth = computed(() => {
           <template #activator="{ props }">
             <v-list-item v-bind="props">
               <template #prepend>
-                <v-icon size="small">mdi-home</v-icon>
+                <v-icon size="small">
+                  mdi-home
+                </v-icon>
               </template>
               <v-list-item-title>Residential</v-list-item-title>
             </v-list-item>
@@ -127,7 +157,9 @@ const computedWidth = computed(() => {
           <template #activator="{ props }">
             <v-list-item v-bind="props">
               <template #prepend>
-                <v-icon size="small">mdi-office-building</v-icon>
+                <v-icon size="small">
+                  mdi-office-building
+                </v-icon>
               </template>
               <v-list-item-title>Commercial</v-list-item-title>
             </v-list-item>

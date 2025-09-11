@@ -2,15 +2,15 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   isDesktop: {
     type: Boolean,
-    required: true
+    required: true,
   },
   onToggleDrawer: {
     type: Function,
-    required: true
-  }
+    required: true,
+  },
 })
 
 // Dynamic page title based on route
@@ -30,6 +30,7 @@ const routeTitles = {
   '/deals/new': 'Add New Deal',
   '/news': 'Market Updates',
   '/settings': 'Preferences',
+  '/pricing': 'Pricing',
 }
 
 const isCalculatorRoute = computed(() => route.path.startsWith('/calculator'))
