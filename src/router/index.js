@@ -25,6 +25,7 @@ const Cashflow = () => import('@/components/Calculators/CashflowCalculator.vue')
 const CapRate = () => import('@/components/Calculators/CapRateCalculator.vue')
 const PricingView = () => import('@/views/PricingView.vue')
 const CheckoutSuccess = () => import('@/views/CheckoutSuccess.vue')
+const SharedReportViewer = () => import('@/components/SharedReportViewer.vue')
 const NotFound = () => import('@/components/NotFound.vue')
 
 const routes = [
@@ -46,6 +47,12 @@ const routes = [
     name: 'CheckoutSuccess',
     component: CheckoutSuccess,
     meta: { requiresAuth: true },
+  },
+  { 
+    path: '/shared-report/:reportId', 
+    name: 'SharedReport',
+    component: SharedReportViewer,
+    meta: { requiresAuth: false },
   },
   { 
     path: '/login', 

@@ -1,9 +1,11 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import ShareDialog from './ShareDialog.vue'
 
 const display = ref('')
 const history = ref([])
 const showHistory = ref(false)
+const showShareDialog = ref(false)
 
 const buttons = [
   { label: '7' },
@@ -167,6 +169,48 @@ const handleKeyPress = e => {
   }
 }
 
+// Sharing functionality
+const canShare = computed(() => {
+  return display.value && display.value !== 'Error' && display.value !== ''
+})
+
+const getCalculationData = () => {
+  if (!canShare.value) return null
+  
+  const lastCalculation = history.value[0]
+  if (!lastCalculation) return null
+  
+  const parts = lastCalculation.split(' = ')
+  if (parts.length !== 2) return null
+  
+  return {
+    type: 'standard',
+    dealName: 'Calculator Result',
+    inputs: {
+      expression: parts[0],
+    },
+    results: {
+      result: parseFloat(parts[1]) || 0,
+    },
+  }
+}
+
+const openShareDialog = () => {
+  if (canShare.value) {
+    showShareDialog.value = true
+  }
+}
+
+const handleShared = (reportData) => {
+  console.log('Report shared:', reportData)
+  // You might want to show a success message here
+}
+
+const handleUpgradeRequested = () => {
+  console.log('Upgrade requested from share dialog')
+  // Handle upgrade flow
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeyPress)
 })
@@ -274,10 +318,19 @@ onUnmounted(() => {
               variant="outlined"
               color="warning"
               size="large"
-              class="flex-grow-1"
+              class="mr-2"
               @click="backspace"
             >
               <v-icon icon="mdi-backspace-outline" />
+            </v-btn>
+            <v-btn
+              variant="outlined"
+              color="primary"
+              size="large"
+              :disabled="!canShare"
+              @click="openShareDialog"
+            >
+              <v-icon icon="mdi-share-variant" />
             </v-btn>
           </div>
 
@@ -332,6 +385,17 @@ onUnmounted(() => {
         </div>
       </v-card-text>
     </v-card>
+    
+    <!-- Share Dialog -->
+    <ShareDialog
+      v-model="showShareDialog"
+      calculation-type="Standard Calculator"
+      :calculation-inputs="getCalculationData()?.inputs || {}"
+      :calculation-results="getCalculationData()?.results || {}"
+      :deal-name="getCalculationData()?.dealName || 'Calculator Result'"
+      @shared="handleShared"
+      @upgrade-requested="handleUpgradeRequested"
+    />
   </v-container>
 </template>
 
