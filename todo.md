@@ -23,12 +23,17 @@
 
 ## 🌐 Open-Core Implementation & Business Model
 
-### Core Repository & Licensing Strategy
-- [ ] **Split repositories** - Create `rei-toolkit-core` (public) and `rei-toolkit-pro` (private) repositories
-- [ ] **Apply AGPL-3.0 license** - License core functionality under AGPL-3.0 to prevent closed-source SaaS clones
-- [ ] **Apply BSL 1.1 license** - License Pro/Cloud features under Business Source License 1.1
-- [ ] **Create trademark policy** - Establish TRADEMARKS.md with brand usage guidelines and commercial restrictions
-- [ ] **Setup CLA (Contributor License Agreement)** - Require CLA for core contributions via CONTRIBUTING.md
+### Core Repository & Licensing Strategy (Single Repo Approach)
+- [x] **Add dual licensing structure** - Implement file-level licensing with AGPL-3.0 (core) and BSL-1.1 (pro)
+- [x] **Create feature boundary map** - Document which files/features belong to open vs commercial licensing (`licensing/feature-map.json`)
+- [x] **Add license headers** - Add appropriate license headers to all source files based on feature boundaries (script: `npm run licenses:apply`)
+- [x] **Create trademark policy** - Establish TRADEMARKS.md with brand usage guidelines and commercial restrictions
+- [x] **Setup CLA (Contributor License Agreement)** - Require CLA for core contributions via CONTRIBUTING.md
+  - See `LICENSES.md`, `TRADEMARKS.md`, and `CONTRIBUTING.md` for details.
+  
+  Follow-ups:
+  - [ ] **Include full license texts** - Add AGPL-3.0 and BSL-1.1 full license texts as separate files in the repo
+  - [ ] **Add pre-commit header enforcement** - Update Husky pre-commit to run `npm run licenses:apply` on staged .js/.vue files
 
 ### Deal JSON Schema & Portability
 - [ ] **Create public Deal JSON schema** - Design and implement standardized deal.schema.json for data portability
@@ -67,10 +72,10 @@
 - [ ] **Create privacy-safe analytics** - Use anonymized IDs and respect user privacy settings
 - [ ] **Build A/B testing framework** - Test pricing, messaging, and feature gating strategies
 
-### 🚀 Two-Week Open-Core Rollout (Priority Implementation)
+### 🚀 Open-Core Rollout (Priority Implementation)
 
 #### Week 1 - Core Infrastructure
-- [ ] **Split repositories and apply licenses** - Separate core (AGPL-3.0) and pro (BSL 1.1) codebases
+- [ ] **Implement dual licensing structure** - Add file-level licensing with clear feature boundaries
 - [ ] **Implement entitlements system** - Plan/credits verification with client-side feature gating
 - [ ] **Ship Hosted Reports v1** - HTML→PDF rendering with signed URLs and basic branding
 - [ ] **Add soft-gated UI** - Preview Pro features (Share, Comps) with upgrade prompts
@@ -251,6 +256,24 @@
 ### 📱 PHASE 5: Mobile App Development (Month 2 - High Revenue Impact)
 
 > **Strategy**: Convert successful web freemium model to native mobile apps for 2-3x higher conversion rates and expanded market reach
+
+### 🔮 PHASE 6: Scale & Open-Source Strategy (Future - Post Growth)
+
+> **Strategy**: Consider advanced open-source strategies once significant user base and revenue are established
+
+#### Repository Splitting (Consider at 10K+ Users)
+- [ ] **Evaluate repository split benefits** - Assess if separate repos provide value at scale
+- [ ] **Split repositories** - Create `rei-toolkit-core` (public) and `rei-toolkit-pro` (private) if beneficial
+- [ ] **Migrate licensing** - Transfer dual licensing to separate repository structures
+- [ ] **Setup cross-repo CI/CD** - Complex deployment orchestration for split repositories
+- [ ] **Community management at scale** - Large contributor base and governance structure
+
+#### Enterprise & Advanced Open-Source Features
+- [ ] **Enterprise licensing tier** - Advanced licensing options for large organizations
+- [ ] **White-label solutions** - Customizable branding and deployment options
+- [ ] **Advanced plugin system** - Extensible architecture for third-party integrations
+- [ ] **API marketplace** - Third-party data provider ecosystem
+- [ ] **Self-hosted options** - On-premises deployment for enterprise customers
 
 #### 🛠️ Capacitor Integration & Setup
 - [ ] **Install Capacitor SDK** - Add @capacitor/core, @capacitor/cli to existing Vue 3 project
@@ -650,10 +673,11 @@
 
 ## 📋 Priority Levels
 
-- **🔴 Critical**: **FREEMIUM MONETIZATION + OPEN-CORE** - Payment system, feature gating, repository splitting, licensing, credits system (Revenue blocking)
-- **🟡 High**: ~~Firebase integration, authentication, localStorage optimization~~ **COMPLETED** + **MOBILE APP DEVELOPMENT** + **Open-core implementation**
+- **🔴 Critical**: **FREEMIUM MONETIZATION + OPEN-CORE** - Payment system, feature gating, dual licensing, credits system (Revenue blocking)
+- **🟡 High**: ~~Firebase integration, authentication, localStorage optimization~~ **COMPLETED** + **MOBILE APP DEVELOPMENT** + **Single-repo open-core implementation**
 - **🟢 Medium**: Code quality, testing, documentation, UI/UX improvements
 - **🔵 Low**: Nice-to-have features, advanced optimizations
+- **🔮 Future**: Repository splitting, enterprise features (post-growth considerations)
 
 ## 📊 **Implementation Status Summary**
 
@@ -670,15 +694,18 @@
 - 🟡 UI/UX alignment (8 tasks)
 - 🟢 Data & automation features (4 tasks)
 
-### **🌐 Open-Core Implementation (38 new tasks)**
-- 🔴 Repository splitting & licensing (5 tasks)
+### **🌐 Open-Core Implementation (33 tasks - Single Repo)**
+- 🔴 Dual licensing & feature boundaries (5 tasks)
 - 🔴 Deal JSON schema & portability (4 tasks)
 - 🔴 Credit system & data proxy (5 tasks)
-- 🔴 Two-week rollout plan (8 tasks)
+- 🔴 Open-core rollout plan (7 tasks)
 - 🟡 Team collaboration features (4 tasks)
 - 🟡 Privacy & security (4 tasks)
 - 🟡 Telemetry & analytics (4 tasks)
-- 🟡 Paywall UX optimization (4 tasks)
+
+### **� Future Scale Considerations (10 tasks - Post Growth)**
+- 🔮 Repository splitting evaluation (5 tasks)
+- 🔮 Enterprise & advanced features (5 tasks)
 
 ### **📱 Mobile App Development (55 new tasks)**
 - 🟡 Capacitor integration & setup (7 tasks)
@@ -690,10 +717,11 @@
 - 🟡 App store preparation (10 tasks)
 
 ### **🎯 Updated Roadmap Priority**
-1. **Month 1 Week 1-2**: Complete web freemium (Phases 1-2) + Open-core repository split
+1. **Month 1 Week 1-2**: Complete web freemium (Phases 1-2) + Single-repo dual licensing
 2. **Month 1 Week 3-4**: Open-core rollout plan + Web UI/UX + data features (Phases 3-4)
 3. **Month 2**: Mobile app development & app store launch
 4. **Month 3**: Mobile optimization + cross-platform feature parity + open-source community
+5. **Future (Post-Growth)**: Consider repository splitting at 10K+ users if beneficial
 
 ### **📈 Expected Business Impact**
 - **Web Platform**: 3-7% conversion, $19-49 MRR
@@ -704,9 +732,10 @@
 
 ---
 
-*Last updated: September 10, 2025*
-*Total items: 245 (47 completed, 198 remaining)*
-*Revenue-critical tasks: 128 (65% of remaining work)*
-*Open-core tasks: 38 (19% of remaining work)*
-*Mobile app tasks: 55 (28% of remaining work)*
+*Last updated: September 11, 2025*
+*Total items: 250 (47 completed, 203 remaining)*
+*Revenue-critical tasks: 123 (61% of remaining work)*
+*Open-core tasks: 33 (16% of remaining work)*
+*Mobile app tasks: 55 (27% of remaining work)*
+*Future considerations: 10 (5% of remaining work)*
 

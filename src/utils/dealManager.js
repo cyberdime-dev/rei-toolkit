@@ -1,3 +1,8 @@
+/*
+ * REI Toolkit - Community Core
+ * License: AGPL-3.0-only
+ * See LICENSES.md and licensing/feature-map.json
+ */
 // Deal Management Utility for localStorage persistence
 // Handles CRUD operations for real estate deals
 

@@ -1,3 +1,8 @@
+/*
+ * REI Toolkit - Community Core
+ * License: AGPL-3.0-only
+ * See LICENSES.md and licensing/feature-map.json
+ */
 // News Management Utility for Real Estate Market Updates
 // Handles news data with localStorage caching and mock API simulation
 

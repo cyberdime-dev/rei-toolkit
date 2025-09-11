@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "REI Toolkit Feature Licensing Map",
+  "description": "Defines which files and features belong to open source vs commercial licensing",
+  "version": "1.0.0",
+  "lastUpdated": "2025-09-11",
+  "licenses": {
+    "open_source": {
+      "license": "AGPL-3.0-only",
+      "description": "Core functionality available under AGPL-3.0 for free use with copyleft requirements",
+      "commercial_use": "Permitted with source code disclosure requirements",
+      "modification": "Permitted with source code disclosure requirements",
+      "distribution": "Permitted with source code disclosure requirements"
+    },
+    "commercial": {
+      "license": "BSL-1.1",
+      "description": "Premium features under Business Source License with usage restrictions",
+      "commercial_use": "Restricted - requires commercial license",
+      "modification": "Permitted for licensees only",
+      "distribution": "Restricted - original licensor only",
+      "change_date": "2029-09-11",
+      "change_license": "Apache-2.0"
+    }
+  },
+  "feature_boundaries": {
+    "open_source_core": {
+      "license": "AGPL-3.0-only",
+      "directories": [
+        "src/components/calculators/",
+        "src/components/Calculators/",
+        "src/utils/",
+        "src/plugins/",
+        "src/router/"
+      ],
+      "files": [
+  "src/services/calculations.js",
+        "src/services/storageService.js",
+  "src/utils/persistence.js",
+        "src/utils/dealManager.js",
+        "src/components/Layout/AppHeader.vue",
+        "src/components/Layout/AppNavigation.vue",
+        "src/components/NotFound.vue",
+        "src/views/Home.vue",
+        "src/router/index.js",
+        "src/main.js",
+        "src/App.vue",
+        "src/style.css"
+      ],
+      "features": [
+        "Real estate calculators (all types)",
+        "Local data storage and persistence",
+        "Basic deal management",
+        "Core user interface components",
+        "Import/export functionality (CSV, JSON)",
+        "Offline functionality",
+        "Basic reporting and PDF export",
+        "Formula calculations and validations"
+      ]
+    },
+    "commercial_premium": {
+      "license": "BSL-1.1",
+      "directories": [
+        "src/services/billing/",
+        "src/services/cloud/",
+        "src/services/collaboration/",
+        "src/services/analytics/",
+        "src/components/Billing/",
+        "src/components/collaboration/",
+        "src/components/premium/"
+      ],
+      "files": [
+        "src/services/authService.js",
+        "src/services/cloudSyncService.js",
+        "src/services/reportHostingService.js",
+        "src/services/stripeService.js",
+        "src/services/firebaseService.js",
+        "src/components/Auth/LoginView.vue",
+        "src/components/Auth/RegisterView.vue",
+        "src/components/Calculators/ShareDialog.vue",
+        "src/components/SharedReportViewer.vue",
+        "src/components/Layout/PlanBadge.vue",
+        "src/components/Layout/LocalModeIndicator.vue",
+        "src/components/Layout/UpgradeFlow.vue",
+        "src/components/Layout/SuccessMessage.vue",
+        "src/views/PricingView.vue",
+        "src/views/CheckoutSuccess.vue"
+      ],
+      "features": [
+        "Cloud synchronization and backup",
+        "User authentication and account management",
+        "Subscription billing and payment processing",
+        "Shareable hosted reports with custom branding",
+        "Team collaboration and role-based permissions",
+        "Property data integration (comps, rent estimates)",
+        "Advanced analytics and usage tracking",
+        "Premium support and onboarding",
+        "White-label and custom branding options"
+      ]
+    },
+    "hybrid_features": {
+      "description": "Features that have both open source and commercial components",
+      "components": [
+        {
+          "feature": "Deal Management",
+          "open_source": "Basic deal CRUD operations, local storage",
+          "commercial": "Cloud sync, team sharing, advanced analytics"
+        },
+        {
+          "feature": "Reporting",
+          "open_source": "Basic PDF export with watermark",
+          "commercial": "Custom branded reports, hosted sharing, analytics"
+        },
+        {
+          "feature": "User Interface",
+          "open_source": "Core UI components and navigation",
+          "commercial": "Premium indicators, upgrade flows, billing UI"
+        },
+        {
+          "feature": "Data Storage",
+          "open_source": "Local storage with IndexedDB",
+          "commercial": "Cloud storage with Firebase, real-time sync"
+        }
+      ]
+    }
+  },
+  "usage_restrictions": {
+    "commercial_features": {
+      "description": "Commercial features are restricted under BSL-1.1",
+      "restrictions": [
+        "Cannot use commercial features in competing SaaS products",
+        "Cannot redistribute commercial code without permission",
+        "Cannot offer commercial features as a service to third parties",
+        "Academic and personal use permitted"
+      ],
+      "exceptions": [
+        "Internal business use permitted",
+        "Non-competing applications permitted",
+        "Research and development permitted"
+      ]
+    },
+    "trademark_restrictions": {
+      "description": "REI Toolkit trademark and branding restrictions",
+      "restrictions": [
+        "Cannot use 'REI Toolkit' name in commercial forks",
+        "Cannot use official logos or branding in competing products",
+        "Must clearly identify as unofficial/community build",
+        "Cannot imply official endorsement or support"
+      ]
+    }
+  },
+  "compliance_requirements": {
+    "open_source_attribution": {
+      "description": "Requirements for using open source components",
+      "requirements": [
+        "Include AGPL-3.0 license text in redistributions",
+        "Provide source code for any modifications",
+        "Include copyright notices and attribution",
+        "Document any changes made to open source code"
+      ]
+    },
+    "commercial_licensing": {
+      "description": "Requirements for commercial feature usage",
+      "requirements": [
+        "Obtain commercial license for competing SaaS usage",
+        "Contact licensing team for enterprise agreements",
+        "Respect usage limitations outlined in BSL-1.1",
+        "Monitor change date for license transitions"
+      ]
+    }
+  }
+}

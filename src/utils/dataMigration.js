@@ -1,3 +1,8 @@
+/*
+ * REI Toolkit - Community Core
+ * License: AGPL-3.0-only
+ * See LICENSES.md and licensing/feature-map.json
+ */
 /**
  * Data Migration Utilities for REI Toolkit
  * 

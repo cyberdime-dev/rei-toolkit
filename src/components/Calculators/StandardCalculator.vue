@@ -1,3 +1,8 @@
+/*
+ * REI Toolkit - Community Core
+ * License: AGPL-3.0-only
+ * See LICENSES.md and licensing/feature-map.json
+ */
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import ShareDialog from './ShareDialog.vue'

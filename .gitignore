@@ -272,6 +272,7 @@ firebase-users-export.json
 .wireit/
 .history/
 /dev-docs/
+.dev-docs/
 
 # AI and ML cache
 .huggingface/

@@ -1,3 +1,8 @@
+/*
+ * REI Toolkit - Commercial Premium
+ * License: BSL-1.1 (Change Date: 2029-09-11 → Apache-2.0)
+ * See LICENSES.md and licensing/feature-map.json
+ */
 /**
  * Firebase Authentication Service for REI Toolkit
  * 

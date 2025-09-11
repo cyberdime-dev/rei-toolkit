@@ -26,7 +26,8 @@
     "firebase:deploy": "firebase deploy",
     "firebase:init": "firebase init",
     "backup:create": "node scripts/backup.js create",
-    "backup:restore": "node scripts/backup.js restore"
+  "backup:restore": "node scripts/backup.js restore",
+  "licenses:apply": "node scripts/apply-licenses.cjs"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

@@ -278,3 +278,12 @@ This project demonstrates continuous learning and adaptation to modern web devel
 ---
 
 *This project showcases modern web development skills, real estate domain expertise, and commitment to code quality and user experience. Built with passion for creating tools that solve real-world problems in the real estate investment community.*
+
+## 📜 Licensing
+
+This repository uses dual licensing:
+
+- Community Core: AGPL-3.0-only
+- Commercial Premium: BSL-1.1 (with Change Date to Apache-2.0)
+
+See `LICENSES.md` for details and `licensing/feature-map.json` for feature boundaries. Usage of the "REI Toolkit" name and logo is covered by `TRADEMARKS.md`. Contributions require a CLA; see `CONTRIBUTING.md`.
